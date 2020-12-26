@@ -1,0 +1,17 @@
+import React from "react";
+import { View, Text, Button } from "react-native";
+
+const SigninScreen = (props) => {
+  const { navigation } = props;
+  return (
+    <View>
+      <Text>This is signin Page!!!</Text>;
+      <Button
+        title="Signin Done..let's go to home screen"
+        onPress={() => navigation.navigate("homeStack", { screen: "Home" })}
+      />
+    </View>
+  );
+};
+
+export default SigninScreen;
