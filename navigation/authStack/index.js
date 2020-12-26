@@ -6,12 +6,14 @@ import SignupScreen from "../../screens/SignupScreen";
 import SigninScreen from "../../screens/SigninScreen";
 import ForgotPassword from "../../screens/ForgotPasswordScreen";
 import ResetPassword from "../../screens/ResetPassword";
+import SettingScreen from "../../screens/SettingScreen";
 
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="setting" component={SettingScreen} />
       <Stack.Screen
         name="Signup"
         component={SignupScreen}
