@@ -1,15 +1,20 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { View, Text } from "react-native";
 import HomeStack from "../homeStack";
 import AuthStack from "../authStack";
 import CustomDrawer from "../../component/CustomDrawer";
+import SigninScreen from "../../screens/SigninScreen";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerStack = () => {
   return (
     <Drawer.Navigator drawerContent={(props) => <CustomDrawer {...props} />}>
+      {/* <Drawer.Screen
+        options={{ title: "Signin" }}
+        name="Signin"
+        component={SigninScreen}
+      /> */}
       <Drawer.Screen
         options={{ title: "Home" }}
         name="homeStack"

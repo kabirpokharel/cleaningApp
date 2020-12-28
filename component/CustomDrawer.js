@@ -29,7 +29,7 @@ const CustomDrawer = (props) => {
       >
         <Image
           style={styles.drawerLogo}
-          source={require("../assets/favicon.png")}
+          source={require("../assets/icons/favicon.png")}
         />
         <Text style={{ fontSize: 24, color: "grey", fontWeight: "200" }}>
           Nawaz
