@@ -1,4 +1,18 @@
 import React from "react";
-import NavigatePage from "./NavigatePage";
+import CleaningApp from "./CleaningApp";
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 
-export default () => <NavigatePage />;
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "tomato",
+    accent: "yellow",
+  },
+};
+
+export default () => (
+  <PaperProvider theme={theme}>
+    <CleaningApp />
+  </PaperProvider>
+);

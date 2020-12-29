@@ -1,9 +1,11 @@
 import React from "react";
 import { View, Text, Button } from "react-native";
+import { useTheme } from "react-native-paper";
 
+import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 const HomeScreen = (props) => {
+  const { colors, dark } = useTheme();
   const { navigation } = props;
-  console.log("this is props from homeScreen====>", props);
   return (
     <View>
       <Button
@@ -17,6 +19,11 @@ const HomeScreen = (props) => {
           navigation.navigate("authStack", { screen: "Reset Password" })
         }
       />
+      <View>
+        <Text style={{ color: colors.error }}>
+          This is dummy text in welcome screen
+        </Text>
+      </View>
     </View>
   );
 };
