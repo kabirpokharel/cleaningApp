@@ -21,6 +21,7 @@ import { Drawer } from "react-native-paper";
 const CustomDrawer = (props) => {
   const [active, setActive] = React.useState("");
   return (
+    //React native papaer example s****************
     // <ScrollView>
     //   <SafeAreaView>
     //     <Drawer.Section title="Some title">
@@ -37,6 +38,7 @@ const CustomDrawer = (props) => {
     //     </Drawer.Section>
     //   </SafeAreaView>
     // </ScrollView>
+    //React native papaer example e****************
     <ScrollView>
       <SafeAreaView style={{ backgroundColor: "pink" }} />
       <View
