@@ -15,7 +15,7 @@ var height = Dimensions.get("window").height; //full height
 const SettingScreen = (props) => {
   const { navigation } = props;
   return (
-    <View style={styles.container}>
+    <View style={styles.containerWrapper}>
       <SafeAreaView />
       <Text>This is setting Page!!!</Text>
       <Button
@@ -61,7 +61,7 @@ const SettingScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerWrapper: {
     flex: 1,
     backgroundColor: "pink",
   },

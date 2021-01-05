@@ -1,18 +1,10 @@
 import React from "react";
 import CleaningApp from "./CleaningApp";
-import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
-
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: "tomato",
-    accent: "yellow",
-  },
-};
+import { Provider as PaperProvider } from "react-native-paper";
+import { defaultTheme, primary, primaryDark } from "./constants/theme";
 
 export default () => (
-  <PaperProvider theme={theme}>
+  <PaperProvider theme={defaultTheme}>
     <CleaningApp />
   </PaperProvider>
 );

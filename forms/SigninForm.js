@@ -1,12 +1,16 @@
 import React from "react";
-import { Button, View, StyleSheet, Text } from "react-native";
+import { Button, View, StyleSheet, Text, Dimensions } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
 import {
   TextInput as TextInputAdaptor,
   Button as ButtonAdaptor,
+  Title,
 } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
+
+var width = Dimensions.get("window").width; //full width
+var height = Dimensions.get("window").height; //full height
 
 const reviewSchema = yup.object({
   title: yup.string().required().min(4),
@@ -21,7 +25,8 @@ const reviewSchema = yup.object({
 
 const SigninForm = () => {
   return (
-    <View>
+    <View style={styles.containerWrapper}>
+      <Title style={styles.titleText}>Signin</Title>
       <Formik
         initialValues={{ title: "", body: "", rating: "" }}
         validationSchema={reviewSchema}
@@ -33,14 +38,14 @@ const SigninForm = () => {
         {(props) => (
           <View>
             <TextInputAdaptor
-              mode="flat"
+              mode="outlined"
               style={styles.input}
               label="Review title"
               onChangeText={props.handleChange("title")}
               onBlur={props.handleBlur("title")}
               value={props.values.title}
               underlineColor="green"
-              error={!!props.errors.title}
+              error={!!(props.touched.title && props.errors.title)}
             />
             {/* only if the left value is a valid string, will the right value be displayed */}
             <Text style={styles.errorText}>
@@ -48,27 +53,27 @@ const SigninForm = () => {
             </Text>
             <TextInputAdaptor
               style={styles.input}
-              mode="flat"
+              mode="outlined"
               // multiline
               // minHeight={60}
               label="Review details"
               onChangeText={props.handleChange("body")}
               onBlur={props.handleBlur("body")}
               value={props.values.body}
-              error={props.touched.body && !!props.errors.body}
+              error={!!(props.touched.body && props.errors.body)}
             />
             <Text style={styles.errorText}>
               {props.touched.body && props.errors.body}
             </Text>
             <TextInputAdaptor
-              mode="flat"
+              mode="outlined"
               style={styles.input}
               label="Rating (1 - 5)"
               onChangeText={props.handleChange("rating")}
               onBlur={props.handleBlur("rating")}
               value={props.values.rating}
               keyboardType="numeric"
-              // error={!!props.errors.rating}
+              error={!!(props.touched.rating && props.errors.rating)}
             />
             <Text style={styles.errorText}>
               {props.touched.rating && props.errors.rating}
@@ -86,10 +91,21 @@ const SigninForm = () => {
 export default SigninForm;
 
 const styles = StyleSheet.create({
+  containerWrapper: {
+    marginHorizontal: 20,
+    // marginTop: 150,
+    // flex: "1",
+  },
   titleText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
+    marginBottom: 15,
+    fontSize: 25,
+    // fontWeight: "bold",
+    // color: "#333",
+  },
+  input: {
+    borderColor: "red",
+    padding: 0,
+    margin: 0,
   },
   paragraph: {
     marginVertical: 8,
