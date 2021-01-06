@@ -10,7 +10,6 @@ const SigninScreen = (props) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: "pink",
       }}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
