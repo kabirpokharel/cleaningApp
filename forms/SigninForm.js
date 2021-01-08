@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, View, StyleSheet, Text, Dimensions } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { signinUser } from "../redux/actions";
 import {
   TextInput as TextInputAdaptor,
   Button as ButtonAdaptor,
@@ -18,6 +20,9 @@ const reviewSchema = yup.object({
 });
 
 const SigninForm = (props) => {
+  const auth = useSelector((state) => state.auth);
+  console.log("see for the counter===>", auth);
+  const dispatch = useDispatch();
   const { colors } = useTheme();
   return (
     <View style={styles.containerWrapper}>
@@ -26,40 +31,45 @@ const SigninForm = (props) => {
         initialValues={{ email: "", password: "" }}
         validationSchema={reviewSchema}
         onSubmit={(values, actions) => {
+          dispatch(signinUser(values));
           actions.resetForm();
           addReview(values);
         }}
       >
-        {(props) => (
+        {(formikProps) => (
           <View>
             <TextInputAdaptor
               style={styles.input}
               underlineColorAndroid="transparent"
               mode="outlined"
               label="E-mail"
-              onChangeText={props.handleChange("email")}
-              onBlur={props.handleBlur("email")}
-              value={props.values.email}
-              error={!!(props.touched.email && props.errors.email)}
+              onChangeText={formikProps.handleChange("email")}
+              onBlur={formikProps.handleBlur("email")}
+              value={formikProps.values.email}
+              error={!!(formikProps.touched.email && formikProps.errors.email)}
             />
             {/* only if the left value is a valid string, will the right value be displayed */}
-            {!!(props.touched.email && props.errors.email) && (
+            {!!(formikProps.touched.email && formikProps.errors.email) && (
               <Text style={[styles.errorText, { color: colors.error }]}>
-                {props.touched.email && props.errors.email}
+                {formikProps.touched.email && formikProps.errors.email}
               </Text>
             )}
             <TextInputAdaptor
               style={styles.input}
               mode="outlined"
               label="Password"
-              onChangeText={props.handleChange("password")}
-              onBlur={props.handleBlur("password")}
-              value={props.values.password}
-              error={!!(props.touched.password && props.errors.password)}
+              onChangeText={formikProps.handleChange("password")}
+              onBlur={formikProps.handleBlur("password")}
+              value={formikProps.values.password}
+              error={
+                !!(formikProps.touched.password && formikProps.errors.password)
+              }
             />
-            {!!(props.touched.password && props.errors.password) && (
+            {!!(
+              formikProps.touched.password && formikProps.errors.password
+            ) && (
               <Text style={styles.errorText}>
-                {props.touched.password && props.errors.password}
+                {formikProps.touched.password && formikProps.errors.password}
               </Text>
             )}
             <ButtonAdaptor mode="contained" onPress={props.handleSubmit}>
