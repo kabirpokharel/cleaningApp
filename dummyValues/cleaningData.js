@@ -1,5 +1,5 @@
 export const users = {
-  001: {
+  "001": {
     name: "Kabir Pokharel",
     role: "cleaner",
     visaType: "student",
@@ -7,7 +7,7 @@ export const users = {
     gender: "male",
     status: "working",
   },
-  002: {
+  "002": {
     name: "Pradeep Mudhbari",
     role: "HR",
     visaType: "PR",
@@ -20,7 +20,7 @@ export const users = {
 export const usersAuth = [
   {
     id: "001",
-    email:"kabirpokharel12@gmail.com",
+    email: "kabirpokharel12@gmail.com",
     password: "admin123",
   },
   {
@@ -31,7 +31,5 @@ export const usersAuth = [
 ];
 
 const block = {
-  // green: {1,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16},
-  yellow:
-
+  green: [1, 2, 3, 4, 5],
 };
