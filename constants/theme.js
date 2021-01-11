@@ -48,8 +48,4 @@ const primaryDark = {
   animation: { scale: 1.0 },
 };
 
-export default {
-  defaultTheme,
-  primary,
-  primaryDark,
-};
+export { defaultTheme, primary, primaryDark };
