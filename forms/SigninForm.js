@@ -1,13 +1,17 @@
 import React from "react";
 import { Button, View, StyleSheet, Text, Dimensions } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { signinUser } from "../redux/actions";
 import {
   TextInput as TextInputAdaptor,
   Button as ButtonAdaptor,
   Title,
   useTheme,
 } from "react-native-paper";
+import InputFieldAdaptor from "../component/InputFieldAdaptor";
+import { TouchableNativeFeedback } from "react-native-gesture-handler";
 
 var width = Dimensions.get("window").width; //full width
 var height = Dimensions.get("window").height; //full height
@@ -18,51 +22,61 @@ const reviewSchema = yup.object({
 });
 
 const SigninForm = (props) => {
+  const dispatch = useDispatch();
   const { colors } = useTheme();
+  const authData = useSelector((state) => {
+    console.log("this is auth state in reudx==> ", state);
+    return state.auth;
+  });
+
   return (
     <View style={styles.containerWrapper}>
       <Title style={styles.titleText}>Signin</Title>
+      {!!authData.error && (
+        <View>
+          <Text
+            style={{ color: colors.error }}
+          >{`this is error -> ${authData.error}`}</Text>
+        </View>
+      )}
       <Formik
         initialValues={{ email: "", password: "" }}
+        validateOnChange={false}
+        validateOnBlur={false}
         validationSchema={reviewSchema}
         onSubmit={(values, actions) => {
+          dispatch(signinUser(values));
           actions.resetForm();
-          addReview(values);
         }}
       >
-        {(props) => (
+        {({
+          handleSubmit,
+          handleChange,
+          handleBlur,
+          touched,
+          errors,
+          values,
+        }) => (
           <View>
-            <TextInputAdaptor
+            <InputFieldAdaptor
               style={styles.input}
-              underlineColorAndroid="transparent"
-              mode="outlined"
               label="E-mail"
-              onChangeText={props.handleChange("email")}
-              onBlur={props.handleBlur("email")}
-              value={props.values.email}
-              error={!!(props.touched.email && props.errors.email)}
+              onChangeText={handleChange("email")}
+              onBlur={handleBlur("email")}
+              value={values.email}
+              touched={touched.email}
+              error={errors.email}
             />
-            {/* only if the left value is a valid string, will the right value be displayed */}
-            {!!(props.touched.email && props.errors.email) && (
-              <Text style={[styles.errorText, { color: colors.error }]}>
-                {props.touched.email && props.errors.email}
-              </Text>
-            )}
-            <TextInputAdaptor
+            <InputFieldAdaptor
               style={styles.input}
-              mode="outlined"
               label="Password"
-              onChangeText={props.handleChange("password")}
-              onBlur={props.handleBlur("password")}
-              value={props.values.password}
-              error={!!(props.touched.password && props.errors.password)}
+              onChangeText={handleChange("password")}
+              onBlur={handleBlur("password")}
+              value={values.password}
+              touched={touched.password}
+              error={errors.password}
             />
-            {!!(props.touched.password && props.errors.password) && (
-              <Text style={styles.errorText}>
-                {props.touched.password && props.errors.password}
-              </Text>
-            )}
-            <ButtonAdaptor mode="contained" onPress={props.handleSubmit}>
+            <ButtonAdaptor mode="contained" onPress={handleSubmit}>
               Submit
             </ButtonAdaptor>
           </View>
@@ -77,16 +91,10 @@ export default SigninForm;
 const styles = StyleSheet.create({
   containerWrapper: {
     marginHorizontal: 20,
-    // marginTop: 150,
-    // flex: "1",
   },
   titleText: {
     marginBottom: 15,
     fontSize: 25,
-  },
-  input: {
-    borderWidth: 0,
-    height: 40,
   },
   paragraph: {
     marginVertical: 8,
@@ -95,12 +103,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-  },
-  errorText: {
-    color: "red",
-    fontWeight: "bold",
-    // marginBottom: 10,
-    marginTop: 6,
-    textAlign: "center",
   },
 });

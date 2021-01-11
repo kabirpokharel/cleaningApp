@@ -20,11 +20,11 @@ const DrawerStack = () => {
         name="homeStack"
         component={HomeStack}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         options={{ title: "Settings" }}
         name="authStack"
         component={AuthStack}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 };
