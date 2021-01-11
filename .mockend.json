@@ -1,6 +1,7 @@
 {
   "Post": {
     "title": "string",
+    "name":"string",
     "views": "int",
     "published": "boolean",
     "createdAt": "date",
