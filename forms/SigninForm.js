@@ -13,8 +13,8 @@ import {
 import InputFieldAdaptor from "../component/InputFieldAdaptor";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 
-var width = Dimensions.get("window").width; //full width
-var height = Dimensions.get("window").height; //full height
+var screenWidth = Dimensions.get("window").width; //full width
+var screenHeight = Dimensions.get("window").height; //full height
 
 const reviewSchema = yup.object({
   email: yup.string().email().required("Email is required"),

@@ -18,7 +18,8 @@ const NavigatePage = () => {
   });
   return (
     <NavigationContainer>
-      {!authData.isSignedIn ? (
+      {/* {!authData.isSignedIn ? ( */}
+      {!authData.isSignedIn && false ? (
         <Stack.Navigator>
           <Stack.Screen name="signin" component={SigninScreen} />
         </Stack.Navigator>

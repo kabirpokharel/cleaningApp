@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { HomeScreen, ProfileScreen } from "../../screens";
+import { HomeScreen, CleaningLog } from "../../screens";
 
 import { useTheme, Button } from "react-native-paper";
 
@@ -48,7 +48,7 @@ const HomeStack = ({ navigation }) => {
           ),
         }}
       />
-      <Stack.Screen name="profile" component={ProfileScreen} />
+      <Stack.Screen name="cleaningLog" component={CleaningLog} />
     </Stack.Navigator>
   );
 };
