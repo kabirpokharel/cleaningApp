@@ -29,7 +29,3 @@ export const usersAuth = [
     password: "admin321",
   },
 ];
-
-const block = {
-  green: [1, 2, 3, 4, 5],
-};

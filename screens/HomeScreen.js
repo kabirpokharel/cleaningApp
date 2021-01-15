@@ -6,67 +6,76 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
-
-var screenWidth = Dimensions.get("window").width; //full widt,h
-var screenHeight = Dimensions.get("window").height; //full height
-
+import commonStyle from "./style";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
+
+let SCREEN_WIDTH = Dimensions.get("window").width;
+let SCREEN_HEIGHT = Dimensions.get("window").height;
+
+import { roomsBlock } from "../dummyValues/roomsBlock";
+import RowElements from "../component/RowElements";
+
+// const NO_OF_COLUMNS = 3;
+// const GUTTER_WIDTH_RATIO = 0.1 / NO_OF_COLUMNS;
+// const TOTAL_GUTTER_WIDTH =
+//   SCREEN_WIDTH * (NO_OF_COLUMNS - 1) * GUTTER_WIDTH_RATIO;
+// const SINGLE_GUTTER_WIDTH = TOTAL_GUTTER_WIDTH / (NO_OF_COLUMNS - 1);
+// const PAGE_HORIZONTAL_MARGIN = 20;
+// const CARD_WIDTH =
+//   (SCREEN_WIDTH - 2 * PAGE_HORIZONTAL_MARGIN - TOTAL_GUTTER_WIDTH) /
+//   NO_OF_COLUMNS;
+
+// const RoomBlockCard = ({ item, onPress }) => {
+//   const marginRight = item.id % NO_OF_COLUMNS == 0 ? 0 : SINGLE_GUTTER_WIDTH;
+//   return (
+//     <TouchableOpacity
+//       style={[styles.blockWrapper, { marginRight }]}
+//       onPress={onPress}
+//     >
+//       <Text>{item.blockName}</Text>
+//     </TouchableOpacity>
+//   );
+// };
+
+const ElementChildren = ({ item }) => {
+  console.log("from elementCHildren===>", item);
+  return <Text>{item.blockName}</Text>;
+};
+
 const HomeScreen = (props) => {
   const { colors, dark } = useTheme();
   const { navigation } = props;
 
-  console.log("gutter width===>", (screenWidth - (40 + 100 * 3)) / 2);
-  // console.log("gutter width===>", screenWidth-340);
+  const customOnClick = (item) =>
+    navigation.navigate("cleaningLog", {
+      block: item,
+    });
   return (
-    <View style={styles.containerWrapper}>
+    <View style={commonStyle.containerWrapper}>
       <Text style={styles.titleText}>Choose Block</Text>
       <ScrollView>
         <View style={styles.blockContainerWrapper}>
-          <TouchableOpacity
-            style={styles.blockWrapper}
-            onPress={() =>
-              navigation.navigate("cleaningLog", { roomName: "green" })
-            }
-          >
-            <Text>Green</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.blockWrapper}
-            onPress={() =>
-              navigation.navigate("cleaningLog", { roomName: "yellow" })
-            }
-          >
-            <Text>Yellow</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.blockWrapper}
-            onPress={() =>
-              navigation.navigate("cleaningLog", { roomName: "blue" })
-            }
-          >
-            <Text>Blue</Text>
-          </TouchableOpacity>
-          <View style={[styles.blockWrapper, { opacity: 0 }]} />
-
-          <TouchableOpacity
-            style={styles.blockWrapper}
-            onPress={() =>
-              navigation.navigate("cleaningLog", { roomName: "gold" })
-            }
-          >
-            <Text>Gold</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.blockWrapper}
-            onPress={() =>
-              navigation.navigate("cleaningLog", { roomName: "pinkBlue" })
-            }
-          >
-            <Text>{"Pink & Blue"}</Text>
-          </TouchableOpacity>
+          <RowElements
+            item={roomsBlock}
+            ElementChildren={ElementChildren}
+            onPress={customOnClick}
+          />
+          {/* <FlatList
+            numColumns={NO_OF_COLUMNS}
+            data={roomsBlock}
+            renderItem={({ item }) => (
+              <RoomBlockCard
+                item={item}
+                
+                }
+              />
+            )}
+            keyExtractor={(item) => item.id}
+          /> */}
         </View>
       </ScrollView>
     </View>
@@ -75,9 +84,6 @@ const HomeScreen = (props) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  containerWrapper: {
-    marginHorizontal: 20,
-  },
   titleText: {
     marginBottom: 15,
     fontSize: 25,
@@ -87,14 +93,14 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
   },
-  blockWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: (screenWidth - (40 + 100 * 3)) / 4,
-    // marginVertical: 30,
-    height: 150,
-    width: 100,
-    // margin: 5,
-    backgroundColor: "pink",
-  },
+  // blockWrapper: {
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   marginVertical: SINGLE_GUTTER_WIDTH / 2, //margin doesn't collapse in react native
+  //   marginRight: SINGLE_GUTTER_WIDTH,
+  //   height: CARD_WIDTH,
+  //   width: CARD_WIDTH,
+  //   backgroundColor: "pink",
+  //   borderRadius: 4,
+  // },
 });
