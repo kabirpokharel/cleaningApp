@@ -22,8 +22,8 @@ const reviewSchema = yup.object({
 });
 
 const SigninForm = (props) => {
-  const dispatch = useDispatch();
   const { colors } = useTheme();
+  const dispatch = useDispatch();
   const authData = useSelector((state) => {
     console.log("this is auth state in reudx==> ", state);
     return state.auth;

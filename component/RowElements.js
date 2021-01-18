@@ -12,43 +12,67 @@ import {
 let SCREEN_WIDTH = Dimensions.get("window").width;
 let SCREEN_HEIGHT = Dimensions.get("window").height;
 
-const NO_OF_COLUMNS = 3;
-const PAGE_HORIZONTAL_MARGIN = 20;
+const ElementComponent = ({
+  index,
+  numColumns,
+  round,
+  onPress,
+  ElementChildren,
+  extraStyle,
+}) => {
+  const PAGE_HORIZONTAL_MARGIN = 20;
 
-const gutterWidthRatio = 0.1 / NO_OF_COLUMNS;
-const totalGutterWidth = SCREEN_WIDTH * (NO_OF_COLUMNS - 1) * gutterWidthRatio;
-const singleGutterWidth = totalGutterWidth / (NO_OF_COLUMNS - 1);
-const cardWidth =
-  (SCREEN_WIDTH - 2 * PAGE_HORIZONTAL_MARGIN - totalGutterWidth) /
-  NO_OF_COLUMNS;
+  const gutterWidthRatio = 0.2 / numColumns;
+  const totalGutterWidth = SCREEN_WIDTH * (numColumns - 1) * gutterWidthRatio;
+  const singleGutterWidth = totalGutterWidth / (numColumns - 1);
+  const cardWidth =
+    (SCREEN_WIDTH - 2 * PAGE_HORIZONTAL_MARGIN - totalGutterWidth) / numColumns;
 
-const ElementComponent = ({ index, onPress, elementChildren }) => {
-  const marginRight = (index + 1) % NO_OF_COLUMNS == 0 ? 0 : singleGutterWidth;
+  const marginRight = (index + 1) % numColumns == 0 ? 0 : singleGutterWidth;
   return (
     <TouchableOpacity
-      style={[styles.blockWrapper, { marginRight }]}
+      style={[
+        {
+          justifyContent: "center",
+          alignItems: "center",
+          marginVertical: [singleGutterWidth] / 2,
+          marginRight,
+          height: cardWidth,
+          width: cardWidth,
+          borderRadius: round ? cardWidth * 0.5 : 4,
+        },
+        extraStyle,
+      ]}
       onPress={onPress}
     >
-      {elementChildren}
-      {/* <Text>{item.blockName}</Text> */}
+      <ElementChildren />
     </TouchableOpacity>
   );
 };
 
-const RowElements = ({ item, onPress, ElementChildren }) => {
-  console.log("this is elementCHildren===>", ElementChildren);
+const RowElements = ({
+  item,
+  numColumns,
+  onPress,
+  round,
+  ElementChildren,
+  extraStyle,
+}) => {
+  console.log("from rowElements, numColumns===>", numColumns);
   return (
     <>
       <FlatList
-        numColumns={NO_OF_COLUMNS}
         data={item}
+        numColumns={numColumns}
         renderItem={({ item, index }) => {
           return (
             <ElementComponent
-              // item={item}
+              numColumns={numColumns}
               index={index}
+              round={round}
+              extraStyle={extraStyle ? extraStyle(item.blockName) : {}}
               onPress={() => onPress(item)}
-              elementChildren={() => <ElementChildren item={item} />}
+              ElementChildren={() => <ElementChildren item={item} />}
             />
           );
         }}
@@ -73,10 +97,10 @@ const styles = StyleSheet.create({
   blockWrapper: {
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: singleGutterWidth / 2, //margin doesn't collapse in react native
-    marginRight: singleGutterWidth,
-    height: cardWidth,
-    width: cardWidth,
+    // marginVertical: singleGutterWidth / 2, //margin doesn't collapse in react native
+    // marginRight: singleGutterWidth,
+    // height: cardWidth,
+    // width: cardWidth,
     backgroundColor: "pink",
     borderRadius: 4,
   },

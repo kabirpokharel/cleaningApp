@@ -21,14 +21,6 @@ export const roomsBlock = [
   },
 ];
 
-export const blocks = {
-  green,
-  yellow,
-  gold,
-  blue,
-  pinkBlue,
-};
-
 const green = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 const yellow = [100, 101, 102, 103, 104, 105, 106];
 const gold = [
@@ -89,3 +81,11 @@ const blue = [
   45,
 ];
 const pinkBlue = [71, 72, 73, 74, 75, 76, 77];
+
+export const blocks = {
+  green,
+  yellow,
+  gold,
+  blue,
+  pinkBlue,
+};
