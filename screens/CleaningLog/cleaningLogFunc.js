@@ -1,23 +1,24 @@
-const blockStyle = (blockName) => {
-  switch (blockName) {
-    case "green":
-      return { backgroundColor: "#05c46b" };
+const roomButtonStyle = ({ cleaningType }) => {
+  switch (cleaningType) {
+    case "daily":
+      return {
+        color: "black",
+        fontWeight: "bold",
+        borderWidth: 5,
+        borderColor: "#05c46b",
+      };
       break;
-    case "yellow":
-      return { backgroundColor: "#ffd32a" };
-      break;
-    case "gold":
-      return { backgroundColor: "#ccae62" };
-      break;
-    case "blue":
-      return { backgroundColor: "#3B3B98" };
-      break;
-    case "pinkBlue":
-      return { backgroundColor: "#FC427B" };
+    case "thorough":
+      return {
+        color: "black",
+        fontWeight: "bold",
+        borderWidth: 5,
+        backgroundColor: "#05c46b60",
+      };
       break;
     default:
-      return { backgroundColor: "grey" };
+      return { backgroundColor: "white", color: "grey" };
   }
 };
 
-export { blockStyle };
+export { roomButtonStyle };

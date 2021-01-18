@@ -20,9 +20,18 @@ const cleaningDetail = (state = initialState, action) => {
         error: null,
       };
     case "ROOM_CLEANED":
+      const updatedRooms = [...state.rooms].map((room) => {
+        let temp =
+          room.id == payload.id
+            ? !!room.cleaningType
+              ? { ...room, cleaningType: "" }
+              : payload
+            : room;
+        return temp;
+      });
       return {
         ...state,
-        rooms: payload.roomArray,
+        rooms: updatedRooms,
         roomsLoading: false,
         error: null,
       };

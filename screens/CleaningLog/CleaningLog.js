@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import styles from "./cleaningLogStyle";
 import RowElements from "../../component/RowElements";
 import { roomsBlock, blocks } from "../../dummyValues/roomsBlock";
-import { loadRooms } from "../../redux/actions";
+import { loadRooms, roomCleaned } from "../../redux/actions";
+import { roomButtonStyle } from "./cleaningLogFunc";
 
 const NUM_COL = 6;
 
-const ElementChildren = ({ item }) => <Text>{item}</Text>;
+const ElementChildren = ({ item }) => <Text>{item.id}</Text>;
 
 const CleaningLog = (props) => {
   const { rooms, setRooms } = useState([]);
@@ -20,7 +22,7 @@ const CleaningLog = (props) => {
 
   useEffect(() => {
     const roomArray = blocks[blockName].map((room) => ({
-      id: [room],
+      id: room,
       cleaningType: "",
     }));
     // setRooms(allRooms);
@@ -28,27 +30,29 @@ const CleaningLog = (props) => {
     const timer = setTimeout(() => {
       dispatch(loadRooms(blockName, roomArray));
     }, 2000);
-    return () => clearTimeout(timer);
-  });
+    // return () => clearTimeout(timer);
+  }, []);
 
-  const customOnClick = () => {
-    alert("cleaningStatus.roomsLoading==>", cleaningStatus.roomsLoading);
+  const roomClicked = (item) => {
+    dispatch(roomCleaned({ ...item, cleaningType: "daily" }));
   };
+  const roomLongPress = () => dispatch(roomCleaned(item));
   return (
     <View style={styles.containerWrapper}>
       <Text>{blockName}</Text>
-      {cleaningStatus.roomsLoading ? (
+      {cleaningDetail.roomsLoading ? (
         <View>
           <Text>Loading......</Text>
         </View>
       ) : (
         <RowElements
-          // item={blocks[blockName]}
           item={cleaningDetail.rooms}
           numColumns={NUM_COL}
           round
           ElementChildren={ElementChildren}
-          onPress={() => customOnClick(item)}
+          onPress={roomClicked}
+          // onLongPress={roomLongPress}
+          extraStyle={roomButtonStyle}
         />
       )}
     </View>
@@ -56,12 +60,3 @@ const CleaningLog = (props) => {
 };
 
 export default CleaningLog;
-const styles = StyleSheet.create({
-  containerWrapper: {
-    marginHorizontal: 20,
-  },
-  titleText: {
-    marginBottom: 15,
-    fontSize: 25,
-  },
-});

@@ -58,7 +58,7 @@ const RowElements = ({
   ElementChildren,
   extraStyle,
 }) => {
-  console.log("from rowElements, numColumns===>", numColumns);
+  console.log("from rowElements extraStyle===>", extraStyle);
   return (
     <>
       <FlatList
@@ -70,7 +70,7 @@ const RowElements = ({
               numColumns={numColumns}
               index={index}
               round={round}
-              extraStyle={extraStyle ? extraStyle(item.blockName) : {}}
+              extraStyle={extraStyle ? extraStyle(item) : {}}
               onPress={() => onPress(item)}
               ElementChildren={() => <ElementChildren item={item} />}
             />
