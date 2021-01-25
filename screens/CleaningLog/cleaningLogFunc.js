@@ -13,6 +13,7 @@ const roomButtonStyle = ({ cleaningType }) => {
         color: "black",
         fontWeight: "bold",
         borderWidth: 5,
+        borderColor: "#218c74",
         backgroundColor: "#05c46b60",
       };
       break;

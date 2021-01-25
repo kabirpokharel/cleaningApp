@@ -33,10 +33,12 @@ const CleaningLog = (props) => {
     // return () => clearTimeout(timer);
   }, []);
 
-  const roomClicked = (item) => {
-    dispatch(roomCleaned({ ...item, cleaningType: "daily" }));
+  const roomClicked = (roomElement) => {
+    dispatch(roomCleaned({ ...roomElement, cleaningType: "daily" }));
   };
-  const roomLongPress = () => dispatch(roomCleaned(item));
+  const roomLongPress = (roomElement) => {
+    dispatch(roomCleaned({ ...roomElement, cleaningType: "thorough" }));
+  };
   return (
     <View style={styles.containerWrapper}>
       <Text>{blockName}</Text>
@@ -51,10 +53,11 @@ const CleaningLog = (props) => {
           round
           ElementChildren={ElementChildren}
           onPress={roomClicked}
-          // onLongPress={roomLongPress}
+          onLongPress={roomLongPress}
           extraStyle={roomButtonStyle}
         />
       )}
+      {/* <Button onPress={navigation.navigate("cleaningLog"} /> */}
     </View>
   );
 };

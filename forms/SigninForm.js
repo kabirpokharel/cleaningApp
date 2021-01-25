@@ -25,7 +25,7 @@ const SigninForm = (props) => {
   const { colors } = useTheme();
   const dispatch = useDispatch();
   const authData = useSelector((state) => {
-    console.log("this is auth state in reudx==> ", state);
+    // console.log("this is auth state in reudx==> ", state);
     return state.auth;
   });
 

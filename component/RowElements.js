@@ -17,6 +17,7 @@ const ElementComponent = ({
   numColumns,
   round,
   onPress,
+  onLongPress,
   ElementChildren,
   extraStyle,
 }) => {
@@ -44,6 +45,7 @@ const ElementComponent = ({
         extraStyle,
       ]}
       onPress={onPress}
+      onLongPress={onLongPress}
     >
       <ElementChildren />
     </TouchableOpacity>
@@ -54,6 +56,7 @@ const RowElements = ({
   item,
   numColumns,
   onPress,
+  onLongPress,
   round,
   ElementChildren,
   extraStyle,
@@ -72,6 +75,7 @@ const RowElements = ({
               round={round}
               extraStyle={extraStyle ? extraStyle(item) : {}}
               onPress={() => onPress(item)}
+              onLongPress={() => onLongPress(item)}
               ElementChildren={() => <ElementChildren item={item} />}
             />
           );
