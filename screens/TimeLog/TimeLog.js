@@ -1,48 +1,50 @@
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, Platform } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+
+// import all the components we are going to use
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+
+//import TimePicker from the package we installed
+import TimePicker from "react-native-simple-time-picker";
+import PickerComponent from "../../TEMPFolder/PickerComponent";
 
 const TimeLog = () => {
-  const [time, setTime] = useState(new Date());
-  //    const [mode, setMode] = useState("time");
-  const [show, setShow] = useState(false);
-
-  const onChange = (event, selectedTime) => {
-    const currentTime = selectedTime || time;
-    // setShow(Platform.OS === "ios");
-    console.log(
-      "this is current time from the clock ui===>",
-      typeof currentTime
-    );
-    setTime(currentTime);
-  };
-
-  const showTimepicker = () => {
-    setShow("time");
-  };
+  const [selectedHours, setSelectedHours] = useState(0);
+  const [selectedMinutes, setSelectedMinutes] = useState(0);
 
   return (
-    <View>
-      <Text>Time log</Text>
-      <View>
-        <View>
-          <Button onPress={showTimepicker} title="Show time picker!" />
-        </View>
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={time}
-            mode={"time"}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
-        )}
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          React Native Time Picker – To Pick the Time using Native Time Picker
+        </Text>
+        <PickerComponent />
+        {/* <Text>
+          Selected Time: {JSON.stringify(selectedHours)}:
+          {JSON.stringify(selectedMinutes)}
+        </Text>
+        <TimePicker
+          onChange={(time) => {
+            setSelectedHours(time);
+          }}
+        /> */}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default TimeLog;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    padding: 20,
+  },
+});
