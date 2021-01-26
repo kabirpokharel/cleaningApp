@@ -1,6 +1,7 @@
 import ForgotPassword from "./ForgotPasswordScreen";
 import HomeScreen from "./HomeScreen/HomeScreen";
 import CleaningLog from "./CleaningLog/CleaningLog";
+import TimeLog from "./TimeLog/TimeLog";
 import ResetPassword from "./ResetPassword";
 import SettingScreen from "./SettingScreen";
 import SigninScreen from "./SigninScreen";
@@ -10,6 +11,7 @@ export {
   ForgotPassword,
   HomeScreen,
   CleaningLog,
+  TimeLog,
   ResetPassword,
   SettingScreen,
   SigninScreen,

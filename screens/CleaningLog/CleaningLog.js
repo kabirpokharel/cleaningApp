@@ -57,7 +57,7 @@ const CleaningLog = (props) => {
           extraStyle={roomButtonStyle}
         />
       )}
-      {/* <Button onPress={navigation.navigate("cleaningLog"} /> */}
+      <Button title="continue" onPress={() => navigation.navigate("timeLog")} />
     </View>
   );
 };
