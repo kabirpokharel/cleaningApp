@@ -1,50 +1,34 @@
 import React, { useState } from "react";
+import moment from "moment";
+import { View, Platform, Text, StyleSheet } from "react-native";
+import { Button } from "react-native-paper";
+import TimePicker from "../../container/TimePicker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-// import all the components we are going to use
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-
-//import TimePicker from the package we installed
-import TimePicker from "react-native-simple-time-picker";
-import PickerComponent from "../../TEMPFolder/PickerComponent";
-
+const isPlatformIos = Platform.OS === "ios";
 const TimeLog = () => {
-  const [selectedHours, setSelectedHours] = useState(0);
-  const [selectedMinutes, setSelectedMinutes] = useState(0);
-
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <Text style={styles.title}>
-          React Native Time Picker – To Pick the Time using Native Time Picker
-        </Text>
-        <PickerComponent />
-        {/* <Text>
-          Selected Time: {JSON.stringify(selectedHours)}:
-          {JSON.stringify(selectedMinutes)}
-        </Text>
-        <TimePicker
-          onChange={(time) => {
-            setSelectedHours(time);
-          }}
-        /> */}
+    <View style={styles.container}>
+      <View style={{ flex: 1 }}>
+        <TimePicker />
       </View>
-    </SafeAreaView>
+      <View style={{ flex: 1 }}>
+        <TimePicker />
+      </View>
+    </View>
   );
 };
-
 export default TimeLog;
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "pink",
+    display: "flex",
     flex: 1,
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  title: {
-    textAlign: "center",
-    fontSize: 20,
-    fontWeight: "bold",
-    padding: 20,
+    position: "relative",
+    flexDirection: "row",
+    // justifyContent: "center",
+    // alignItems: "center",
   },
 });

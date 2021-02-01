@@ -22,6 +22,7 @@ interface GestureHandlerProps {
 }
 
 const GestureHandler = ({ value, max, defaultValue }: GestureHandlerProps) => {
+  console.log("this is value from picker===>",value);
   const {
     gestureHandler,
     translation,

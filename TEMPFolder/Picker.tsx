@@ -1,6 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Text, Dimensions } from "react-native";
-import Animated, {
+import 
+  Animated,
+  {
   interpolate,
   Extrapolate,
   multiply,
@@ -61,7 +63,6 @@ const Picker = ({ values, defaultValue }: PickerProps) => {
         );
         const rotateX = asin(y);
         const z = sub(multiply(RADIUS, cos(rotateX)), RADIUS);
-        console.log("these are value of y, rotateX,z ====? ", y, rotateX,z );
         return (
           <Animated.View
             key={v.value}
