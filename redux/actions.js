@@ -4,6 +4,7 @@ import {
   ROOM_CLEANED,
   ROOM_REMOVED,
   COMMON_AREA_CLEANED,
+  ADD_SHIFT_TIME,
 } from "./actionsConstant";
 
 export const signinUser = (enteredEmaiPassword) => {
@@ -38,5 +39,12 @@ export const commonAreaCleaned = (boolStatus) => {
   return {
     type: COMMON_AREA_CLEANED,
     payload: boolStatus,
+  };
+};
+
+export const addShiftTime = (time) => {
+  return {
+    type: ADD_SHIFT_TIME,
+    payload: time,
   };
 };

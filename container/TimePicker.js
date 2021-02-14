@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import moment from "moment";
 import { View, Platform, Text, Modal, Dimensions } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { addShiftTime } from "../redux/actions";
 
 const isPlatformIos = Platform.OS === "ios";
 const width = Dimensions.get("window").width;
@@ -12,14 +14,16 @@ const modalStyle = (width, gutter) => {
   return { width: gutter * 2 - width, left: gutter, right: gutter };
 };
 
-const TimePicker = () => {
+const TimePicker = ({ inputId, timeType }) => {
   const [time, setTime] = useState(new Date());
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
 
   const onChange = (event, selectedTime) => {
-    const currentDate = selectedTime || time;
+    const inputTime = selectedTime || time;
     setShow(isPlatformIos);
-    setTime(currentDate);
+    setTime(inputTime);
+    dispatch(addShiftTime({ [timeType]: inputTime, inputId: inputId }));
   };
 
   return (

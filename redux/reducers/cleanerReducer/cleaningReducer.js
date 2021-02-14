@@ -5,7 +5,13 @@ const initialState = {
   currentBlock: "",
   rooms: [],
   commonAreaCleaned: false,
+  time: [],
   error: null,
+};
+
+const updateTime = (payload, time) => {
+  time[payload.inputId] = { ...time[payload.inputId], ...payload };
+  return time;
 };
 
 const cleaningDetail = (state = initialState, action) => {
@@ -14,7 +20,7 @@ const cleaningDetail = (state = initialState, action) => {
     case "LOAD_ROOM":
       return {
         ...state,
-        currentBlock: payload.blockName, // change in this value
+        currentBlock: payload.blockName,
         rooms: payload.roomArray,
         roomsLoading: false,
         error: null,
@@ -47,6 +53,12 @@ const cleaningDetail = (state = initialState, action) => {
         commonAreaCleaned: true,
         roomsLoading: false,
         error: null,
+      };
+    case "ADD_SHIFT_TIME":
+      const updatedTime = updateTime(payload, [...state.time]);
+      return {
+        ...state,
+        time: updatedTime,
       };
     default:
       return state;

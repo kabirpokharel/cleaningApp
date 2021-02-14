@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 
 const NavigatePage = () => {
   const authData = useSelector((state) => {
-    console.log("this is auth state in reudx form Nativate==> ", state);
+    // console.log("this is auth state in reudx form Nativate==> ", state);
     return state.auth;
   });
   return (
