@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
-var width = Dimensions.get("window").width; //full width
-var height = Dimensions.get("window").height; //full height
+const width = Dimensions.get("window").width; //full width
+const height = Dimensions.get("window").height; //full height
 
 const SettingScreen = (props) => {
   const { navigation } = props;
