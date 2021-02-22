@@ -7,6 +7,7 @@ const defaultTheme = {
     backgroundColor: "#ffffff",
     primary: "tomato",
     accent: "yellow",
+    error: "red",
   },
 };
 

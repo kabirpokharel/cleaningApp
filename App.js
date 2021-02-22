@@ -8,7 +8,7 @@ import { defaultTheme, primary, primaryDark } from "./constants/theme";
 
 export default () => (
   <Provider store={store}>
-    <PaperProvider theme={defaultTheme}>
+    <PaperProvider theme={primary}>
       <CleaningApp />
     </PaperProvider>
   </Provider>

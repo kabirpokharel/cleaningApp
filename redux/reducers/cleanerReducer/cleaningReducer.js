@@ -26,7 +26,7 @@ const cleaningDetail = (state = initialState, action) => {
         error: null,
       };
     case "ROOM_CLEANED":
-      const updatedRooms = [...state.rooms].map((room) =>
+      const updatedRooms = state.rooms.map((room) =>
         room.id == payload.id
           ? !!room.cleaningType
             ? { ...room, cleaningType: "" }

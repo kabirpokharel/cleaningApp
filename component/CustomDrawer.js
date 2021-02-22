@@ -39,7 +39,7 @@ const CustomDrawer = (props) => {
     //   </SafeAreaView>
     // </ScrollView>
     //React native papaer example e****************
-    <ScrollView>
+    <View>
       <SafeAreaView style={{ backgroundColor: "pink" }} />
       <View
         style={{
@@ -63,7 +63,7 @@ const CustomDrawer = (props) => {
         <Ionicons name="md-checkmark-circle" size={32} color="green" />
       </View>
       <DrawerItemList {...props} />
-    </ScrollView>
+    </View>
   );
 };
 

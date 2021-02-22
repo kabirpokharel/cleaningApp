@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { useTheme } from "react-native-paper";
@@ -10,7 +10,7 @@ import { blockStyle } from "./homeScreenFunc";
 import { roomsBlock } from "../../dummyValues/roomsBlock";
 import RowElements from "../../component/RowElements";
 
-const NUM_COL = 3;
+const NUM_COLL = 3;
 
 const ElementChildren = ({ item }) => <Text>{item.blockName}</Text>;
 
@@ -24,19 +24,20 @@ const HomeScreen = (props) => {
     });
 
   return (
-    <View style={commonStyle.containerWrapper}>
-      <Text style={styles.titleText}>Choose Block</Text>
-      <ScrollView>
-        <View style={styles.blockContainerWrapper}>
-          <RowElements
-            item={roomsBlock}
-            numColumns={NUM_COL}
-            ElementChildren={ElementChildren}
-            onPress={customOnClick}
-            extraStyle={blockStyle}
-          />
-        </View>
-      </ScrollView>
+    <View style={[commonStyle.containerWrapper, { flex: 1 }]}>
+      <View>
+        <Text style={styles.titleText}>Choose Block</Text>
+      </View>
+      <View style={{ flex: 1, marginHorizontal: 20 }}>
+        <RowElements
+          item={roomsBlock}
+          numColumns={NUM_COLL}
+          ElementChildren={ElementChildren}
+          onPress={customOnClick}
+          extraStyle={blockStyle}
+        />
+      </View>
+      {/* <SafeAreaView /> */}
     </View>
   );
 };

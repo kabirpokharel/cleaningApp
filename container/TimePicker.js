@@ -15,7 +15,8 @@ const modalStyle = (width, gutter) => {
 };
 
 const TimePicker = ({ inputId, timeType }) => {
-  const [time, setTime] = useState(new Date());
+  const [time, setTime] = useState(new Date().setHours(0, 0, 0, 0));
+  const [isInputDirty, setIsInputDirty] = useState(false);
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
@@ -23,13 +24,14 @@ const TimePicker = ({ inputId, timeType }) => {
     const inputTime = selectedTime || time;
     setShow(isPlatformIos);
     setTime(inputTime);
+    setIsInputDirty(true);
     dispatch(addShiftTime({ [timeType]: inputTime, inputId: inputId }));
   };
 
   return (
     <View style={{ position: "relative" }}>
       <Button mode="outlined" onPress={() => setShow(true)}>
-        {moment(time).format("h:mm a")}
+        {isInputDirty ? moment(time).format("h:mm a") : `${timeType} time`}
       </Button>
       {show && (
         <Modal

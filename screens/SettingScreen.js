@@ -25,7 +25,7 @@ const SettingScreen = (props) => {
       <View style={{ flex: 1, backgroundColor: "blue" }}>
         <View style={{ height: 20 }}></View>
         <View style={{ backgroundColor: "yellow", flex: 1 }}>
-          <ScrollView>
+          <View>
             <View style={styles.box1} />
             <View style={styles.box1} />
             <View style={styles.box1} />
@@ -36,7 +36,7 @@ const SettingScreen = (props) => {
               <Text>Last Item</Text>
             </View>
             <View style={{ marginBottom: 50 }}></View>
-          </ScrollView>
+          </View>
         </View>
         <View
           style={{

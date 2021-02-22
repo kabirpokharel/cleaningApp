@@ -11,7 +11,7 @@ import { SigninScreen, SignupScreen } from "./screens";
 
 const Stack = createStackNavigator();
 
-const NavigatePage = () => {
+const NavigatePage = (props) => {
   const authData = useSelector((state) => {
     // console.log("this is auth state in reudx form Nativate==> ", state);
     return state.auth;
