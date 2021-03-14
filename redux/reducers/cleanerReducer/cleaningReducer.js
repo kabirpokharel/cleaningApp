@@ -1,4 +1,5 @@
 import { roomsBlock, blocks } from "../../../dummyValues/roomsBlock";
+import moment from "moment";
 
 const initialState = {
   roomsLoading: true,
@@ -9,8 +10,23 @@ const initialState = {
   error: null,
 };
 
+const timeError = (diff) => {
+  return diff.hours() >= 0 && diff.minutes() >= 0 ? false : true;
+};
+const getTimeDiff = (start, end) => {
+  return moment.duration(moment(end, "HH:mm:ss a").diff(moment(start, "HH:mm:ss a")));
+};
+
 const updateTime = (payload, time) => {
   time[payload.inputId] = { ...time[payload.inputId], ...payload };
+  if (!time[payload.inputId].start || !time[payload.inputId].end) {
+    time[payload.inputId].status = "incomplete";
+  } else {
+    let diff = getTimeDiff(time[payload.inputId].start, time[payload.inputId].end);
+    if (!timeError(diff)) {
+      time[payload.inputId].status = `${diff.hours()}:${diff.minutes()}`;
+    } else time[payload.inputId].status = "diff error";
+  }
   return time;
 };
 

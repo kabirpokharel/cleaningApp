@@ -34,9 +34,7 @@ const SigninForm = (props) => {
       <Title style={styles.titleText}>Signin</Title>
       {!!authData.error && (
         <View>
-          <Text
-            style={{ color: colors.error }}
-          >{`this is error -> ${authData.error}`}</Text>
+          <Text style={{ color: colors.error }}>{`this is error -> ${authData.error}`}</Text>
         </View>
       )}
       <Formik
@@ -49,14 +47,7 @@ const SigninForm = (props) => {
           actions.resetForm();
         }}
       >
-        {({
-          handleSubmit,
-          handleChange,
-          handleBlur,
-          touched,
-          errors,
-          values,
-        }) => (
+        {({ handleSubmit, handleChange, handleBlur, touched, errors, values }) => (
           <View>
             <InputFieldAdaptor
               style={styles.input}

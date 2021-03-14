@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { View, Platform, Text, Modal, Dimensions } from "react-native";
+import { View, Platform, Text, StyleSheet, Modal, Dimensions } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { addShiftTime } from "../redux/actions";
 
 const isPlatformIos = Platform.OS === "ios";
@@ -30,9 +30,15 @@ const TimePicker = ({ inputId, timeType }) => {
 
   return (
     <View style={{ position: "relative" }}>
-      <Button mode="outlined" onPress={() => setShow(true)}>
-        {isInputDirty ? moment(time).format("h:mm a") : `${timeType} time`}
-      </Button>
+      <TouchableOpacity style={styles.timeInput} onPress={() => setShow(true)}>
+        {isInputDirty ? (
+          <Text style={styles.displayTime}>{moment(time).format("h:mm a")}</Text>
+        ) : (
+          <Text style={styles.displayTime}>{`${
+            timeType.charAt(0).toUpperCase() + timeType.slice(1)
+          } time`}</Text>
+        )}
+      </TouchableOpacity>
       {show && (
         <Modal
           animationType="slide"
@@ -62,11 +68,7 @@ const TimePicker = ({ inputId, timeType }) => {
               onChange={onChange}
             />
             {isPlatformIos && (
-              <Button
-                style={{ margin: 30 }}
-                mode="contained"
-                onPress={() => setShow(!true)}
-              >
+              <Button style={{ margin: 30 }} mode="contained" onPress={() => setShow(!true)}>
                 OK
               </Button>
             )}
@@ -77,3 +79,18 @@ const TimePicker = ({ inputId, timeType }) => {
   );
 };
 export default TimePicker;
+
+const styles = StyleSheet.create({
+  timeInput: {
+    height: 35,
+    width: "80%",
+    borderRadius: 4,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#F5F5F5",
+  },
+  displayTime: {
+    color: "grey",
+  },
+});
