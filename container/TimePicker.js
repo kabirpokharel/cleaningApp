@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { View, Platform, Text, StyleSheet, Modal, Dimensions } from "react-native";
+import { View, Platform, Text, StyleSheet, Modal, Alert, Dimensions } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { Button } from "react-native-paper";
+import { Button, useTheme } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { addShiftTime } from "../redux/actions";
@@ -19,6 +19,7 @@ const TimePicker = ({ inputId, timeType }) => {
   const [isInputDirty, setIsInputDirty] = useState(false);
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
+  const { colors } = useTheme();
 
   const onChange = (event, selectedTime) => {
     const inputTime = selectedTime || time;
@@ -27,10 +28,54 @@ const TimePicker = ({ inputId, timeType }) => {
     setIsInputDirty(true);
     dispatch(addShiftTime({ [timeType]: inputTime, inputId: inputId }));
   };
+  const TimePicker = () => (
+    <DateTimePicker
+      testID="dateTimePicker"
+      value={time}
+      mode={"time"}
+      is24Hour={!true}
+      display={isPlatformIos ? "spinner" : "default"}
+      onChange={onChange}
+    />
+  );
+  const TimeModalComponent = () => {
+    return isPlatformIos ? (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={show}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View
+          style={[
+            modalStyle(width, 40),
+            {
+              borderRadius: 4,
+              backgroundColor: "#ffffff",
+              position: "absolute",
+              bottom: 150,
+            },
+          ]}
+        >
+          <TimePicker />
+          <Button style={{ margin: 30 }} mode="contained" onPress={() => setShow(false)}>
+            OK
+          </Button>
+        </View>
+      </Modal>
+    ) : (
+      <TimePicker />
+    );
+  };
 
   return (
     <View style={{ position: "relative" }}>
-      <TouchableOpacity style={styles.timeInput} onPress={() => setShow(true)}>
+      <TouchableOpacity
+        style={[styles.timeInput, { borderColor: colors.primary }]}
+        onPress={() => setShow(true)}
+      >
         {isInputDirty ? (
           <Text style={styles.displayTime}>{moment(time).format("h:mm a")}</Text>
         ) : (
@@ -39,42 +84,7 @@ const TimePicker = ({ inputId, timeType }) => {
           } time`}</Text>
         )}
       </TouchableOpacity>
-      {show && (
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={show}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}
-        >
-          <View
-            style={[
-              modalStyle(width, 40),
-              {
-                borderRadius: 4,
-                backgroundColor: "#ffffff",
-                position: "absolute",
-                bottom: 150,
-              },
-            ]}
-          >
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={time}
-              mode={"time"}
-              is24Hour={!true}
-              display={isPlatformIos ? "spinner" : "default"}
-              onChange={onChange}
-            />
-            {isPlatformIos && (
-              <Button style={{ margin: 30 }} mode="contained" onPress={() => setShow(!true)}>
-                OK
-              </Button>
-            )}
-          </View>
-        </Modal>
-      )}
+      {show && <TimeModalComponent onChange={onChange} />}
     </View>
   );
 };
@@ -83,11 +93,11 @@ export default TimePicker;
 const styles = StyleSheet.create({
   timeInput: {
     height: 35,
-    width: "80%",
-    borderRadius: 4,
+    width: 110,
+    borderRadius: 17,
+    borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
     borderColor: "#F5F5F5",
   },
   displayTime: {

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { HomeScreen, CleaningLog, TimeLog } from "../../screens";
+import { HomeScreen, CleaningLog, TimeLog, SummaryScreen } from "../../screens";
 
 import { useTheme, Button } from "react-native-paper";
 
@@ -40,16 +40,13 @@ const HomeStack = ({ navigation }) => {
           ),
 
           headerRight: () => (
-            <Button
-              onPress={() => alert("This is a button!")}
-              title="Info"
-              color="pink"
-            />
+            <Button onPress={() => alert("This is a button!")} title="Info" color="pink" />
           ),
         }}
       />
       <Stack.Screen name="cleaningLog" component={CleaningLog} />
       <Stack.Screen name="timeLog" component={TimeLog} />
+      <Stack.Screen name="summaryScreen" component={SummaryScreen} />
     </Stack.Navigator>
   );
 };
