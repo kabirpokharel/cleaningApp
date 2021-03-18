@@ -18,73 +18,89 @@ const TimePicker = ({ inputId, timeType }) => {
   const [time, setTime] = useState(new Date().setHours(0, 0, 0, 0));
   const [isInputDirty, setIsInputDirty] = useState(false);
   const [show, setShow] = useState(false);
+  const cleaningDetail = useSelector((state) => {
+    //  console.log("this is state.cleaning====>", state.cleaning);
+    return state.cleaning;
+  });
+  const { time: reduxTimeArray } = cleaningDetail;
   const dispatch = useDispatch();
   const { colors } = useTheme();
 
   const onChange = (event, selectedTime) => {
     const inputTime = selectedTime || time;
     setShow(isPlatformIos);
+    dispatch(addShiftTime({ [timeType]: inputTime, inputId: inputId }));
     setTime(inputTime);
     setIsInputDirty(true);
-    dispatch(addShiftTime({ [timeType]: inputTime, inputId: inputId }));
-  };
-  const TimePicker = () => (
-    <DateTimePicker
-      testID="dateTimePicker"
-      value={time}
-      mode={"time"}
-      is24Hour={!true}
-      display={isPlatformIos ? "spinner" : "default"}
-      onChange={onChange}
-    />
-  );
-  const TimeModalComponent = () => {
-    return isPlatformIos ? (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={show}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
-      >
-        <View
-          style={[
-            modalStyle(width, 40),
-            {
-              borderRadius: 4,
-              backgroundColor: "#ffffff",
-              position: "absolute",
-              bottom: 150,
-            },
-          ]}
-        >
-          <TimePicker />
-          <Button style={{ margin: 30 }} mode="contained" onPress={() => setShow(false)}>
-            OK
-          </Button>
-        </View>
-      </Modal>
-    ) : (
-      <TimePicker />
-    );
   };
 
   return (
     <View style={{ position: "relative" }}>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={time}
+          mode={"time"}
+          is24Hour={!true}
+          display={isPlatformIos ? "spinner" : "default"}
+          onChange={onChange}
+        />
+      )}
+      {/* <TouchableOpacity onPress={() => setShow(!show)}>
+        <Text>CLick</Text>
+      </TouchableOpacity> */}
       <TouchableOpacity
         style={[styles.timeInput, { borderColor: colors.primary }]}
         onPress={() => setShow(true)}
       >
         {isInputDirty ? (
-          <Text style={styles.displayTime}>{moment(time).format("h:mm a")}</Text>
+          <Text style={styles.displayTime}>
+            {moment(reduxTimeArray[inputId][timeType] || time).format("h:mm a")}
+            {/* {moment(time).format("h:mm a")} */}
+          </Text>
         ) : (
           <Text style={styles.displayTime}>{`${
             timeType.charAt(0).toUpperCase() + timeType.slice(1)
           } time`}</Text>
         )}
       </TouchableOpacity>
-      {show && <TimeModalComponent onChange={onChange} />}
+
+      {/* {show && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={show}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View
+            style={[
+              modalStyle(width, 40),
+              {
+                borderRadius: 4,
+                backgroundColor: "#ffffff",
+                position: "absolute",
+                bottom: 150,
+              },
+            ]}
+          >
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={time}
+              mode={"time"}
+              is24Hour={!true}
+              display={isPlatformIos ? "spinner" : "default"}
+              onChange={onChange}
+            />
+            {isPlatformIos && (
+              <Button style={{ margin: 30 }} mode="contained" onPress={() => setShow(!true)}>
+                OK
+              </Button>
+            )}
+          </View>
+        </Modal>
+      )} */}
     </View>
   );
 };

@@ -5,6 +5,7 @@ import {
   ROOM_REMOVED,
   COMMON_AREA_CLEANED,
   ADD_SHIFT_TIME,
+  DELETE_TIMELOG,
 } from "./actionsConstant";
 
 export const signinUser = (enteredEmaiPassword) => {
@@ -46,5 +47,11 @@ export const addShiftTime = (time) => {
   return {
     type: ADD_SHIFT_TIME,
     payload: time,
+  };
+};
+export const deleteTimeLog = (logIndex) => {
+  return {
+    type: DELETE_TIMELOG,
+    payload: logIndex,
   };
 };

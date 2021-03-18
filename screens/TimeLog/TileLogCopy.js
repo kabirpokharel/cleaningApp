@@ -124,9 +124,9 @@ const TimeLog = (props) => {
               position: "absolute",
               height: screenDimension.height,
               width: screenDimension.width,
-              opacity: 0.3,
-              backgroundColor: "#000",
-              // backgroundColor: "blue", // covers all accept footer button and
+              opacity: 0.8,
+              // backgroundColor: "#000",
+              backgroundColor: "blue", // covers all accept footer button and
               zIndex: 1,
             }}
           >
@@ -163,7 +163,7 @@ const TimeLog = (props) => {
                       left: -10,
                       right: -10,
                       bottom: -10,
-                      opacity: 0.3,
+                      opacity: 0.5,
                       backgroundColor: "#000",
                       zIndex: 1,
                     }}
