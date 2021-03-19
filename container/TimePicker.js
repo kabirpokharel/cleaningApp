@@ -36,7 +36,7 @@ const TimePicker = ({ inputId, timeType }) => {
 
   return (
     <View style={{ position: "relative" }}>
-      {show && (
+      {show && !isPlatformIos && (
         <DateTimePicker
           testID="dateTimePicker"
           value={time}
@@ -65,7 +65,7 @@ const TimePicker = ({ inputId, timeType }) => {
         )}
       </TouchableOpacity>
 
-      {/* {show && (
+      {show && isPlatformIos && (
         <Modal
           animationType="slide"
           transparent={true}
@@ -100,7 +100,7 @@ const TimePicker = ({ inputId, timeType }) => {
             )}
           </View>
         </Modal>
-      )} */}
+      )}
     </View>
   );
 };

@@ -75,6 +75,7 @@ const TimeLogFeedback = ({ feedbackString, defaultColor, errorColor }) => {
 const TimeLog = (props) => {
   const [timeSetCounter, setTimeSetCounter] = useState([null]);
   const [overlay, setOverlay] = useState(false);
+  const [timeEditPopup, setTimeEditpopup] = useState(null);
   const dispatch = useDispatch();
   const { colors, screenDimension } = useTheme();
   const { navigation } = props;
@@ -180,22 +181,27 @@ const TimeLog = (props) => {
                 <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                   <Subheading style={{ color: "grey" }}>Time log no.{inputId + 1}</Subheading>
                   <TouchableOpacity
-                    onPress={() => setOverlay(true)}
+                    onPress={() => {
+                      setOverlay(true);
+                      setTimeEditpopup(inputId);
+                    }}
                     style={{ height: 40, width: 40, alignItems: "center" }}
                     // onPress={() => setShow(!show)}
                   >
                     <AntDesign name="ellipsis1" size={24} color="#00000080" />
                   </TouchableOpacity>
                 </View>
-                {overlay && (
+                {overlay && timeEditPopup == inputId && (
                   <View
                     style={{
-                      width: 200,
+                      width: 150,
                       position: "absolute",
                       backgroundColor: "#fff",
+                      borderRadius: 4,
+                      // padding: 5,
                       zIndex: 3,
-                      right: 5,
-                      top: 5,
+                      right: -5,
+                      top: -5,
                       shadowColor: "#000",
                       shadowOffset: {
                         width: 0,
@@ -207,35 +213,42 @@ const TimeLog = (props) => {
                       elevation: 5,
                     }}
                   >
-                    {inputId !== 0 && (
-                      <TouchableOpacity
-                        style={{ height: 40 }}
-                        onPress={() => {
-                          setTimeSetCounter(
-                            timeSetCounter.filter((timeCount, id) => {
-                              if (id === inputId) {
-                                console.log(
-                                  `see these value ............timeCount: ${inputId} and id: ${id}`
-                                );
-                              }
-                              return id !== inputId;
-                            })
-                          );
-                          dispatch(deleteTimeLog(inputId));
-                        }}
-                      >
-                        <Text>Delete</Text>
-                      </TouchableOpacity>
-                    )}
                     <TouchableOpacity
-                      style={{ height: 40 }}
+                      disabled={timeSetCounter.length == 1}
+                      style={{
+                        padding: 8,
+                        justifyContent: "center",
+                      }}
+                      onPress={() => {
+                        setTimeSetCounter(timeSetCounter.filter((timeCount, id) => id !== inputId));
+                        setOverlay(false);
+                        dispatch(deleteTimeLog(inputId));
+                      }}
+                    >
+                      <Text
+                        style={{ color: timeSetCounter.length == 1 ? colors.disabled : "#000000" }}
+                      >
+                        Delete
+                      </Text>
+                    </TouchableOpacity>
+                    <View
+                      style={{
+                        marginHorizontal: 5,
+                        borderBottomColor: "#00000010",
+                        borderBottomWidth: 1,
+                      }}
+                    />
+                    <TouchableOpacity
+                      style={{
+                        padding: 8,
+                        justifyContent: "center",
+                      }}
                       onPress={() => {
                         alert("watnt to Reset??");
                       }}
                     >
                       <Text>Reset</Text>
                     </TouchableOpacity>
-                    <Text>3</Text>
                   </View>
                 )}
                 <View style={{ flexDirection: "row", height: 40 }}>
