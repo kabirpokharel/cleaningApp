@@ -53,7 +53,8 @@ const TimePicker = ({ inputId, timeType }) => {
         style={[styles.timeInput, { borderColor: colors.primary }]}
         onPress={() => setShow(true)}
       >
-        {isInputDirty ? (
+        {isInputDirty ||
+        (!!reduxTimeArray[inputId].status && reduxTimeArray[inputId].status.includes(":")) ? (
           <Text style={styles.displayTime}>
             {moment(reduxTimeArray[inputId][timeType] || time).format("h:mm a")}
             {/* {moment(time).format("h:mm a")} */}

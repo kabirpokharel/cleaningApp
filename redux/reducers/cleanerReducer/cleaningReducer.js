@@ -19,6 +19,10 @@ const getTimeDiff = (start, end) => {
 const deleteTimeLog = (index, time) => {
   return time.filter((timeSet, id) => index !== id);
 };
+const initilizeTimeLog = (index, time) => {
+  time[index] = { ...time[index], inputId: index };
+  return time;
+};
 const updateTime = (payload, time) => {
   time[payload.inputId] = { ...time[payload.inputId], ...payload };
   if (!time[payload.inputId].start || !time[payload.inputId].end) {
@@ -72,6 +76,13 @@ const cleaningDetail = (state = initialState, action) => {
         roomsLoading: false,
         error: null,
       };
+    case "INITILIZE_TIME_LOG": {
+      const updatedTime = initilizeTimeLog(payload, [...state.time]);
+      return {
+        ...state,
+        time: updatedTime,
+      };
+    }
     case "ADD_SHIFT_TIME": {
       const updatedTime = updateTime(payload, [...state.time]);
       return {

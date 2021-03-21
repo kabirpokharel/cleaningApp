@@ -6,6 +6,7 @@ import {
   COMMON_AREA_CLEANED,
   ADD_SHIFT_TIME,
   DELETE_TIMELOG,
+  INITILIZE_TIME_LOG,
 } from "./actionsConstant";
 
 export const signinUser = (enteredEmaiPassword) => {
@@ -43,6 +44,13 @@ export const commonAreaCleaned = (boolStatus) => {
   };
 };
 
+export const initilizeTimeLog = (logIndex) => {
+  console.log("reached initilizeTimeLog action creator");
+  return {
+    type: INITILIZE_TIME_LOG,
+    payload: logIndex,
+  };
+};
 export const addShiftTime = (time) => {
   return {
     type: ADD_SHIFT_TIME,

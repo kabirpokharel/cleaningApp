@@ -3,7 +3,7 @@ import { View, Platform, Text, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import { Button, useTheme, Surface, Title, Subheading } from "react-native-paper";
-import { deleteTimeLog } from "../../redux/actions";
+import { deleteTimeLog, initilizeTimeLog } from "../../redux/actions";
 import TimePicker from "../../container/TimePicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { FontAwesome } from "@expo/vector-icons";
@@ -13,24 +13,29 @@ import styles from "./timeLogStyle";
 
 const isPlatformIos = Platform.OS === "ios";
 
-// const timeError = (diff) => {
-//   return diff.hours() >= 0 && diff.minutes() >= 0 ? false : true;
-// };
-// const getTimeDiff = (start, end) => {
-//   return moment.duration(moment(end, "HH:mm:ss a").diff(moment(start, "HH:mm:ss a")));
-// };
 const checkTimeLogHasError = (feedbackString) => {
   return !feedbackString.includes(":");
 };
 
-const timeLogErrorCheck = (reduxTimeArray, timeSetCounter) => {
+const timeLogErrorCheck = (reduxTimeArray) => {
   let result = "";
+  const emptyLog = reduxTimeArray.find((time) => !time.status); //only one time log can have empty status at a time, it's after initilization and creating new log
   let errorsArray = reduxTimeArray.filter(
-    (time) => checkTimeLogHasError(time.status) && !!time.status
+    // filter out all the array with error (first check it status is undefined or empty) if not than check for status string
+    (time) => {
+      if (!time.status) {
+        return false;
+      } else checkTimeLogHasError(time.status);
+    }
   );
-  if (!reduxTimeArray.length || timeSetCounter.length != reduxTimeArray.length) {
+  // ............................................s*******************start here onward
+  if (!!emptyLog) {
     result = "incomplete";
-  } else if (!!errorsArray.length) {
+  }
+  // if (!reduxTimeArray.length || timeSetCounter.length != reduxTimeArray.length) {
+  //   result = "incomplete";
+  // }
+  else if (!!errorsArray.length) {
     result = "other errors";
   } else {
     result = "no error";
@@ -38,8 +43,9 @@ const timeLogErrorCheck = (reduxTimeArray, timeSetCounter) => {
   return result;
 };
 
-const continueButtonAction = (reduxTimeArray, timeSetCounter, navigation) => {
-  let errorCheckResult = timeLogErrorCheck(reduxTimeArray, timeSetCounter);
+// const continueButtonAction = (reduxTimeArray, timeSetCounter, navigation) => {
+const continueButtonAction = (reduxTimeArray, navigation) => {
+  let errorCheckResult = timeLogErrorCheck(reduxTimeArray);
   switch (errorCheckResult) {
     case "incomplete":
       alert("Enter start and end time before proceeding");
@@ -75,11 +81,15 @@ const TimeLogFeedback = ({ feedbackString, defaultColor, errorColor }) => {
 const TimeLog = (props) => {
   const [timeSetCounter, setTimeSetCounter] = useState([null]);
   const [overlay, setOverlay] = useState(false);
-  const [timeEditPopup, setTimeEditpopup] = useState(null);
+  const [showTimeEditPopup, setShowTimeEditpopup] = useState(null);
   const dispatch = useDispatch();
   const { colors, screenDimension } = useTheme();
   const { navigation } = props;
   console.log("see this props check if it has theme in it===>", props);
+
+  useEffect(() => {
+    dispatch(initilizeTimeLog(0));
+  }, []);
 
   const cleaningDetail = useSelector((state) => {
     console.log("this is state.cleaning====>", state.cleaning);
@@ -118,6 +128,10 @@ const TimeLog = (props) => {
 
   return (
     <View style={[styles.containerWrapper, { flex: 1 }]}>
+      {console.log(
+        "see this is value of redux time object after useEffect==============================>",
+        typeof reduxTimeArray
+      )}
       <View style={{ flex: 1 }}>
         {overlay && (
           <View
@@ -127,7 +141,6 @@ const TimeLog = (props) => {
               width: screenDimension.width,
               opacity: 0.3,
               backgroundColor: "#000",
-              // backgroundColor: "blue", // covers all accept footer button and
               zIndex: 1,
             }}
           >
@@ -140,7 +153,8 @@ const TimeLog = (props) => {
             />
           </View>
         )}
-        {timeSetCounter.map((val, inputId) => (
+        {/* {(!!reduxTimeArray.length ? reduxTimeArray : timeSetCounter).map((val, inputId) => ( */}
+        {reduxTimeArray.map((val, inputId) => (
           <React.Fragment key={inputId}>
             <Surface
               key={inputId}
@@ -183,7 +197,7 @@ const TimeLog = (props) => {
                   <TouchableOpacity
                     onPress={() => {
                       setOverlay(true);
-                      setTimeEditpopup(inputId);
+                      setShowTimeEditpopup(inputId);
                     }}
                     style={{ height: 40, width: 40, alignItems: "center" }}
                     // onPress={() => setShow(!show)}
@@ -191,7 +205,7 @@ const TimeLog = (props) => {
                     <AntDesign name="ellipsis1" size={24} color="#00000080" />
                   </TouchableOpacity>
                 </View>
-                {overlay && timeEditPopup == inputId && (
+                {overlay && showTimeEditPopup == inputId && (
                   <View
                     style={{
                       width: 150,
@@ -214,19 +228,21 @@ const TimeLog = (props) => {
                     }}
                   >
                     <TouchableOpacity
-                      disabled={timeSetCounter.length == 1}
+                      disabled={reduxTimeArray.length == 1}
                       style={{
                         padding: 8,
                         justifyContent: "center",
                       }}
                       onPress={() => {
-                        setTimeSetCounter(timeSetCounter.filter((timeCount, id) => id !== inputId));
+                        // setTimeSetCounter(timeSetCounter.filter((timeCount, id) => id !== inputId));
                         setOverlay(false);
                         dispatch(deleteTimeLog(inputId));
                       }}
                     >
                       <Text
-                        style={{ color: timeSetCounter.length == 1 ? colors.disabled : "#000000" }}
+                        style={{
+                          color: reduxTimeArray.length == 1 ? colors.disabled : "#000000",
+                        }}
                       >
                         Delete
                       </Text>
@@ -260,29 +276,33 @@ const TimeLog = (props) => {
                   </View>
                 </View>
                 <View style={{ height: 20 }}>
-                  {!!reduxTimeArray.length && !!reduxTimeArray[inputId] && (
-                    <TimeLogFeedback
-                      feedbackString={reduxTimeArray[inputId].status}
-                      defaultColor={"grey"}
-                      errorColor={colors.error}
-                    />
-                  )}
+                  {!!reduxTimeArray.length &&
+                    reduxTimeArray[inputId] &&
+                    Object.keys(reduxTimeArray[inputId]).length > 1 && (
+                      <TimeLogFeedback
+                        feedbackString={reduxTimeArray[inputId].status}
+                        defaultColor={"grey"}
+                        errorColor={colors.error}
+                      />
+                    )}
                 </View>
               </View>
             </Surface>
           </React.Fragment>
         ))}
         <AddCardButton
-          disabled={!(timeLogErrorCheck(reduxTimeArray, timeSetCounter) === "no error")}
+          // disabled={!(timeLogErrorCheck(reduxTimeArray, timeSetCounter) === "no error")}
+          disabled={!(timeLogErrorCheck(reduxTimeArray) === "no error")}
           onPress={() => {
-            setTimeSetCounter([...timeSetCounter, null]);
+            dispatch(initilizeTimeLog(reduxTimeArray.length));
+            // setTimeSetCounter([...timeSetCounter, null]);
           }}
           activeColor={colors.primary}
           disableColor="grey"
         />
       </View>
       <TouchableOpacity
-        onPress={() => continueButtonAction(reduxTimeArray, timeSetCounter, navigation)}
+        onPress={() => continueButtonAction(reduxTimeArray, navigation)}
         disabled={overlay}
         style={{
           backgroundColor: "red",
