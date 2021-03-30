@@ -6,6 +6,26 @@ import { roomsBlock, blocks } from "../../dummyValues/roomsBlock";
 import { loadRooms, roomCleaned } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
+const capitalizeEachWord = (text) => {
+  return text.replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase());
+};
+
+const camelCaseBreaker = (text) => {
+  const regex = /([a-z])([A-Z])/g;
+  const spaces = text.replace(regex, "$1 $2");
+  const lowercase = spaces.toLowerCase();
+  return lowercase;
+};
+
+const blockNameFormatter = (blockName) => {
+  if (/[A-Z]/.test(blockName)) {
+    const capatilizedSplitString = capitalizeEachWord(camelCaseBreaker(blockName));
+    return capatilizedSplitString;
+  } else {
+    return capitalizeEachWord(blockName);
+  }
+};
+
 export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
   const dispatch = useDispatch();
   const renderItem = ({ item }) => {
@@ -13,8 +33,10 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
     return (
       <TouchableOpacity
         style={{
-          padding: SIZES.padding,
-          paddingBottom: SIZES.padding * 2,
+          height: 112,
+          width: 70,
+          // padding: SIZES.padding,
+          // paddingBottom: SIZES.padding * 2,
           backgroundColor: selectedBlock?.id == item.id ? COLORS.primary : COLORS.white,
           borderRadius: SIZES.radius,
           alignItems: "center",
@@ -58,7 +80,6 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
             ]}
           />
         </View>
-
         <Text
           style={{
             marginTop: SIZES.padding,
@@ -66,7 +87,7 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
             ...FONTS.body5,
           }}
         >
-          {item.blockName}
+          {blockNameFormatter(item.blockName)}
         </Text>
       </TouchableOpacity>
     );

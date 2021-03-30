@@ -9,6 +9,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import styles from "./timeLogStyle";
+import commonStyle from "../style";
 import { COLORS, SIZES, FONTS } from "../../constants/theme";
 
 const isPlatformIos = Platform.OS === "ios";
@@ -124,6 +125,10 @@ const TimeLog = (props) => {
 
   return (
     <View style={[styles.containerWrapper, { flex: 1 }]}>
+      <View style={{ marginTop: 10 }}>
+        <Text style={[commonStyle.titleText, FONTS.body2]}>Set time</Text>
+        <Text style={[commonStyle.descriptionText, FONTS.body5]}>Enter start and end time</Text>
+      </View>
       <View style={{ flex: 1 }}>
         {overlay && (
           <View
@@ -145,6 +150,7 @@ const TimeLog = (props) => {
             />
           </View>
         )}
+
         {reduxTimeArray.map((val, inputId) => (
           <React.Fragment key={inputId}>
             <Surface

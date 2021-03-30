@@ -9,8 +9,9 @@ import {
   FlatList,
 } from "react-native";
 
-let SCREEN_WIDTH = Dimensions.get("window").width;
-let SCREEN_HEIGHT = Dimensions.get("window").height;
+import { SIZES } from "../constants/theme";
+// let SIZES.width = Dimensions.get("window").width;
+// let SCREEN_HEIGHT = Dimensions.get("window").height;
 
 const ElementComponent = ({
   index,
@@ -24,9 +25,9 @@ const ElementComponent = ({
   const PAGE_HORIZONTAL_MARGIN = 20;
 
   const gutterWidthRatio = 0.2 / numColumns;
-  const totalGutterWidth = SCREEN_WIDTH * (numColumns - 1) * gutterWidthRatio;
+  const totalGutterWidth = SIZES.width * (numColumns - 1) * gutterWidthRatio;
   const singleGutterWidth = totalGutterWidth / (numColumns - 1);
-  const cardWidth = (SCREEN_WIDTH - 2 * PAGE_HORIZONTAL_MARGIN - totalGutterWidth) / numColumns;
+  const cardWidth = (SIZES.width - 2 * PAGE_HORIZONTAL_MARGIN - totalGutterWidth) / numColumns;
 
   const marginRight = (index + 1) % numColumns == 0 ? 0 : singleGutterWidth;
   return (
@@ -86,25 +87,3 @@ const RowElements = ({
 };
 
 export default RowElements;
-
-const styles = StyleSheet.create({
-  titleText: {
-    marginBottom: 15,
-    fontSize: 25,
-  },
-  blockContainerWrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  blockWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    // marginVertical: singleGutterWidth / 2, //margin doesn't collapse in react native
-    // marginRight: singleGutterWidth,
-    // height: cardWidth,
-    // width: cardWidth,
-    backgroundColor: "pink",
-    borderRadius: 4,
-  },
-});

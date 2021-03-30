@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet, SafeAreaView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import commonStyle from "../style";
 import styles from "./cleaningLogStyle";
 import RowElements from "../../component/RowElements";
 import { roomsBlock, blocks } from "../../dummyValues/roomsBlock";
@@ -17,8 +18,6 @@ const CleaningLog = (props) => {
   const { rooms, setRooms } = useState([null]);
   const { navigation, selectedBlock } = props;
   const { id, blockName } = selectedBlock;
-
-  console.log("see the value of selectedBlock============>", selectedBlock);
 
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => {
@@ -44,10 +43,11 @@ const CleaningLog = (props) => {
   };
   return (
     <View style={[styles.containerWrapper, { flex: 1 }]}>
-      <View style={{ marginTop: 30 }}>
-        <Text style={[styles.titleText, FONTS.body2]}>Select Room</Text>
+      <View style={{ marginTop: 10 }}>
+        <Text style={[commonStyle.titleText, FONTS.body2]}>Rooms</Text>
+        <Text style={[commonStyle.descriptionText, FONTS.body5]}>Select cleaned rooms</Text>
       </View>
-      <View style={{ flex: 1, marginHorizontal: 20, paddingVertical: SIZES.padding * 2 }}>
+      <View style={{ flex: 1, marginHorizontal: 20, paddingVertical: SIZES.padding * 2 - 6 }}>
         <RowElements
           item={cleaningDetail.rooms}
           numColumns={NUM_COL}
@@ -69,6 +69,7 @@ const CleaningLog = (props) => {
         >
           <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>Continu</Text>
         </TouchableOpacity> */}
+        <View style={{ marginBottom: 50 }} />
       </View>
 
       {/* {console.log("cleaning details===>", cleaningDetail)}
