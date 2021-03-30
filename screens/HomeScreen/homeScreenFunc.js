@@ -1,4 +1,5 @@
-const blockStyle = ({ blockName }) => {
+const blockStyle = (blockName) => {
+  console.log("see what i get for blockname");
   switch (blockName) {
     case "green":
       return { backgroundColor: "#05c46b" };

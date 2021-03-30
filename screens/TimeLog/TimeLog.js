@@ -6,10 +6,10 @@ import { Button, useTheme, Surface, Title, Subheading } from "react-native-paper
 import { deleteTimeLog, initilizeTimeLog } from "../../redux/actions";
 import TimePicker from "../../container/TimePicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { FontAwesome } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import styles from "./timeLogStyle";
+import { COLORS, SIZES, FONTS } from "../../constants/theme";
 
 const isPlatformIos = Platform.OS === "ios";
 
@@ -79,22 +79,18 @@ const TimeLogFeedback = ({ feedbackString, defaultColor, errorColor }) => {
   );
 };
 const TimeLog = (props) => {
-  const [timeSetCounter, setTimeSetCounter] = useState([null]);
   const [overlay, setOverlay] = useState(false);
   const [showTimeEditPopup, setShowTimeEditpopup] = useState(null);
+
   const dispatch = useDispatch();
-  const { colors, screenDimension } = useTheme();
   const { navigation } = props;
-  console.log("see this props check if it has theme in it===>", props);
 
   useEffect(() => {
     dispatch(initilizeTimeLog(0));
   }, []);
 
-  const cleaningDetail = useSelector((state) => {
-    console.log("this is state.cleaning====>", state.cleaning);
-    return state.cleaning;
-  });
+  const cleaningDetail = useSelector((state) => state.cleaning);
+
   const { time: reduxTimeArray } = cleaningDetail;
 
   const AddCardButton = ({ disabled, activeColor, disableColor, onPress }) => {
@@ -128,17 +124,13 @@ const TimeLog = (props) => {
 
   return (
     <View style={[styles.containerWrapper, { flex: 1 }]}>
-      {console.log(
-        "see this is value of redux time object after useEffect==============================>",
-        typeof reduxTimeArray
-      )}
       <View style={{ flex: 1 }}>
         {overlay && (
           <View
             style={{
               position: "absolute",
-              height: screenDimension.height,
-              width: screenDimension.width,
+              height: SIZES.height,
+              width: SIZES.width,
               opacity: 0.3,
               backgroundColor: "#000",
               zIndex: 1,
@@ -147,13 +139,12 @@ const TimeLog = (props) => {
             <TouchableOpacity
               onPress={() => setOverlay(false)}
               style={{
-                height: screenDimension.height,
-                width: screenDimension.width,
+                height: SIZES.height,
+                width: SIZES.width,
               }}
             />
           </View>
         )}
-        {/* {(!!reduxTimeArray.length ? reduxTimeArray : timeSetCounter).map((val, inputId) => ( */}
         {reduxTimeArray.map((val, inputId) => (
           <React.Fragment key={inputId}>
             <Surface
@@ -186,8 +177,8 @@ const TimeLog = (props) => {
                     <TouchableOpacity
                       onPress={() => setOverlay(false)}
                       style={{
-                        height: screenDimension.height,
-                        width: screenDimension.width,
+                        height: SIZES.height,
+                        width: SIZES.width,
                       }}
                     />
                   </View>
@@ -200,7 +191,6 @@ const TimeLog = (props) => {
                       setShowTimeEditpopup(inputId);
                     }}
                     style={{ height: 40, width: 40, alignItems: "center" }}
-                    // onPress={() => setShow(!show)}
                   >
                     <AntDesign name="ellipsis1" size={24} color="#00000080" />
                   </TouchableOpacity>
@@ -230,19 +220,20 @@ const TimeLog = (props) => {
                     <TouchableOpacity
                       disabled={reduxTimeArray.length == 1}
                       style={{
-                        padding: 8,
+                        paddingHorizontal: 8,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                       onPress={() => {
-                        // setTimeSetCounter(timeSetCounter.filter((timeCount, id) => id !== inputId));
                         setOverlay(false);
                         dispatch(deleteTimeLog(inputId));
                       }}
                     >
                       <Text
-                        style={{
-                          color: reduxTimeArray.length == 1 ? colors.disabled : "#000000",
-                        }}
+                        style={[
+                          FONTS.body4,
+                          { color: reduxTimeArray.length == 1 ? COLORS.light1 : COLORS.dark1 },
+                        ]}
                       >
                         Delete
                       </Text>
@@ -250,7 +241,7 @@ const TimeLog = (props) => {
                     <View
                       style={{
                         marginHorizontal: 5,
-                        borderBottomColor: "#00000010",
+                        borderBottomColor: COLORS.light1,
                         borderBottomWidth: 1,
                       }}
                     />
@@ -282,7 +273,7 @@ const TimeLog = (props) => {
                       <TimeLogFeedback
                         feedbackString={reduxTimeArray[inputId].status}
                         defaultColor={"grey"}
-                        errorColor={colors.error}
+                        errorColor={COLORS.error}
                       />
                     )}
                 </View>
@@ -297,15 +288,15 @@ const TimeLog = (props) => {
             dispatch(initilizeTimeLog(reduxTimeArray.length));
             // setTimeSetCounter([...timeSetCounter, null]);
           }}
-          activeColor={colors.primary}
-          disableColor="grey"
+          activeColor={COLORS.primary}
+          disableColor={COLORS.light1}
         />
       </View>
       <TouchableOpacity
         onPress={() => continueButtonAction(reduxTimeArray, navigation)}
         disabled={overlay}
         style={{
-          backgroundColor: "red",
+          backgroundColor: COLORS.primary,
           alignItems: "center",
           justifyContent: "center",
           height: 50,

@@ -26,8 +26,7 @@ const ElementComponent = ({
   const gutterWidthRatio = 0.2 / numColumns;
   const totalGutterWidth = SCREEN_WIDTH * (numColumns - 1) * gutterWidthRatio;
   const singleGutterWidth = totalGutterWidth / (numColumns - 1);
-  const cardWidth =
-    (SCREEN_WIDTH - 2 * PAGE_HORIZONTAL_MARGIN - totalGutterWidth) / numColumns;
+  const cardWidth = (SCREEN_WIDTH - 2 * PAGE_HORIZONTAL_MARGIN - totalGutterWidth) / numColumns;
 
   const marginRight = (index + 1) % numColumns == 0 ? 0 : singleGutterWidth;
   return (

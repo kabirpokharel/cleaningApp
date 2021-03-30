@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet, SafeAreaView } from "react-native";
-import { useTheme } from "react-native-paper";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./summaryScreenStyle";
 import RowElements from "../../component/RowElements";
@@ -19,17 +18,7 @@ const SummaryScreen = (props) => {
         <View style={{ flex: 1 }}>
           <Text>Hey</Text>
         </View>
-        {/* <RowElements
-          item={cleaningDetail.rooms}
-          numColumns={NUM_COL}
-          round
-          ElementChildren={ElementChildren}
-          onPress={roomClicked}
-          onLongPress={roomLongPress}
-          extraStyle={roomButtonStyle}
-        /> */}
         <TouchableOpacity
-          //   onPress={() => navigation.navigate("timeLog")}
           style={{
             backgroundColor: "red",
             alignItems: "center",

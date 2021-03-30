@@ -1,9 +1,12 @@
 import { StyleSheet } from "react-native";
+import { SIZES, COLORS, FONTS } from "../../constants/theme";
 
 export default StyleSheet.create({
   titleText: {
-    marginBottom: 15,
-    fontSize: 25,
+    // marginBottom: 15,
+    paddingHorizontal: 20,
+    // letterSpacing: 1,
+    color: COLORS.primary1,
   },
   blockContainerWrapper: {
     flexDirection: "row",

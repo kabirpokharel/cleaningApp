@@ -6,8 +6,6 @@ import { DrawerItemList } from "@react-navigation/drawer";
 
 import { Ionicons } from "@expo/vector-icons";
 
-// import { Drawer } from "react-native-paper";
-
 // import colors from "../../assets/colors";
 
 const CustomDrawer = (props) => {

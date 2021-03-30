@@ -5,8 +5,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { HomeScreen, CleaningLog, TimeLog, SummaryScreen } from "../../screens";
 
-import { useTheme, Button } from "react-native-paper";
-
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
@@ -40,11 +38,13 @@ const HomeStack = ({ navigation }) => {
           ),
 
           headerRight: () => (
-            <Button onPress={() => alert("This is a button!")} title="Info" color="pink" />
+            <View>
+              <Text>Right Component</Text>
+            </View>
           ),
         }}
       />
-      <Stack.Screen name="cleaningLog" component={CleaningLog} />
+      {/* <Stack.Screen name="cleaningLog" component={CleaningLog} /> */}
       <Stack.Screen name="timeLog" component={TimeLog} />
       <Stack.Screen name="summaryScreen" component={SummaryScreen} />
     </Stack.Navigator>

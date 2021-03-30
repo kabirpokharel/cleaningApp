@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import moment from "moment";
 import { View, Platform, Text, StyleSheet, Modal, Alert, Dimensions } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, useTheme } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { addShiftTime } from "../redux/actions";
+import { COLORS, SIZES, FONTS } from "../constants/theme";
 
 const isPlatformIos = Platform.OS === "ios";
 const width = Dimensions.get("window").width;
@@ -24,7 +24,6 @@ const TimePicker = ({ inputId, timeType }) => {
   });
   const { time: reduxTimeArray } = cleaningDetail;
   const dispatch = useDispatch();
-  const { colors } = useTheme();
 
   const onChange = (event, selectedTime) => {
     const inputTime = selectedTime || time;
@@ -50,7 +49,7 @@ const TimePicker = ({ inputId, timeType }) => {
         <Text>CLick</Text>
       </TouchableOpacity> */}
       <TouchableOpacity
-        style={[styles.timeInput, { borderColor: colors.primary }]}
+        style={[styles.timeInput, { borderColor: COLORS.primary }]}
         onPress={() => setShow(true)}
       >
         {isInputDirty ||
@@ -80,7 +79,7 @@ const TimePicker = ({ inputId, timeType }) => {
               modalStyle(width, 40),
               {
                 borderRadius: 4,
-                backgroundColor: "#ffffff",
+                backgroundColor: COLORS.white,
                 position: "absolute",
                 bottom: 150,
               },
@@ -95,9 +94,19 @@ const TimePicker = ({ inputId, timeType }) => {
               onChange={onChange}
             />
             {isPlatformIos && (
-              <Button style={{ margin: 30 }} mode="contained" onPress={() => setShow(!true)}>
-                OK
-              </Button>
+              <TouchableOpacity
+                style={{
+                  margin: 30,
+                  padding: 10,
+                  borderRadius: 4,
+                  alignItems: "center",
+                  backgroundColor: COLORS.primary,
+                }}
+                mode="contained"
+                onPress={() => setShow(!true)}
+              >
+                <Text style={{ color: COLORS.white }}>OK</Text>
+              </TouchableOpacity>
             )}
           </View>
         </Modal>
@@ -115,7 +124,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderColor: "#F5F5F5",
+    borderColor: COLORS.primary,
   },
   displayTime: {
     color: "grey",

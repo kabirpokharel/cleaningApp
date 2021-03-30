@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import HomeStack from "./navigation/homeStack";
 import DrawerStack from "./navigation/drawerStack";
 import { SigninScreen, SignupScreen } from "./screens";
+import { COLORS, SIZES, FONTS } from "./constants/theme";
 
 const Stack = createStackNavigator();
 
@@ -35,7 +36,7 @@ export default NavigatePage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.white,
     alignItems: "center",
     justifyContent: "center",
   },

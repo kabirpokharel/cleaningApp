@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { TextInput as TextInputAdaptor } from "react-native-paper";
 
 const InputFieldAdaptor = ({ style, touched, error, ...rest }) => {
   console.log("rest==>", rest);

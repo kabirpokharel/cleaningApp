@@ -4,12 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { signinUser } from "../redux/actions";
-import {
-  TextInput as TextInputAdaptor,
-  Button as ButtonAdaptor,
-  Title,
-  useTheme,
-} from "react-native-paper";
 import InputFieldAdaptor from "../component/InputFieldAdaptor";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 
@@ -22,7 +16,6 @@ const reviewSchema = yup.object({
 });
 
 const SigninForm = (props) => {
-  const { colors } = useTheme();
   const dispatch = useDispatch();
   const authData = useSelector((state) => {
     // console.log("this is auth state in reudx==> ", state);
@@ -31,7 +24,7 @@ const SigninForm = (props) => {
 
   return (
     <View style={styles.containerWrapper}>
-      <Title style={styles.titleText}>Signin</Title>
+      {/* <Title style={styles.titleText}>Signin</Title>
       {!!authData.error && (
         <View>
           <Text style={{ color: colors.error }}>{`this is error -> ${authData.error}`}</Text>
@@ -72,7 +65,7 @@ const SigninForm = (props) => {
             </ButtonAdaptor>
           </View>
         )}
-      </Formik>
+      </Formik> */}
     </View>
   );
 };
