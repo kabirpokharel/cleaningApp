@@ -34,9 +34,7 @@ const HomeScreen = (props) => {
     <View style={[commonStyle.containerWrapper, { flex: 1, backgroundColor: COLORS.light3 }]}>
       <View style={{ marginTop: 30 }}>
         <Text style={[commonStyle.titleText, FONTS.body2]}>Block</Text>
-        <Text style={[commonStyle.descriptionText, FONTS.body5]}>
-          Slect Block below to access the rooms
-        </Text>
+        <Text style={[commonStyle.descriptionText, FONTS.body5]}>Slect block to access rooms</Text>
       </View>
       <View style={{ marginHorizontal: 20 }}>
         <RoomBlockComponent {...{ roomsBlock, selectedBlock, setSelectedBlock }} />

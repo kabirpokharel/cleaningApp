@@ -47,7 +47,13 @@ const CleaningLog = (props) => {
         <Text style={[commonStyle.titleText, FONTS.body2]}>Rooms</Text>
         <Text style={[commonStyle.descriptionText, FONTS.body5]}>Select cleaned rooms</Text>
       </View>
-      <View style={{ flex: 1, marginHorizontal: 20, paddingVertical: SIZES.padding * 2 - 6 }}>
+      <View
+        style={{
+          flex: 1,
+          marginHorizontal: 20,
+          paddingTop: SIZES.padding * 2 - 6,
+        }}
+      >
         <RowElements
           item={cleaningDetail.rooms}
           numColumns={NUM_COL}

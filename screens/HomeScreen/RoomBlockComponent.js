@@ -5,6 +5,7 @@ import { blockStyle } from "./homeScreenFunc";
 import { roomsBlock, blocks } from "../../dummyValues/roomsBlock";
 import { loadRooms, roomCleaned } from "../../redux/actions";
 import { useDispatch } from "react-redux";
+import homeStyles from "./homeScreeStyle";
 
 const capitalizeEachWord = (text) => {
   return text.replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase());
@@ -49,24 +50,19 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
             id: roomNumber,
             cleaningType: "",
           }));
-          // const timer = setTimeout(() => {
           dispatch(loadRooms(blockName, roomArray));
           setSelectedBlock(item);
         }}
       >
         <View
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 25,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: selectedBlock?.id == item.id ? COLORS.white : COLORS.lightGray,
-          }}
+          style={[
+            homeStyles.blockStyle,
+            {
+              backgroundColor: selectedBlock?.id == item.id ? COLORS.white : COLORS.lightGray,
+            },
+          ]}
         >
           <View
-            // source={item.icon}
-            // resizeMode="contain"
             style={[
               blockStyle(item.blockName),
               {
@@ -74,9 +70,6 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
                 height: 30,
                 borderRadius: 15,
               },
-              //   { backgroundColor: "green" },
-
-              // blockStyle("green"),
             ]}
           />
         </View>

@@ -10,8 +10,6 @@ import {
 } from "react-native";
 
 import { SIZES } from "../constants/theme";
-// let SIZES.width = Dimensions.get("window").width;
-// let SCREEN_HEIGHT = Dimensions.get("window").height;
 
 const ElementComponent = ({
   index,
@@ -21,6 +19,7 @@ const ElementComponent = ({
   onLongPress,
   ElementChildren,
   extraStyle,
+  lastElement,
 }) => {
   const PAGE_HORIZONTAL_MARGIN = 20;
 
@@ -30,6 +29,8 @@ const ElementComponent = ({
   const cardWidth = (SIZES.width - 2 * PAGE_HORIZONTAL_MARGIN - totalGutterWidth) / numColumns;
 
   const marginRight = (index + 1) % numColumns == 0 ? 0 : singleGutterWidth;
+
+  console.log("see this is last element", lastElement);
   return (
     <TouchableOpacity
       style={[
@@ -41,6 +42,7 @@ const ElementComponent = ({
           height: cardWidth,
           width: cardWidth,
           borderRadius: round ? cardWidth * 0.5 : 4,
+          marginBottom: lastElement ? 40 : null,
         },
         extraStyle,
       ]}
@@ -61,9 +63,9 @@ const RowElements = ({
   ElementChildren,
   extraStyle,
 }) => {
-  console.log("from rowElements extraStyle===>", extraStyle);
+  let itemLength = item.length;
   return (
-    <>
+    <View style={{ marginBottom: 70 }}>
       <FlatList
         data={item}
         numColumns={numColumns}
@@ -77,12 +79,13 @@ const RowElements = ({
               onPress={() => onPress(item)}
               onLongPress={() => onLongPress(item)}
               ElementChildren={() => <ElementChildren item={item} />}
+              lastElement={itemLength === parseInt(index) + 1}
             />
           );
         }}
         keyExtractor={(item) => item.id}
       />
-    </>
+    </View>
   );
 };
 

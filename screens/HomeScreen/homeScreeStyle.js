@@ -15,4 +15,16 @@ export default StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
   },
+  //choose block style s
+  blockStyle: {
+    width: 50,
+    height: 50,
+    // borderRadius: 26,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderRadius: 26,
+    borderColor: COLORS.white,
+  },
+  //choose block style e
 });
