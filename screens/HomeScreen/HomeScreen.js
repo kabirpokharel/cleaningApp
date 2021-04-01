@@ -24,6 +24,7 @@ const ElementChildren = ({ item }) => <Text>{item.blockName}</Text>;
 const HomeScreen = (props) => {
   const { navigation } = props;
   const [selectedBlock, setSelectedBlock] = useState(null);
+  const [overlay, setOverlay] = useState(false);
 
   // const customOnClick = (item) =>
   //   navigation.navigate("cleaningLog", {
@@ -32,7 +33,27 @@ const HomeScreen = (props) => {
 
   return (
     <View style={[commonStyle.containerWrapper, { flex: 1, backgroundColor: COLORS.light3 }]}>
-      <View style={{ marginTop: 30 }}>
+      {overlay && (
+        <View
+          style={{
+            position: "absolute",
+            height: SIZES.height,
+            width: SIZES.width,
+            opacity: 0.3,
+            backgroundColor: "#000",
+            zIndex: 1,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => setOverlay(false)}
+            style={{
+              height: SIZES.height,
+              width: SIZES.width,
+            }}
+          />
+        </View>
+      )}
+      <View style={commonStyle.titleContainer}>
         <Text style={[commonStyle.titleText, FONTS.body2]}>Block</Text>
         <Text style={[commonStyle.descriptionText, FONTS.body5]}>Slect block to access rooms</Text>
       </View>
@@ -49,7 +70,7 @@ const HomeScreen = (props) => {
         }}
       /> */}
       {selectedBlock ? (
-        <CleaningLog {...{ selectedBlock }} />
+        <CleaningLog {...{ selectedBlock, setOverlay }} />
       ) : (
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
           <Text>No Block selected</Text>

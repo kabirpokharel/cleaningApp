@@ -45,7 +45,6 @@ export const commonAreaCleaned = (boolStatus) => {
 };
 
 export const initilizeTimeLog = (logIndex) => {
-  console.log("reached initilizeTimeLog action creator");
   return {
     type: INITILIZE_TIME_LOG,
     payload: logIndex,

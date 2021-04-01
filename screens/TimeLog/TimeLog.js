@@ -125,7 +125,7 @@ const TimeLog = (props) => {
 
   return (
     <View style={[styles.containerWrapper, { flex: 1 }]}>
-      <View style={{ marginTop: 10 }}>
+      <View style={commonStyle.titleContainer}>
         <Text style={[commonStyle.titleText, FONTS.body2]}>Set time</Text>
         <Text style={[commonStyle.descriptionText, FONTS.body5]}>Enter start and end time</Text>
       </View>

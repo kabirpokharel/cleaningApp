@@ -5,13 +5,15 @@ const commonStyle = StyleSheet.create({
   containerWrapper: {
     // marginHorizontal: 20,
   },
+  titleContainer: {
+    marginHorizontal: 20,
+    marginTop: 30,
+  },
   titleText: {
-    paddingLeft: 20,
     color: COLORS.primary1,
   },
   descriptionText: {
     color: COLORS.primary2,
-    paddingLeft: 20,
   },
   blockContainerWrapper: {
     flexDirection: "row",

@@ -4,8 +4,6 @@ import { useFonts } from "expo-font";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import CleaningApp from "./CleaningApp";
-import { Provider as PaperProvider } from "react-native-paper";
-// import { themeConst } from "./constants/theme";
 
 export default () => {
   const [loaded] = useFonts({
@@ -24,9 +22,7 @@ export default () => {
 
   return (
     <Provider store={store}>
-      {/* <PaperProvider theme={themeConst}> */}
       <CleaningApp />
-      {/* </PaperProvider> */}
     </Provider>
   );
 };

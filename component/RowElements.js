@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 
 import { SIZES } from "../constants/theme";
 
@@ -30,7 +22,6 @@ const ElementComponent = ({
 
   const marginRight = (index + 1) % numColumns == 0 ? 0 : singleGutterWidth;
 
-  console.log("see this is last element", lastElement);
   return (
     <TouchableOpacity
       style={[

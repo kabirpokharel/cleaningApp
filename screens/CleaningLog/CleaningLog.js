@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet, SafeAreaView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import { AntDesign } from "@expo/vector-icons";
 import commonStyle from "../style";
 import styles from "./cleaningLogStyle";
 import RowElements from "../../component/RowElements";
@@ -8,7 +9,7 @@ import { roomsBlock, blocks } from "../../dummyValues/roomsBlock";
 import { loadRooms, roomCleaned } from "../../redux/actions";
 import { roomButtonStyle } from "./cleaningLogFunc";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { SIZES, FONTS } from "../../constants/theme";
+import { SIZES, FONTS, COLORS } from "../../constants/theme";
 
 const NUM_COL = 6;
 
@@ -16,7 +17,7 @@ const ElementChildren = ({ item }) => <Text>{item.id}</Text>;
 
 const CleaningLog = (props) => {
   const { rooms, setRooms } = useState([null]);
-  const { navigation, selectedBlock } = props;
+  const { navigation, selectedBlock, setOverlay } = props;
   const { id, blockName } = selectedBlock;
 
   const dispatch = useDispatch();
@@ -43,9 +44,27 @@ const CleaningLog = (props) => {
   };
   return (
     <View style={[styles.containerWrapper, { flex: 1 }]}>
-      <View style={{ marginTop: 10 }}>
-        <Text style={[commonStyle.titleText, FONTS.body2]}>Rooms</Text>
-        <Text style={[commonStyle.descriptionText, FONTS.body5]}>Select cleaned rooms</Text>
+      <View
+        style={[
+          commonStyle.titleContainer,
+          { marginTop: 10, flexDirection: "row", justifyContent: "space-between" },
+        ]}
+      >
+        <View>
+          <Text style={[commonStyle.titleText, FONTS.body2]}>Rooms</Text>
+          <Text style={[commonStyle.descriptionText, FONTS.body5]}>Select cleaned rooms</Text>
+        </View>
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              setOverlay(true);
+              // setShowTimeEditpopup(inputId);
+            }}
+            style={{ height: 40, width: 40, alignItems: "center" }}
+          >
+            <AntDesign name="ellipsis1" size={28} color={COLORS.primary1} />
+          </TouchableOpacity>
+        </View>
       </View>
       <View
         style={{
