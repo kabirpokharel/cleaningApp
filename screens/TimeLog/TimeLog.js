@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { View, Platform, Text, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
-import { Button, useTheme, Surface, Title, Subheading } from "react-native-paper";
 import { deleteTimeLog, initilizeTimeLog } from "../../redux/actions";
 import TimePicker from "../../container/TimePicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -26,17 +25,12 @@ const timeLogErrorCheck = (reduxTimeArray) => {
     (time) => {
       if (!time.status) {
         return false;
-      } else checkTimeLogHasError(time.status);
+      } else return checkTimeLogHasError(time.status);
     }
   );
-  // ............................................s*******************start here onward
   if (!!emptyLog) {
     result = "incomplete";
-  }
-  // if (!reduxTimeArray.length || timeSetCounter.length != reduxTimeArray.length) {
-  //   result = "incomplete";
-  // }
-  else if (!!errorsArray.length) {
+  } else if (!!errorsArray.length) {
     result = "other errors";
   } else {
     result = "no error";
@@ -153,7 +147,7 @@ const TimeLog = (props) => {
 
         {reduxTimeArray.map((val, inputId) => (
           <React.Fragment key={inputId}>
-            <Surface
+            <View
               key={inputId}
               style={{
                 borderRadius: 4,
@@ -190,7 +184,9 @@ const TimeLog = (props) => {
                   </View>
                 )}
                 <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                  <Subheading style={{ color: "grey" }}>Time log no.{inputId + 1}</Subheading>
+                  <Text style={[commonStyle.titleText, FONTS.body4]}>
+                    Time log no.{inputId + 1}
+                  </Text>
                   <TouchableOpacity
                     onPress={() => {
                       setOverlay(true);
@@ -284,15 +280,13 @@ const TimeLog = (props) => {
                     )}
                 </View>
               </View>
-            </Surface>
+            </View>
           </React.Fragment>
         ))}
         <AddCardButton
-          // disabled={!(timeLogErrorCheck(reduxTimeArray, timeSetCounter) === "no error")}
           disabled={!(timeLogErrorCheck(reduxTimeArray) === "no error")}
           onPress={() => {
             dispatch(initilizeTimeLog(reduxTimeArray.length));
-            // setTimeSetCounter([...timeSetCounter, null]);
           }}
           activeColor={COLORS.primary}
           disableColor={COLORS.light1}

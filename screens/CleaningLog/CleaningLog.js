@@ -13,11 +13,13 @@ import { SIZES, FONTS, COLORS } from "../../constants/theme";
 
 const NUM_COL = 6;
 
-const ElementChildren = ({ item }) => <Text>{item.id}</Text>;
+const ElementChildren = ({ item, dynamicStyle }) => {
+  return <Text style={dynamicStyle}>{item.id}</Text>;
+};
 
 const CleaningLog = (props) => {
   const { rooms, setRooms } = useState([null]);
-  const { navigation, selectedBlock, setOverlay } = props;
+  const { navigation, selectedBlock, overlay, setOverlay } = props;
   const { id, blockName } = selectedBlock;
 
   const dispatch = useDispatch();
@@ -54,7 +56,7 @@ const CleaningLog = (props) => {
           <Text style={[commonStyle.titleText, FONTS.body2]}>Rooms</Text>
           <Text style={[commonStyle.descriptionText, FONTS.body5]}>Select cleaned rooms</Text>
         </View>
-        <View>
+        {!overlay && (
           <TouchableOpacity
             onPress={() => {
               setOverlay(true);
@@ -64,7 +66,7 @@ const CleaningLog = (props) => {
           >
             <AntDesign name="ellipsis1" size={28} color={COLORS.primary1} />
           </TouchableOpacity>
-        </View>
+        )}
       </View>
       <View
         style={{

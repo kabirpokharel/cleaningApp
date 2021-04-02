@@ -56,7 +56,7 @@ const RowElements = ({
 }) => {
   let itemLength = item.length;
   return (
-    <View style={{ marginBottom: 70 }}>
+    <View style={{ marginBottom: 0 }}>
       <FlatList
         data={item}
         numColumns={numColumns}
@@ -69,7 +69,14 @@ const RowElements = ({
               extraStyle={extraStyle ? extraStyle(item) : {}}
               onPress={() => onPress(item)}
               onLongPress={() => onLongPress(item)}
-              ElementChildren={() => <ElementChildren item={item} />}
+              ElementChildren={() => (
+                <ElementChildren
+                  dynamicStyle={{
+                    color: extraStyle ? extraStyle(item).color : "#000",
+                  }}
+                  item={item}
+                />
+              )}
               lastElement={itemLength === parseInt(index) + 1}
             />
           );

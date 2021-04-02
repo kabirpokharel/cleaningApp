@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 
 const LogoTitle = ({ title }) => {
   return (
-    <View>
+    <View style={{ width: 190, backgroundColor: "lightpink", borderRadius: 25 }}>
       <Text>{title}</Text>
     </View>
   );
@@ -25,7 +25,7 @@ const HomeStack = ({ navigation }) => {
       <Stack.Screen
         name="home"
         component={HomeScreen}
-        options={{ title: "Welcome" }}
+        // options={{ title: "Welcome" }}
         options={{
           headerTitle: () => <LogoTitle title={title} />,
           headerLeft: () => (
@@ -36,7 +36,6 @@ const HomeStack = ({ navigation }) => {
               color="black"
             />
           ),
-
           headerRight: () => (
             <View>
               <Text>Right Component</Text>
