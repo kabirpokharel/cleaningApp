@@ -2,8 +2,10 @@ export const SIGN_IN = "SIGN_IN";
 
 export const LOAD_ROOM = "LOAD_ROOM";
 export const ROOM_CLEANED = "ROOM_CLEANED";
-export const ROOM_REMOVED = "ROOM_REMOVED";
+export const REMOVE_ROOM = "REMOVE_ROOM";
 export const COMMON_AREA_CLEANED = "COMMON_AREA_CLEANED";
 export const ADD_SHIFT_TIME = "ADD_SHIFT_TIME";
 export const DELETE_TIMELOG = "DELETE_TIMELOG";
 export const INITILIZE_TIME_LOG = "INITILIZE_TIME_LOG";
+export const SELECT_ALL_ROOMS = "SELECT_ALL_ROOMS";
+export const REMOVE_BLOCK = "REMOVE_BLOCK";

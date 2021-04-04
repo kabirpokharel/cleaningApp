@@ -1,79 +1,3 @@
-export const roomsBlock = [
-  {
-    id: 1,
-    blockName: "green",
-  },
-  {
-    id: 2,
-    blockName: "yellow",
-  },
-  {
-    id: 3,
-    blockName: "blue",
-  },
-  {
-    id: 4,
-    blockName: "gold",
-  },
-  {
-    id: 5,
-    blockName: "pinkBlue",
-  },
-  // {
-  //   id: 6,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 7,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 8,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 9,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 10,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 11,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 5,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 6,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 7,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 8,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 9,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 10,
-  //   blockName: "pinkBlue",
-  // },
-  // {
-  //   id: 11,
-  //   blockName: "pinkBlue",
-  // },
-];
-
-// const green = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 const green = [
   1,
   2,
@@ -185,6 +109,88 @@ const blue = [
   45,
 ];
 const pinkBlue = [71, 72, 73, 74, 75, 76, 77];
+
+export const roomsBlock = [
+  {
+    id: 1,
+    rooms: green,
+    blockName: "green",
+  },
+  {
+    id: 2,
+    rooms: yellow,
+    blockName: "yellow",
+  },
+  {
+    id: 3,
+    rooms: blue,
+    blockName: "blue",
+  },
+  {
+    id: 4,
+    rooms: gold,
+    blockName: "gold",
+  },
+  {
+    id: 5,
+    rooms: pinkBlue,
+    blockName: "pinkBlue",
+  },
+  // {
+  //   id: 6,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 7,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 8,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 9,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 10,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 11,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 5,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 6,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 7,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 8,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 9,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 10,
+  //   blockName: "pinkBlue",
+  // },
+  // {
+  //   id: 11,
+  //   blockName: "pinkBlue",
+  // },
+];
+
+// const green = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 export const blocks = {
   green,

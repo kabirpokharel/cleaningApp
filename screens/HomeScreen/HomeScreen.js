@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   ActivityIndicator,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import commonStyle from "../style";
 import styles from "./homeScreeStyle";
 import { blockStyle } from "./homeScreenFunc";
@@ -26,8 +27,11 @@ const HomeScreen = (props) => {
   const { navigation } = props;
   const [selectedBlock, setSelectedBlock] = useState(null);
   const [overlay, setOverlay] = useState(false);
-
   const [isEnabled, setIsEnabled] = useState(false);
+  const dispatch = useDispatch();
+  const cleaningDetail = useSelector((state) => state.cleaning);
+  console.log("see this is cleaning detail=====>", cleaningDetail);
+
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   // const customOnClick = (item) =>
@@ -81,7 +85,7 @@ const HomeScreen = (props) => {
                 { color: COLORS.dark1 },
               ]}
             >
-              Delete
+              Select all
             </Text>
           </TouchableOpacity>
           <View
@@ -155,6 +159,8 @@ const HomeScreen = (props) => {
           alignItems: "center",
           marginBottom: 70,
           height: 90,
+          borderTopWidth: 0.5,
+          borderTopColor: COLORS.light1,
           // paddingVertical: 10,
           marginHorizontal: 20,
         }}
@@ -167,12 +173,10 @@ const HomeScreen = (props) => {
           value={isEnabled}
         />
         <View style={{ paddingLeft: 20, paddingRight: 25 }}>
-          <Text style={[FONTS.body5, { color: COLORS.primary2, fontWeight: "700" }]}>
-            {`Common area cleaning`}
-            <Text
-              style={[FONTS.body5, { color: COLORS.primary2, fontWeight: "normal" }]}
-            >{` (eg. Door knobs, activity room surfaces, hand rails, toilets, staff rooms, dining rooms)`}</Text>
-          </Text>
+          <Text style={[FONTS.h6, { color: COLORS.primary2 }]}>{`Common area cleaning`}</Text>
+          <Text
+            style={[FONTS.body5, { color: COLORS.primary2, lineHeight: 16 }]}
+          >{`(eg. Door knobs, activity room surfaces, hand rails, toilets, staff rooms, dining rooms)`}</Text>
         </View>
       </View>
 

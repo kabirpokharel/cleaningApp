@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native";
 import { COLORS, SIZES, FONTS } from "../../constants/theme";
 import { blockStyle } from "./homeScreenFunc";
-import { roomsBlock, blocks } from "../../dummyValues/roomsBlock";
+// import { roomsBlock } from "../../dummyValues/roomsBlock";
 import { loadRooms, roomCleaned } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import homeStyles from "./homeScreeStyle";
@@ -30,7 +30,8 @@ const blockNameFormatter = (blockName) => {
 export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
   const dispatch = useDispatch();
   const renderItem = ({ item }) => {
-    const { blockName } = item;
+    // console.log("see this is item--------------------->", item);
+    const { id, blockName, rooms } = item;
     return (
       <TouchableOpacity
         style={{
@@ -38,7 +39,7 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
           width: 70,
           // padding: SIZES.padding,
           // paddingBottom: SIZES.padding * 2,
-          backgroundColor: selectedBlock?.id == item.id ? COLORS.primary : COLORS.white,
+          backgroundColor: selectedBlock === id ? COLORS.primary : COLORS.white,
           borderRadius: SIZES.radius,
           alignItems: "center",
           justifyContent: "center",
@@ -46,25 +47,25 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
           ...styles.shadow,
         }}
         onPress={() => {
-          const roomArray = blocks[blockName].map((roomNumber) => ({
-            id: roomNumber,
-            cleaningType: "",
-          }));
-          dispatch(loadRooms(blockName, roomArray));
-          setSelectedBlock(item);
+          // const roomArray = rooms.map((roomNumber) => ({
+          //   id: roomNumber,
+          //   // cleaningType: "",
+          // }));
+          dispatch(loadRooms(id, blockName, rooms));
+          setSelectedBlock(id);
         }}
       >
         <View
           style={[
             homeStyles.blockStyle,
             {
-              backgroundColor: selectedBlock?.id == item.id ? COLORS.white : COLORS.lightGray,
+              backgroundColor: selectedBlock === id ? COLORS.white : COLORS.lightGray,
             },
           ]}
         >
           <View
             style={[
-              blockStyle(item.blockName),
+              blockStyle(blockName),
               {
                 width: 30,
                 height: 30,
@@ -76,11 +77,11 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
         <Text
           style={{
             marginTop: SIZES.padding,
-            color: selectedBlock?.id == item.id ? COLORS.white : COLORS.dark1,
+            color: selectedBlock === id ? COLORS.white : COLORS.dark1,
             ...FONTS.body5,
           }}
         >
-          {blockNameFormatter(item.blockName)}
+          {blockNameFormatter(blockName)}
         </Text>
       </TouchableOpacity>
     );

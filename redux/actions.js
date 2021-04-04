@@ -2,11 +2,13 @@ import {
   SIGN_IN,
   LOAD_ROOM,
   ROOM_CLEANED,
-  ROOM_REMOVED,
+  REMOVE_ROOM,
   COMMON_AREA_CLEANED,
   ADD_SHIFT_TIME,
   DELETE_TIMELOG,
   INITILIZE_TIME_LOG,
+  SELECT_ALL_ROOMS,
+  REMOVE_BLOCK,
 } from "./actionsConstant";
 
 export const signinUser = (enteredEmaiPassword) => {
@@ -16,24 +18,24 @@ export const signinUser = (enteredEmaiPassword) => {
   };
 };
 
-export const loadRooms = (blockName, roomArray) => {
+export const loadRooms = (id) => {
   return {
     type: LOAD_ROOM,
-    payload: { blockName, roomArray },
+    payload: id,
   };
 };
 
-export const roomCleaned = (room) => {
+export const roomCleaned = ({ currentBlockId, blockName, roomNumber, cleaningType }) => {
   return {
     type: ROOM_CLEANED,
-    payload: room,
+    payload: { currentBlockId, blockName, roomNumber, cleaningType },
   };
 };
 
-export const roomRemoved = (room) => {
+export const removeRoom = (currentBlockId, roomNumber) => {
   return {
-    type: ROOM_REMOVED,
-    payload: room,
+    type: REMOVE_ROOM,
+    payload: { currentBlockId, roomNumber },
   };
 };
 
@@ -60,5 +62,19 @@ export const deleteTimeLog = (logIndex) => {
   return {
     type: DELETE_TIMELOG,
     payload: logIndex,
+  };
+};
+
+export const selectAllRooms = (blockName) => {
+  return {
+    type: SELECT_ALL_ROOMS,
+    payload: blockName,
+  };
+};
+
+export const removeBlock = (blockName) => {
+  return {
+    type: REMOVE_BLOCK,
+    payload: blockName,
   };
 };

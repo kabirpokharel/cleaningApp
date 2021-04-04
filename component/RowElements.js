@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 
-import { SIZES } from "../constants/theme";
+import { SIZES, COLORS } from "../constants/theme";
 
 const ElementComponent = ({
   index,
@@ -72,7 +72,7 @@ const RowElements = ({
               ElementChildren={() => (
                 <ElementChildren
                   dynamicStyle={{
-                    color: extraStyle ? extraStyle(item).color : "#000",
+                    color: extraStyle ? extraStyle(item).color : COLORS.dark1,
                   }}
                   item={item}
                 />
@@ -81,7 +81,7 @@ const RowElements = ({
             />
           );
         }}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => index.toString()}
       />
     </View>
   );

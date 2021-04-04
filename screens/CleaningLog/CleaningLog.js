@@ -6,7 +6,7 @@ import commonStyle from "../style";
 import styles from "./cleaningLogStyle";
 import RowElements from "../../component/RowElements";
 import { roomsBlock, blocks } from "../../dummyValues/roomsBlock";
-import { loadRooms, roomCleaned } from "../../redux/actions";
+import { loadRooms, removeRoom, roomCleaned } from "../../redux/actions";
 import { roomButtonStyle } from "./cleaningLogFunc";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SIZES, FONTS, COLORS } from "../../constants/theme";
@@ -14,7 +14,7 @@ import { SIZES, FONTS, COLORS } from "../../constants/theme";
 const NUM_COL = 6;
 
 const ElementChildren = ({ item, dynamicStyle }) => {
-  return <Text style={dynamicStyle}>{item.id}</Text>;
+  return <Text style={dynamicStyle}>{item}</Text>;
 };
 
 const CleaningLog = (props) => {
@@ -26,23 +26,49 @@ const CleaningLog = (props) => {
   const cleaningDetail = useSelector((state) => {
     return state.cleaning;
   });
+  const { currentBlockId, taskLog } = cleaningDetail;
 
-  // useEffect(() => {
-  // const roomArray = blocks[blockName].map((roomNumber) => ({
-  //   id: roomNumber,
-  //   cleaningType: "",
-  // }));
-  // const timer = setTimeout(() => {
-  // dispatch(loadRooms(blockName, roomArray));
-  // }, 1000);
-  // return () => clearTimeout(timer);
-  // }, []);
-
-  const roomClicked = (roomElement) => {
-    dispatch(roomCleaned({ ...roomElement, cleaningType: "daily" }));
+  const blockNameFinder = (blockId) => {
+    const block = roomsBlock.find((block) => block.id === blockId);
+    return block.blockName;
   };
-  const roomLongPress = (roomElement) => {
-    dispatch(roomCleaned({ ...roomElement, cleaningType: "thorough" }));
+
+  const roomAlreadySelected = (roomNumber) => {
+    if (!taskLog.length) {
+      return false;
+    }
+    const blockFound = taskLog.find((block) => block.id === currentBlockId);
+    if (!blockFound) {
+      return false;
+    }
+    const roomFound = blockFound.rooms.find((room) => room.id === roomNumber);
+    if (!roomFound) {
+      return false;
+    } else return true;
+  };
+  const roomClicked = (roomNumber) => {
+    if (roomAlreadySelected(roomNumber)) {
+      dispatch(removeRoom(currentBlockId, roomNumber));
+    } else
+      dispatch(
+        roomCleaned({
+          currentBlockId,
+          blockName: blockNameFinder(currentBlockId),
+          roomNumber,
+          cleaningType: "daily",
+        })
+      );
+  };
+
+  const roomLongPress = (roomNumber) => {
+    dispatch(
+      roomCleaned({
+        currentBlockId,
+        blockName: blockNameFinder(currentBlockId),
+        roomNumber,
+        cleaningType: "thorough",
+      })
+    );
   };
   return (
     <View style={[styles.containerWrapper, { flex: 1 }]}>
@@ -76,7 +102,7 @@ const CleaningLog = (props) => {
         }}
       >
         <RowElements
-          item={cleaningDetail.rooms}
+          item={roomsBlock.find((roomBlockElem) => currentBlockId === roomBlockElem.id).rooms}
           numColumns={NUM_COL}
           round
           ElementChildren={ElementChildren}
