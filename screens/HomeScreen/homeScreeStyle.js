@@ -22,9 +22,9 @@ export default StyleSheet.create({
     // borderRadius: 26,
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 1,
+    borderWidth: 0,
     borderRadius: 26,
-    borderColor: COLORS.white,
+    borderColor: "transparent",
   },
   //choose block style e
 });

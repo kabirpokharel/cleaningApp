@@ -1,7 +1,5 @@
-import { roomsBlock, blocks } from "../../../dummyValues/roomsBlock";
 import moment from "moment";
 import { loadRooms } from "../../actions";
-import { TextComponent } from "react-native";
 
 const initialState = {
   roomsLoading: true,
@@ -19,23 +17,9 @@ const initialState = {
   //   },
   // ],
   currentBlockId: null,
-  // rooms: [],
-  // time: [],
+  time: [],
   error: null,
   commonAreaCleaned: false,
-};
-
-const updateTaskLog = (state, { id, blockName, rooms }) => {
-  let newState = { ...state };
-  newState.taskLog = [
-    ...newState.taskLog,
-    {
-      id,
-      blockName,
-      rooms,
-    },
-  ];
-  return newState;
 };
 
 const timeError = (diff) => {
@@ -64,11 +48,21 @@ const updateTime = (payload, time) => {
   return time;
 };
 
+const resetBlock = (state, currentBlockId) => {
+  const newTaskLog = state.taskLog.map((block) => {
+    return block.id === currentBlockId ? { ...block, rooms: [] } : block;
+  });
+  return { ...state, taskLog: newTaskLog };
+};
+
 const cleaningDetail = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case "LOAD_ROOM":
-      return { ...state, currentBlockId: payload };
+      const newTaskLog = state.taskLog.filter(
+        (block) => !!block.rooms.length || block.id === payload
+      );
+      return { ...state, taskLog: newTaskLog, currentBlockId: payload };
       break;
     case "ROOM_CLEANED": {
       const { currentBlockId, blockName, roomNumber, cleaningType } = payload;
@@ -108,30 +102,6 @@ const cleaningDetail = (state = initialState, action) => {
       newState.taskLog = newTaskLog;
       return newState;
     }
-    // const updatedRooms = state.taskLog.find((a) => {
-    //   console.log("this is a.id *********////////////////////*************", a.id);
-    //   return true;
-    //   // a.id === payload.id);
-    // });
-    // console.log("see this for state @@@@@@@@@@@@@@@@@@@22", updatedRooms);
-
-    // const updatedRooms = state.taskLog
-    //   .find((a) => a.id === payload.id)
-    //   .map((room) =>
-    //     room.id == payload.id
-    //       ? !!room.cleaningType
-    //         ? { ...room, cleaningType: "" }
-    //         : payload
-    //       : room
-    //   );
-
-    // return {
-    //   ...state,
-    //   rooms: updatedRooms,
-    //   roomsLoading: false,
-    //   error: null,
-    // };
-    // break;
     case "REMOVE_ROOM":
       {
         let newTaskLog = state.taskLog.map((block) => {
@@ -148,9 +118,7 @@ const cleaningDetail = (state = initialState, action) => {
     case "COMMON_AREA_CLEANED":
       return {
         ...state,
-        commonAreaCleaned: true,
-        roomsLoading: false,
-        error: null,
+        commonAreaCleaned: payload,
       };
       break;
     case "INITILIZE_TIME_LOG": {
@@ -177,20 +145,16 @@ const cleaningDetail = (state = initialState, action) => {
       };
       break;
     }
-    // case "SELECT_ALL_ROOMS": {
-    //   const updatedTime = deleteTimeLog(payload, [...state.time]);
-    //   return {
-    //     ...state,
-    //     time: updatedTime,
-    //   };
-    // }
-    // case "REMOVE_BLOCK": {
-    //   const updatedTime = deleteTimeLog(payload, [...state.time]);
-    //   return {
-    //     ...state,
-    //     time: updatedTime,
-    //   };
-    // }
+    case "SELECT_ALL_ROOMS": {
+      const { blockId, blockName, rooms } = payload;
+      const newTaskLog = [...state.taskLog].filter((block) => block.id !== blockId);
+      const allRooms = rooms.map((room) => ({ id: room, cleaningType: "daily" }));
+      const newBlock = { id: blockId, blockName, rooms: allRooms };
+      return { ...state, taskLog: [...newTaskLog, newBlock] };
+    }
+    case "RESET_BLOCK": {
+      return resetBlock(state, payload.currentBlockId);
+    }
     default:
       return state;
   }

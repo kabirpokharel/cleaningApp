@@ -7,7 +7,7 @@ import styles from "./cleaningLogStyle";
 import RowElements from "../../component/RowElements";
 import { roomsBlock, blocks } from "../../dummyValues/roomsBlock";
 import { loadRooms, removeRoom, roomCleaned } from "../../redux/actions";
-import { roomButtonStyle } from "./cleaningLogFunc";
+import { roomStyle } from "./cleaningLogFunc";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SIZES, FONTS, COLORS } from "../../constants/theme";
 
@@ -18,15 +18,17 @@ const ElementChildren = ({ item, dynamicStyle }) => {
 };
 
 const CleaningLog = (props) => {
-  const { rooms, setRooms } = useState([null]);
-  const { navigation, selectedBlock, overlay, setOverlay } = props;
-  const { id, blockName } = selectedBlock;
+  const { overlay, setOverlay } = props;
 
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => {
     return state.cleaning;
   });
   const { currentBlockId, taskLog } = cleaningDetail;
+
+  const roomButtonStyle = (roomId) => {
+    return roomStyle(roomId, cleaningDetail);
+  };
 
   const blockNameFinder = (blockId) => {
     const block = roomsBlock.find((block) => block.id === blockId);
@@ -47,27 +49,28 @@ const CleaningLog = (props) => {
     } else return true;
   };
   const roomClicked = (roomNumber) => {
-    if (roomAlreadySelected(roomNumber)) {
-      dispatch(removeRoom(currentBlockId, roomNumber));
-    } else
-      dispatch(
-        roomCleaned({
-          currentBlockId,
-          blockName: blockNameFinder(currentBlockId),
-          roomNumber,
-          cleaningType: "daily",
-        })
-      );
+    dispatch(
+      roomAlreadySelected(roomNumber)
+        ? removeRoom(currentBlockId, roomNumber)
+        : roomCleaned({
+            currentBlockId,
+            blockName: blockNameFinder(currentBlockId),
+            roomNumber,
+            cleaningType: "daily",
+          })
+    );
   };
 
   const roomLongPress = (roomNumber) => {
     dispatch(
-      roomCleaned({
-        currentBlockId,
-        blockName: blockNameFinder(currentBlockId),
-        roomNumber,
-        cleaningType: "thorough",
-      })
+      roomAlreadySelected(roomNumber)
+        ? removeRoom(currentBlockId, roomNumber)
+        : roomCleaned({
+            currentBlockId,
+            blockName: blockNameFinder(currentBlockId),
+            roomNumber,
+            cleaningType: "thorough",
+          })
     );
   };
   return (
@@ -110,56 +113,8 @@ const CleaningLog = (props) => {
           onLongPress={roomLongPress}
           extraStyle={roomButtonStyle}
         />
-        {/* <TouchableOpacity
-          onPress={() => navigation.navigate("timeLog")}
-          style={{
-            backgroundColor: "red",
-            alignItems: "center",
-            justifyContent: "center",
-            height: 50,
-            marginHorizontal: -20,
-          }}
-        >
-          <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>Continu</Text>
-        </TouchableOpacity> */}
         <View style={{ marginBottom: 50 }} />
       </View>
-
-      {/* {console.log("cleaning details===>", cleaningDetail)}
-      <Text>{blockName}</Text>
-      {cleaningDetail.roomsLoading ? (
-        <View>
-          <Text>Loading......</Text>
-        </View>
-      ) : (
-        // <View style={{ flex: 1, backgroundColor: "grey", marginBottom: 50 }}>
-        <View style={{ flex: 1, backgroundColor: "grey" }}>
-          <RowElements
-            item={cleaningDetail.rooms}
-            numColumns={NUM_COL}
-            round
-            ElementChildren={ElementChildren}
-            onPress={roomClicked}
-            onLongPress={roomLongPress}
-            extraStyle={roomButtonStyle}
-          />
-          <TouchableOpacity
-            onPress={() => navigation.navigate("timeLog")}
-            style={{
-              // position: "relative",
-              // top: 90,
-              backgroundColor: "red",
-              alignItems: "center",
-              justifyContent: "center",
-              height: 50,
-            }}
-          >
-            <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
-              Continue
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )} */}
     </View>
   );
 };

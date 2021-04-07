@@ -10,10 +10,11 @@ const blockStyle = (blockName) => {
       return { backgroundColor: "#ccae62" };
       break;
     case "blue":
-      return { backgroundColor: "#3B3B98" };
+      return { backgroundColor: "#99ccff" };
       break;
     case "pinkBlue":
-      return { backgroundColor: "#FC427B" };
+      // return { backgroundColor: "#FC427B" };
+      return { backgroundColor: "#fc8eac" };
       break;
     default:
       return { backgroundColor: "grey" };

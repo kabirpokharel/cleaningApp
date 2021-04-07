@@ -8,7 +8,7 @@ import {
   DELETE_TIMELOG,
   INITILIZE_TIME_LOG,
   SELECT_ALL_ROOMS,
-  REMOVE_BLOCK,
+  RESET_BLOCK,
 } from "./actionsConstant";
 
 export const signinUser = (enteredEmaiPassword) => {
@@ -39,7 +39,7 @@ export const removeRoom = (currentBlockId, roomNumber) => {
   };
 };
 
-export const commonAreaCleaned = (boolStatus) => {
+export const commonAreaCleanedAct = (boolStatus) => {
   return {
     type: COMMON_AREA_CLEANED,
     payload: boolStatus,
@@ -65,16 +65,18 @@ export const deleteTimeLog = (logIndex) => {
   };
 };
 
-export const selectAllRooms = (blockName) => {
+export const selectAllRooms = (blockId, blockName, rooms) => {
+  console.log("see the values for selectAllRooms action creator======>", blockId);
   return {
     type: SELECT_ALL_ROOMS,
-    payload: blockName,
+    payload: { blockId, blockName, rooms },
   };
 };
 
-export const removeBlock = (blockName) => {
+export const resetCurrentBlock = (currentBlockId) => {
+  console.log("this is blockId");
   return {
-    type: REMOVE_BLOCK,
-    payload: blockName,
+    type: RESET_BLOCK,
+    payload: { currentBlockId },
   };
 };

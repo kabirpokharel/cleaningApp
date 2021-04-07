@@ -118,7 +118,7 @@ const TimeLog = (props) => {
   };
 
   return (
-    <View style={[styles.containerWrapper, { flex: 1 }]}>
+    <View style={[styles.containerWrapper, { flex: 1, backgroundColor: COLORS.light3 }]}>
       <View style={commonStyle.titleContainer}>
         <Text style={[commonStyle.titleText, FONTS.body2]}>Set time</Text>
         <Text style={[commonStyle.descriptionText, FONTS.body5]}>Enter start and end time</Text>
@@ -154,10 +154,13 @@ const TimeLog = (props) => {
                 margin: 10,
                 padding: 10,
                 width: "80%",
-                shadowColor: "#000000",
-                elevation: 6,
                 marginBottom: 20,
                 zIndex: 3,
+                backgroundColor: "white",
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                elevation: 5,
               }}
             >
               <View>
@@ -183,7 +186,12 @@ const TimeLog = (props) => {
                     />
                   </View>
                 )}
-                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
                   <Text style={[commonStyle.titleText, FONTS.body4]}>
                     Time log no.{inputId + 1}
                   </Text>
@@ -223,7 +231,7 @@ const TimeLog = (props) => {
                       disabled={reduxTimeArray.length == 1}
                       style={{
                         paddingHorizontal: 8,
-                        paddingVertical: 4,
+                        paddingVertical: 5,
                         justifyContent: "center",
                       }}
                       onPress={() => {
@@ -234,7 +242,7 @@ const TimeLog = (props) => {
                       <Text
                         style={[
                           FONTS.body4,
-                          { color: reduxTimeArray.length == 1 ? COLORS.light1 : COLORS.dark1 },
+                          { color: reduxTimeArray.length == 1 ? COLORS.light1 : COLORS.primary },
                         ]}
                       >
                         Delete
@@ -249,14 +257,22 @@ const TimeLog = (props) => {
                     />
                     <TouchableOpacity
                       style={{
-                        padding: 8,
+                        paddingHorizontal: 8,
+                        paddingVertical: 5,
                         justifyContent: "center",
                       }}
                       onPress={() => {
                         alert("watnt to Reset??");
                       }}
                     >
-                      <Text>Reset</Text>
+                      <Text
+                        style={[
+                          FONTS.body4,
+                          { color: reduxTimeArray.length == 1 ? COLORS.light1 : COLORS.primary },
+                        ]}
+                      >
+                        Reset
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 )}

@@ -18,8 +18,9 @@ export const COLORS = {
   dark3: "#1b342d",
   //light
   light1: "#c2d2cd",
-  light2: "#d7e1de",
+  light2: "#cddada",
   light3: "#d7e1de",
+  light4: "#e6eded",
 
   error: "#ff0033",
   white: "#ffffff",

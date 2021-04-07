@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import commonStyle from "../style";
 import styles from "./homeScreeStyle";
 import { blockStyle } from "./homeScreenFunc";
-
+import { selectAllRooms, commonAreaCleanedAct, resetCurrentBlock } from "../../redux/actions";
 import { roomsBlock } from "../../dummyValues/roomsBlock";
 import RowElements from "../../component/RowElements";
 import RoomBlockComponent from "./RoomBlockComponent";
@@ -27,13 +27,25 @@ const HomeScreen = (props) => {
   const { navigation } = props;
   const [selectedBlock, setSelectedBlock] = useState(null);
   const [overlay, setOverlay] = useState(false);
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [commonAreaCleaned, setCommonAreaCleaned] = useState(false);
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
-  console.log("see this is cleaning detail=====>", cleaningDetail);
+  console.log("this is cleaning detail==========>", cleaningDetail);
+  const { currentBlockId, taskLog } = cleaningDetail;
 
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const toggleSwitch = () => {
+    dispatch(commonAreaCleanedAct(!commonAreaCleaned));
+    setCommonAreaCleaned((previousState) => !previousState);
+  };
 
+  const checkBlockStatus = (currentBlockId, taskLog) => {
+    const roomInitilized = !!taskLog.length && taskLog.find((block) => block.id === currentBlockId);
+    const selectedRoomsLength = !!roomInitilized && roomInitilized.rooms.length;
+    const allRoomsLength = roomsBlock?.find((block) => block.id === currentBlockId).rooms.length;
+    const isFull = selectedRoomsLength === allRoomsLength;
+    const isEmpty = !selectedRoomsLength;
+    return { isFull, isEmpty };
+  };
   // const customOnClick = (item) =>
   //   navigation.navigate("cleaningLog", {
   //     block: item,
@@ -70,19 +82,23 @@ const HomeScreen = (props) => {
             // disabled={reduxTimeArray.length == 1}
             style={{
               paddingHorizontal: 8,
-              paddingVertical: 4,
+              paddingVertical: 5,
               justifyContent: "center",
             }}
             onPress={() => {
               setOverlay(false);
-              dispatch(deleteTimeLog(inputId));
+              const choosenBlock = roomsBlock.find((block) => block.id === currentBlockId);
+              dispatch(selectAllRooms(currentBlockId, choosenBlock.blockName, choosenBlock.rooms));
             }}
           >
             <Text
               style={[
                 FONTS.body4,
-                // { color: reduxTimeArray.length == 1 ? COLORS.light1 : COLORS.dark1 },
-                { color: COLORS.dark1 },
+                {
+                  color: checkBlockStatus(currentBlockId, taskLog).isFull
+                    ? COLORS.light1
+                    : COLORS.primary,
+                },
               ]}
             >
               Select all
@@ -97,14 +113,28 @@ const HomeScreen = (props) => {
           />
           <TouchableOpacity
             style={{
-              padding: 8,
+              paddingHorizontal: 8,
+              paddingVertical: 5,
               justifyContent: "center",
             }}
             onPress={() => {
-              alert("watnt to Reset??");
+              console.log("currentBlockid from Home screen", currentBlockId);
+              setOverlay(false);
+              dispatch(resetCurrentBlock(currentBlockId));
             }}
           >
-            <Text>Reset</Text>
+            <Text
+              style={[
+                FONTS.body4,
+                {
+                  color: checkBlockStatus(currentBlockId, taskLog).isEmpty
+                    ? COLORS.light1
+                    : COLORS.primary,
+                },
+              ]}
+            >
+              Reset
+            </Text>
           </TouchableOpacity>
         </View>
       )}
@@ -165,18 +195,20 @@ const HomeScreen = (props) => {
           marginHorizontal: 20,
         }}
       >
-        <Switch
-          trackColor={{ false: "#767577", true: "#05c46b" }}
-          thumbColor={isEnabled ? COLORS.white : COLORS.white}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
-        <View style={{ paddingLeft: 20, paddingRight: 25 }}>
-          <Text style={[FONTS.h6, { color: COLORS.primary2 }]}>{`Common area cleaning`}</Text>
+        <View style={{ paddingRight: 20, flex: 1 }}>
+          <Text style={[FONTS.h6, { color: COLORS.primary1 }]}>{`Common area cleaning`}</Text>
           <Text
             style={[FONTS.body5, { color: COLORS.primary2, lineHeight: 16 }]}
           >{`(eg. Door knobs, activity room surfaces, hand rails, toilets, staff rooms, dining rooms)`}</Text>
+        </View>
+        <View style={{ flex: 0.3, alignItems: "flex-start" }}>
+          <Switch
+            trackColor={{ false: "#767577", true: "#05c46b" }}
+            thumbColor={commonAreaCleaned ? COLORS.white : COLORS.white}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={commonAreaCleaned}
+          />
         </View>
       </View>
 

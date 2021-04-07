@@ -30,7 +30,6 @@ const blockNameFormatter = (blockName) => {
 export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
   const dispatch = useDispatch();
   const renderItem = ({ item }) => {
-    // console.log("see this is item--------------------->", item);
     const { id, blockName, rooms } = item;
     return (
       <TouchableOpacity
@@ -64,15 +63,38 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
           ]}
         >
           <View
-            style={[
-              blockStyle(blockName),
-              {
-                width: 30,
-                height: 30,
-                borderRadius: 15,
-              },
-            ]}
-          />
+            style={{
+              height: 30,
+              width: 30,
+              borderWidth: 0,
+              borderColor: "transparent",
+              borderRadius: 15,
+              overflow: "hidden",
+              flexDirection: "row",
+              transform: [{ rotate: `${45}deg` }],
+            }}
+          >
+            <View
+              style={[
+                blockStyle(blockName),
+                {
+                  width: 15,
+                  height: 30,
+                  // borderRadius: 7.5,
+                },
+              ]}
+            />
+            <View
+              style={[
+                blockStyle(blockName === "pinkBlue" ? "blue" : blockName),
+                {
+                  width: 15,
+                  height: 30,
+                  // borderRadius: 15,
+                },
+              ]}
+            />
+          </View>
         </View>
         <Text
           style={{
