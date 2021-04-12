@@ -2,7 +2,7 @@ import { COLORS } from "../../constants/theme";
 
 const roomButtonStyle = {
   defaultStyle: {
-    backgroundColor: COLORS.light2,
+    backgroundColor: COLORS.light4,
     color: COLORS.primary1,
     borderWidth: 2,
     borderColor: COLORS.primary2,

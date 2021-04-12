@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   Switch,
+  Platform,
   FlatList,
   SafeAreaView,
   ActivityIndicator,
@@ -18,6 +19,11 @@ import RowElements from "../../component/RowElements";
 import RoomBlockComponent from "./RoomBlockComponent";
 import CleaningLog from "../CleaningLog/CleaningLog";
 import { SIZES, FONTS, COLORS } from "../../constants/theme";
+import FooterButton from "../../component/FooterButton";
+import TitleWithDescription from "../../component/TitleWithDescriptionComponent";
+import PageTemplate from "../../component/PageTemplate";
+
+const isPlatformIos = Platform.OS === "ios";
 
 const NUM_COLL = 3;
 
@@ -52,11 +58,8 @@ const HomeScreen = (props) => {
   //   });
 
   return (
-    <View style={[commonStyle.containerWrapper, { flex: 1, backgroundColor: COLORS.light3 }]}>
-      <View style={commonStyle.titleContainer}>
-        <Text style={[commonStyle.titleText, FONTS.body2]}>Block</Text>
-        <Text style={[commonStyle.descriptionText, FONTS.body5]}>Slect block to access rooms</Text>
-      </View>
+    <PageTemplate>
+      <TitleWithDescription title="Block" description="Slect block to access rooms" />
       {overlay && (
         <View
           style={{
@@ -64,7 +67,6 @@ const HomeScreen = (props) => {
             position: "absolute",
             backgroundColor: "#ffffff",
             borderRadius: 4,
-            // padding: 5,
             zIndex: 2,
             shadowColor: "#000",
             shadowOffset: {
@@ -74,7 +76,7 @@ const HomeScreen = (props) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5,
-            top: 250,
+            top: 245,
             right: 20,
           }}
         >
@@ -141,15 +143,6 @@ const HomeScreen = (props) => {
       <View style={{ marginHorizontal: 20 }}>
         <RoomBlockComponent {...{ roomsBlock, selectedBlock, setSelectedBlock }} />
       </View>
-      {/* <View
-        style={{
-          marginVertical: 20,
-          marginHorizontal: 90,
-          height: 3,
-          borderRadius: 2,
-          backgroundColor: COLORS.light1,
-        }}
-      /> */}
       {overlay && (
         <View
           style={{
@@ -180,14 +173,14 @@ const HomeScreen = (props) => {
             justifyContent: "center",
           }}
         >
-          <Text>No Block selected</Text>
+          <Text style={[FONTS.h1, { color: COLORS.light1 }]}>No Block selected</Text>
         </View>
       )}
       <View
         style={{
           flexDirection: "row",
           alignItems: "center",
-          marginBottom: 70,
+          marginBottom: isPlatformIos ? 70 : 55,
           height: 90,
           borderTopWidth: 0.5,
           borderTopColor: COLORS.light1,
@@ -212,41 +205,14 @@ const HomeScreen = (props) => {
         </View>
       </View>
 
+      <FooterButton
+        onPress={() => navigation.navigate("timeLog")}
+        btnText="Continue"
+        // containerStyle
+        // textStyle
+      />
       {/* <SafeAreaView /> */}
-      <View
-        style={{
-          position: "absolute",
-          bottom: 0,
-          backgroundColor: COLORS.primary,
-          alignItems: "center",
-          justifyContent: "center",
-          // justifyContent: "space-between",
-          height: 70,
-          paddingHorizontal: 10,
-          width: SIZES.width,
-          flexDirection: "row",
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("timeLog")}
-          style={{
-            // position: "absolute",
-            // bottom: 0,
-            // backgroundColor: COLORS.white,
-
-            alignItems: "center",
-            justifyContent: "center",
-            height: 50,
-            width: 150,
-            borderRadius: 8,
-            // width: SIZES.width,
-            // marginHorizontal: -20,
-          }}
-        >
-          <Text style={[FONTS.body3, { color: COLORS.white }]}>Continue</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </PageTemplate>
   );
 };
 export default HomeScreen;

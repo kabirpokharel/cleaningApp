@@ -32,4 +32,19 @@ export default StyleSheet.create({
 
     elevation: 5,
   },
+
+  // Temp code to test scroll card S
+  container: {
+    flex: 1,
+    // paddingTop: 50,
+    // height: 400,
+  },
+  scrollView: {
+    // backgroundColor: "pink",
+    // marginHorizontal: 20,
+  },
+  text: {
+    fontSize: 42,
+  },
+  // Temp code to test scroll card E
 });

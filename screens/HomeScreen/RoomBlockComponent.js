@@ -39,7 +39,7 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
           // padding: SIZES.padding,
           // paddingBottom: SIZES.padding * 2,
           backgroundColor: selectedBlock === id ? COLORS.primary : COLORS.white,
-          borderRadius: SIZES.radius,
+          borderRadius: SIZES.radius * 2,
           alignItems: "center",
           justifyContent: "center",
           marginRight: SIZES.padding,
@@ -71,7 +71,7 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
               borderRadius: 15,
               overflow: "hidden",
               flexDirection: "row",
-              transform: [{ rotate: `${45}deg` }],
+              // transform: [{ rotate: `${45}deg` }],
             }}
           >
             <View
@@ -99,8 +99,8 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
         <Text
           style={{
             marginTop: SIZES.padding,
-            color: selectedBlock === id ? COLORS.white : COLORS.dark1,
-            ...FONTS.body5,
+            color: selectedBlock === id ? COLORS.white : COLORS.primary1,
+            ...FONTS.body6,
           }}
         >
           {blockNameFormatter(blockName)}
@@ -116,7 +116,7 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
       showsHorizontalScrollIndicator={false}
       keyExtractor={(item) => `${item.id}`}
       renderItem={renderItem}
-      contentContainerStyle={{ paddingVertical: SIZES.padding * 2 }}
+      contentContainerStyle={{ paddingTop: SIZES.padding * 2, paddingBottom: 8 }}
     />
   );
 };

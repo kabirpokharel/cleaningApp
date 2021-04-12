@@ -6,8 +6,8 @@ const commonStyle = StyleSheet.create({
     // marginHorizontal: 20,
   },
   titleContainer: {
-    marginHorizontal: 20,
-    marginTop: 30,
+    paddingHorizontal: 20,
+    paddingTop: 30,
   },
   titleText: {
     color: COLORS.primary1,

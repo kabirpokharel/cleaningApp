@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { View, Platform, Text, StyleSheet } from "react-native";
+import { View, Platform, Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import moment from "moment";
+
 import { deleteTimeLog, initilizeTimeLog } from "../../redux/actions";
 import TimePicker from "../../container/TimePicker";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import styles from "./timeLogStyle";
 import commonStyle from "../style";
 import { COLORS, SIZES, FONTS } from "../../constants/theme";
+import FooterButton from "../../component/FooterButton";
+import TitleWithDescriptionComponent, {
+  TitleDescription,
+} from "../../component/TitleWithDescriptionComponent";
+import PageTemplate from "../../component/PageTemplate";
 
 const isPlatformIos = Platform.OS === "ios";
 
@@ -68,7 +72,9 @@ const TimeLogFeedback = ({ feedbackString, defaultColor, errorColor }) => {
     feedbackString = "*Enter both start and end time";
   }
   return (
-    <Text style={{ fontSize: 10, color: hasError ? errorColor : defaultColor }}>
+    <Text
+      style={[hasError ? FONTS.body6 : FONTS.h6, { color: hasError ? errorColor : defaultColor }]}
+    >
       {feedbackString}
     </Text>
   );
@@ -118,21 +124,19 @@ const TimeLog = (props) => {
   };
 
   return (
-    <View style={[styles.containerWrapper, { flex: 1, backgroundColor: COLORS.light3 }]}>
-      <View style={commonStyle.titleContainer}>
-        <Text style={[commonStyle.titleText, FONTS.body2]}>Set time</Text>
-        <Text style={[commonStyle.descriptionText, FONTS.body5]}>Enter start and end time</Text>
-      </View>
-      <View style={{ flex: 1 }}>
+    <PageTemplate>
+      <TitleWithDescriptionComponent title="Set time" description="Enter start and end time">
         {overlay && (
           <View
             style={{
               position: "absolute",
-              height: SIZES.height,
-              width: SIZES.width,
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
               opacity: 0.3,
               backgroundColor: "#000",
-              zIndex: 1,
+              zIndex: 2,
             }}
           >
             <TouchableOpacity
@@ -144,184 +148,215 @@ const TimeLog = (props) => {
             />
           </View>
         )}
-
-        {reduxTimeArray.map((val, inputId) => (
-          <React.Fragment key={inputId}>
+      </TitleWithDescriptionComponent>
+      <SafeAreaView style={[{ flex: 1, marginBottom: isPlatformIos ? 70 : 55 }]}>
+        <ScrollView style={styles.scrollView}>
+          {overlay && (
             <View
-              key={inputId}
               style={{
-                borderRadius: 4,
-                margin: 10,
-                padding: 10,
-                width: "80%",
-                marginBottom: 20,
-                zIndex: 3,
-                backgroundColor: "white",
-                shadowColor: "#000",
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.3,
-                elevation: 5,
+                position: "absolute",
+                height: SIZES.height,
+                width: SIZES.width,
+                opacity: 0.3,
+                backgroundColor: "#000",
+                zIndex: 1,
               }}
             >
-              <View>
-                {overlay && (
-                  <View
-                    style={{
-                      position: "absolute",
-                      top: -10,
-                      left: -10,
-                      right: -10,
-                      bottom: -10,
-                      opacity: 0.3,
-                      backgroundColor: "#000",
-                      zIndex: 1,
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => setOverlay(false)}
-                      style={{
-                        height: SIZES.height,
-                        width: SIZES.width,
-                      }}
-                    />
-                  </View>
-                )}
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Text style={[commonStyle.titleText, FONTS.body4]}>
-                    Time log no.{inputId + 1}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setOverlay(true);
-                      setShowTimeEditpopup(inputId);
-                    }}
-                    style={{ height: 40, width: 40, alignItems: "center" }}
-                  >
-                    <AntDesign name="ellipsis1" size={24} color="#00000080" />
-                  </TouchableOpacity>
-                </View>
-                {overlay && showTimeEditPopup == inputId && (
-                  <View
-                    style={{
-                      width: 150,
-                      position: "absolute",
-                      backgroundColor: "#fff",
-                      borderRadius: 4,
-                      // padding: 5,
-                      zIndex: 3,
-                      right: -5,
-                      top: -5,
-                      shadowColor: "#000",
-                      shadowOffset: {
-                        width: 0,
-                        height: 2,
-                      },
-                      shadowOpacity: 0.25,
-                      shadowRadius: 3.84,
+              <TouchableOpacity
+                onPress={() => setOverlay(false)}
+                style={{
+                  height: SIZES.height,
+                  width: SIZES.width,
+                }}
+              />
+            </View>
+          )}
 
-                      elevation: 5,
-                    }}
-                  >
-                    <TouchableOpacity
-                      disabled={reduxTimeArray.length == 1}
-                      style={{
-                        paddingHorizontal: 8,
-                        paddingVertical: 5,
-                        justifyContent: "center",
-                      }}
-                      onPress={() => {
-                        setOverlay(false);
-                        dispatch(deleteTimeLog(inputId));
-                      }}
-                    >
-                      <Text
-                        style={[
-                          FONTS.body4,
-                          { color: reduxTimeArray.length == 1 ? COLORS.light1 : COLORS.primary },
-                        ]}
-                      >
-                        Delete
-                      </Text>
-                    </TouchableOpacity>
+          {reduxTimeArray.map((val, inputId) => (
+            <React.Fragment key={inputId}>
+              <View
+                key={inputId}
+                style={{
+                  borderRadius: 4,
+                  margin: 10,
+                  padding: 10,
+                  width: "80%",
+                  marginBottom: 20,
+                  zIndex: 3,
+                  backgroundColor: "white",
+                  shadowColor: "#000",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.3,
+                  elevation: 5,
+                }}
+              >
+                <View>
+                  {overlay && (
                     <View
                       style={{
-                        marginHorizontal: 5,
-                        borderBottomColor: COLORS.light1,
-                        borderBottomWidth: 1,
-                      }}
-                    />
-                    <TouchableOpacity
-                      style={{
-                        paddingHorizontal: 8,
-                        paddingVertical: 5,
-                        justifyContent: "center",
-                      }}
-                      onPress={() => {
-                        alert("watnt to Reset??");
+                        position: "absolute",
+                        top: -10,
+                        left: -10,
+                        right: -10,
+                        bottom: -10,
+                        opacity: 0.3,
+                        backgroundColor: "#000",
+                        zIndex: 1,
                       }}
                     >
-                      <Text
-                        style={[
-                          FONTS.body4,
-                          { color: reduxTimeArray.length == 1 ? COLORS.light1 : COLORS.primary },
-                        ]}
-                      >
-                        Reset
-                      </Text>
+                      <TouchableOpacity
+                        onPress={() => setOverlay(false)}
+                        style={{
+                          height: SIZES.height,
+                          width: SIZES.width,
+                        }}
+                      />
+                    </View>
+                  )}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text style={[commonStyle.titleText, FONTS.h5, { color: COLORS.primary2 }]}>
+                      Time log {inputId + 1}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setOverlay(true);
+                        setShowTimeEditpopup(inputId);
+                      }}
+                      style={{ height: 40, width: 40, alignItems: "center" }}
+                    >
+                      <AntDesign name="ellipsis1" size={24} color="#00000080" />
                     </TouchableOpacity>
                   </View>
-                )}
-                <View style={{ flexDirection: "row", height: 40 }}>
-                  <View style={{ flex: 1 }}>
-                    <TimePicker {...{ inputId, timeType: "start" }} />
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <TimePicker {...{ inputId, timeType: "end" }} />
-                  </View>
-                </View>
-                <View style={{ height: 20 }}>
-                  {!!reduxTimeArray.length &&
-                    reduxTimeArray[inputId] &&
-                    Object.keys(reduxTimeArray[inputId]).length > 1 && (
-                      <TimeLogFeedback
-                        feedbackString={reduxTimeArray[inputId].status}
-                        defaultColor={"grey"}
-                        errorColor={COLORS.error}
+                  {overlay && showTimeEditPopup == inputId && (
+                    <View
+                      style={{
+                        width: 150,
+                        position: "absolute",
+                        backgroundColor: "#fff",
+                        borderRadius: 4,
+                        zIndex: 3,
+                        right: -5,
+                        top: -5,
+                        shadowColor: "#000",
+                        shadowOffset: {
+                          width: 0,
+                          height: 2,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 3.84,
+
+                        elevation: 5,
+                      }}
+                    >
+                      <TouchableOpacity
+                        disabled={reduxTimeArray.length == 1}
+                        style={{
+                          paddingHorizontal: 8,
+                          paddingVertical: 5,
+                          justifyContent: "center",
+                        }}
+                        onPress={() => {
+                          setOverlay(false);
+                          dispatch(deleteTimeLog(inputId));
+                        }}
+                      >
+                        <Text
+                          style={[
+                            FONTS.body4,
+                            {
+                              color: reduxTimeArray.length == 1 ? COLORS.light1 : COLORS.primary,
+                            },
+                          ]}
+                        >
+                          Delete
+                        </Text>
+                      </TouchableOpacity>
+                      <View
+                        style={{
+                          marginHorizontal: 5,
+                          borderBottomColor: COLORS.light1,
+                          borderBottomWidth: 1,
+                        }}
                       />
-                    )}
+                      <TouchableOpacity
+                        style={{
+                          paddingHorizontal: 8,
+                          paddingVertical: 5,
+                          justifyContent: "center",
+                        }}
+                        onPress={() => {
+                          alert("watnt to Reset??");
+                        }}
+                      >
+                        <Text
+                          style={[
+                            FONTS.body4,
+                            {
+                              color: reduxTimeArray.length == 1 ? COLORS.light1 : COLORS.primary,
+                            },
+                          ]}
+                        >
+                          Reset
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: 40,
+                    }}
+                  >
+                    <View>
+                      <TimePicker {...{ inputId, timeType: "start" }} />
+                    </View>
+                    <View style={{ width: 25 }} />
+                    <View>
+                      <TimePicker {...{ inputId, timeType: "end" }} />
+                    </View>
+                  </View>
+                  <View style={{ height: 20, marginTop: 10, alignItems: "center" }}>
+                    {!!reduxTimeArray.length &&
+                      reduxTimeArray[inputId] &&
+                      Object.keys(reduxTimeArray[inputId]).length > 1 && (
+                        <TimeLogFeedback
+                          feedbackString={reduxTimeArray[inputId].status}
+                          defaultColor={COLORS.primary1}
+                          errorColor={COLORS.secondary}
+                        />
+                      )}
+                  </View>
                 </View>
               </View>
-            </View>
-          </React.Fragment>
-        ))}
-        <AddCardButton
-          disabled={!(timeLogErrorCheck(reduxTimeArray) === "no error")}
-          onPress={() => {
-            dispatch(initilizeTimeLog(reduxTimeArray.length));
-          }}
-          activeColor={COLORS.primary}
-          disableColor={COLORS.light1}
-        />
-      </View>
-      <TouchableOpacity
+            </React.Fragment>
+          ))}
+          <AddCardButton
+            disabled={!(timeLogErrorCheck(reduxTimeArray) === "no error")}
+            onPress={() => {
+              dispatch(initilizeTimeLog(reduxTimeArray.length));
+            }}
+            activeColor={COLORS.primary}
+            disableColor={COLORS.light1}
+          />
+        </ScrollView>
+      </SafeAreaView>
+      <FooterButton
         onPress={() => continueButtonAction(reduxTimeArray, navigation)}
+        btnText="Summary"
         disabled={overlay}
-        style={{
-          backgroundColor: COLORS.primary,
-          alignItems: "center",
-          justifyContent: "center",
-          height: 50,
-          marginHorizontal: -20,
-        }}
-      >
-        <Text>Summary</Text>
-      </TouchableOpacity>
-    </View>
+        // containerStyle
+        // textStyle
+      />
+    </PageTemplate>
+    // <View style={[styles.containerWrapper, { flex: 1, backgroundColor: COLORS.light3 }]}>
+    // </View>
   );
 };
 export default TimeLog;
