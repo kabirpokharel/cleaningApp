@@ -14,6 +14,7 @@ import TitleWithDescriptionComponent, {
   TitleDescription,
 } from "../../component/TitleWithDescriptionComponent";
 import PageTemplate from "../../component/PageTemplate";
+import CardComponent from "../../component/CardComponent";
 
 const isPlatformIos = Platform.OS === "ios";
 
@@ -125,7 +126,11 @@ const TimeLog = (props) => {
 
   return (
     <PageTemplate>
-      <TitleWithDescriptionComponent title="Set time" description="Enter start and end time">
+      <TitleWithDescriptionComponent
+        title="Set time"
+        description="Enter start and end time"
+        containerStyle={{ paddingBottom: 20 }}
+      >
         {overlay && (
           <View
             style={{
@@ -174,20 +179,12 @@ const TimeLog = (props) => {
 
           {reduxTimeArray.map((val, inputId) => (
             <React.Fragment key={inputId}>
-              <View
+              <CardComponent
                 key={inputId}
-                style={{
-                  borderRadius: 4,
-                  margin: 10,
-                  padding: 10,
-                  width: "80%",
-                  marginBottom: 20,
+                cardStyle={{
+                  width: 330,
+                  marginBottom: 25,
                   zIndex: 3,
-                  backgroundColor: "white",
-                  shadowColor: "#000",
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.3,
-                  elevation: 5,
                 }}
               >
                 <View>
@@ -219,7 +216,7 @@ const TimeLog = (props) => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Text style={[commonStyle.titleText, FONTS.h5, { color: COLORS.primary2 }]}>
+                    <Text style={[commonStyle.titleText, FONTS.body3, { color: COLORS.primary }]}>
                       Time log {inputId + 1}
                     </Text>
                     <TouchableOpacity
@@ -334,7 +331,7 @@ const TimeLog = (props) => {
                       )}
                   </View>
                 </View>
-              </View>
+              </CardComponent>
             </React.Fragment>
           ))}
           <AddCardButton

@@ -1,91 +1,75 @@
-import React from "react";
-import { Button, View, StyleSheet, Text, Dimensions } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { Formik } from "formik";
-import * as yup from "yup";
-import { signinUser } from "../redux/actions";
-import InputFieldAdaptor from "../component/InputFieldAdaptor";
-import { TouchableNativeFeedback } from "react-native-gesture-handler";
+import React, { useRef } from "react";
+import { Text, View, Keyboard } from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-var screenWidth = Dimensions.get("window").width; //full width
-var screenHeight = Dimensions.get("window").height; //full height
+import TextInput from "../component/InputFieldAdaptor";
+import Button from "../component/Button";
+import { FONTS } from "../constants/theme";
 
-const reviewSchema = yup.object({
-  email: yup.string().email().required("Email is required"),
-  password: yup.string().required("Password is required"),
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string().min(2, "Too Short!").max(10, "Too Long!").required("Required"),
 });
 
-const SigninForm = (props) => {
-  const dispatch = useDispatch();
-  const authData = useSelector((state) => {
-    // console.log("this is auth state in reudx==> ", state);
-    return state.auth;
+const Login = () => {
+  const { handleChange, handleBlur, handleSubmit, values, errors, touched } = useFormik({
+    validationSchema: LoginSchema,
+    initialValues: { email: "", password: "" },
+    onSubmit: (values) => alert(`Email: ${values.email}, Password: ${values.password}`),
   });
 
+  const password = useRef(null);
+
   return (
-    <View style={styles.containerWrapper}>
-      {/* <Title style={styles.titleText}>Signin</Title>
-      {!!authData.error && (
-        <View>
-          <Text style={{ color: colors.error }}>{`this is error -> ${authData.error}`}</Text>
-        </View>
-      )}
-      <Formik
-        initialValues={{ email: "", password: "" }}
-        validateOnChange={false}
-        validateOnBlur={false}
-        validationSchema={reviewSchema}
-        onSubmit={(values, actions) => {
-          dispatch(signinUser(values));
-          actions.resetForm();
-        }}
-      >
-        {({ handleSubmit, handleChange, handleBlur, touched, errors, values }) => (
-          <View>
-            <InputFieldAdaptor
-              style={styles.input}
-              label="E-mail"
-              onChangeText={handleChange("email")}
-              onBlur={handleBlur("email")}
-              value={values.email}
-              touched={touched.email}
-              error={errors.email}
-            />
-            <InputFieldAdaptor
-              style={styles.input}
-              label="Password"
-              onChangeText={handleChange("password")}
-              onBlur={handleBlur("password")}
-              value={values.password}
-              touched={touched.password}
-              error={errors.password}
-            />
-            <ButtonAdaptor mode="contained" onPress={handleSubmit}>
-              Submit
-            </ButtonAdaptor>
-          </View>
-        )}
-      </Formik> */}
-    </View>
+    <TouchableWithoutFeedback
+      onPress={Keyboard.dismiss}
+      style={{
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Text style={[FONTS.body5, { color: "#223e4b", fontSize: 20, marginBottom: 16 }]}>Login</Text>
+      <View style={{ paddingHorizontal: 32, marginBottom: 16, width: "100%" }}>
+        <TextInput
+          icon="mail"
+          placeholder="Enter your email"
+          autoCapitalize="none"
+          autoCompleteType="email"
+          keyboardType="email-address"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+          onChangeText={handleChange("email")}
+          onBlur={handleBlur("email")}
+          error={errors.email}
+          touched={touched.email}
+          onSubmitEditing={() => password.current?.focus()}
+        />
+      </View>
+      <View style={{ paddingHorizontal: 32, marginBottom: 16, width: "100%" }}>
+        <TextInput
+          ref={password}
+          icon="key"
+          placeholder="Enter your password"
+          secureTextEntry
+          autoCompleteType="password"
+          autoCapitalize="none"
+          keyboardAppearance="dark"
+          returnKeyType="go"
+          returnKeyLabel="go"
+          onChangeText={handleChange("password")}
+          onBlur={handleBlur("password")}
+          error={errors.password}
+          touched={touched.password}
+          onSubmitEditing={() => handleSubmit()}
+        />
+      </View>
+      <Button label="Login" onPress={handleSubmit} />
+    </TouchableWithoutFeedback>
   );
 };
 
-export default SigninForm;
-
-const styles = StyleSheet.create({
-  containerWrapper: {
-    marginHorizontal: 20,
-  },
-  titleText: {
-    marginBottom: 15,
-    fontSize: 25,
-  },
-  paragraph: {
-    marginVertical: 8,
-    lineHeight: 20,
-  },
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-});
+export default Login;

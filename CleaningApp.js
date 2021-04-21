@@ -9,6 +9,7 @@ import HomeStack from "./navigation/homeStack";
 import DrawerStack from "./navigation/drawerStack";
 import { SigninScreen, SignupScreen } from "./screens";
 import { COLORS, SIZES, FONTS } from "./constants/theme";
+import AuthStack from "./navigation/authStack";
 
 const Stack = createStackNavigator();
 
@@ -19,12 +20,12 @@ const NavigatePage = (props) => {
   });
   return (
     <NavigationContainer>
-      {/* {!authData.isSignedIn ? ( */}
-      {!authData.isSignedIn && false ? (
-        <Stack.Navigator>
-          <Stack.Screen name="signin" component={SigninScreen} />
-        </Stack.Navigator>
+      {!authData.isSignedIn ? (
+        <AuthStack />
       ) : (
+        // <Stack.Navigator>
+        //   <Stack.Screen name="signin" component={SigninScreen} />
+        // </Stack.Navigator>
         <DrawerStack />
       )}
     </NavigationContainer>

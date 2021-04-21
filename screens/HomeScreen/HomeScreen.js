@@ -76,7 +76,7 @@ const HomeScreen = (props) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5,
-            top: 245,
+            top: 255,
             right: 20,
           }}
         >
@@ -173,7 +173,7 @@ const HomeScreen = (props) => {
             justifyContent: "center",
           }}
         >
-          <Text style={[FONTS.h1, { color: COLORS.light1 }]}>No Block selected</Text>
+          <Text style={[FONTS.h1, { color: COLORS.light1 }]}>No Block Selected</Text>
         </View>
       )}
       <View

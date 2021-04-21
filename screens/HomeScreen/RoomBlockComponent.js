@@ -38,11 +38,15 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
           width: 70,
           // padding: SIZES.padding,
           // paddingBottom: SIZES.padding * 2,
+          // borderWidth: 0.3,
+          // borderColor: COLORS.light4,
           backgroundColor: selectedBlock === id ? COLORS.primary : COLORS.white,
-          borderRadius: SIZES.radius * 2,
+          borderRadius: SIZES.radius * 2.1,
           alignItems: "center",
           justifyContent: "center",
           marginRight: SIZES.padding,
+          marginRight: SIZES.padding - SIZES.padding / 4,
+          marginLeft: SIZES.padding / 4,
           ...styles.shadow,
         }}
         onPress={() => {
@@ -71,7 +75,6 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
               borderRadius: 15,
               overflow: "hidden",
               flexDirection: "row",
-              // transform: [{ rotate: `${45}deg` }],
             }}
           >
             <View
@@ -127,12 +130,12 @@ const styles = StyleSheet.create({
   //     backgroundColor: COLORS.lightGray4,
   //   },
   shadow: {
-    shadowColor: "#000",
+    shadowColor: COLORS.dark1,
     shadowOffset: {
       width: 0,
       height: 3,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 1,
   },

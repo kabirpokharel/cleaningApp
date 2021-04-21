@@ -4,7 +4,7 @@ import { COLORS, FONTS, SIZES } from "../constants/theme";
 
 const PageTemplate = ({ children }) => {
   return (
-    <View style={[styles.containerWrapper, { flex: 1, backgroundColor: COLORS.light4 }]}>
+    <View style={[styles.containerWrapper, { flex: 1, backgroundColor: COLORS.white }]}>
       {children}
     </View>
   );

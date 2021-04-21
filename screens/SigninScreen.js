@@ -1,6 +1,6 @@
 import React from "react";
-import { Keyboard, View } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { View } from "react-native";
+// import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import SigninForm from "../forms/SigninForm";
 
 const SigninScreen = (props) => {
@@ -10,9 +10,7 @@ const SigninScreen = (props) => {
         flex: 1,
       }}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SigninForm />
-      </TouchableWithoutFeedback>
+      <SigninForm />
     </View>
   );
 };

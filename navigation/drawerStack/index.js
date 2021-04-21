@@ -15,16 +15,8 @@ const DrawerStack = () => {
         name="Signin"
         component={SigninScreen}
       /> */}
-      <Drawer.Screen
-        options={{ title: "Home" }}
-        name="homeStack"
-        component={HomeStack}
-      />
-      {/* <Drawer.Screen
-        options={{ title: "Settings" }}
-        name="authStack"
-        component={AuthStack}
-      /> */}
+      <Drawer.Screen options={{ title: "Home" }} name="homeStack" component={HomeStack} />
+      <Drawer.Screen options={{ title: "Settings" }} name="authStack" component={AuthStack} />
     </Drawer.Navigator>
   );
 };

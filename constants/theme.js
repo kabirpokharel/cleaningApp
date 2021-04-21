@@ -6,7 +6,8 @@ export const COLORS = {
   //   primary: "#FC6D3F", // orange
   //   secondary: "#CDCDD2", // gray
 
-  primary: "#034748",
+  primary: "#017968",
+  // primary: "#034748",
   primary1: "#5d867a",
   primary2: "#9ab4ac",
   secondary: "#fd5523",
@@ -69,4 +70,26 @@ export const FONTS = {
   body4: { fontFamily: "Roboto-Regular", fontSize: SIZES.body4, lineHeight: 22 },
   body5: { fontFamily: "Roboto-Regular", fontSize: SIZES.body5, lineHeight: 20 },
   body6: { fontFamily: "Roboto-Regular", fontSize: SIZES.body6, lineHeight: 18 },
+};
+
+export const blockColor = (blockName) => {
+  switch (blockName) {
+    case "green":
+      return "#05c46b";
+      break;
+    case "yellow":
+      return "#ffd32a";
+      break;
+    case "gold":
+      return "#ccae62";
+      break;
+    case "blue":
+      return "#99ccff";
+      break;
+    case "pinkBlue":
+      return "#fc8eac";
+      break;
+    default:
+      return "grey";
+  }
 };

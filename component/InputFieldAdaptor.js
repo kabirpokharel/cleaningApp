@@ -1,36 +1,34 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { forwardRef } from "react";
+import { TextInput as RNTextInput, View, StyleSheet } from "react-native";
+import { Entypo as Icon } from "@expo/vector-icons";
 
-const InputFieldAdaptor = ({ style, touched, error, ...rest }) => {
-  console.log("rest==>", rest);
+const TextInput = forwardRef(({ icon, error, touched, ...otherProps }, ref) => {
+  const validationColor = !touched ? "#223e4b" : error ? "#FF5A5F" : "#223e4b";
   return (
-    <>
-      <TextInputAdaptor
-        style={styles.input}
-        {...rest}
-        underlineColorAndroid="transparent"
-        mode={rest.mode ? rest.mode : "outlined"}
-        error={!!(touched && error)}
-      />
-      {touched && error ? (
-        <View>
-          <Text style={styles.errorText}>{error}</Text>
-        </View>
-      ) : null}
-    </>
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        height: 48,
+        borderRadius: 8,
+        borderColor: validationColor,
+        borderWidth: StyleSheet.hairlineWidth,
+        padding: 8,
+      }}
+    >
+      <View style={{ padding: 8 }}>
+        <Icon name={icon} color={validationColor} size={16} />
+      </View>
+      <View style={{ flex: 1 }}>
+        <RNTextInput
+          underlineColorAndroid="transparent"
+          placeholderTextColor="rgba(34, 62, 75, 0.7)"
+          ref={ref}
+          {...otherProps}
+        />
+      </View>
+    </View>
   );
-};
-
-export default InputFieldAdaptor;
-
-const styles = StyleSheet.create({
-  input: {
-    borderWidth: 0,
-    height: 40,
-  },
-  errorText: {
-    color: "red",
-    marginTop: 2,
-    marginBottom: 6,
-  },
 });
+
+export default TextInput;

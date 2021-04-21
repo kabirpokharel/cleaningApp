@@ -93,7 +93,35 @@ const HomeStack = ({ navigation }) => {
           headerRight: () => <View style={{ paddingHorizontal: 10 }} />,
         }}
       />
-      <Stack.Screen name="summaryScreen" component={SummaryScreen} />
+      <Stack.Screen
+        name="summaryScreen"
+        component={SummaryScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+          },
+          screenOptions: { headerTitleAlign: "center" },
+          headerTitle: () => (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+              <LogoTitle title={"Time Log"} />
+            </View>
+          ),
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{
+                paddingHorizontal: 10,
+                marginBottom: 9,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <AntDesign name="arrowleft" size={33} color={COLORS.primary2} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => <View style={{ paddingHorizontal: 10 }} />,
+        }}
+      />
     </Stack.Navigator>
   );
 };
