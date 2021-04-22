@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "react-native";
+import { COLORS } from "../constants/theme";
 // import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import SigninForm from "../forms/SigninForm";
 
@@ -8,6 +9,7 @@ const SigninScreen = (props) => {
     <View
       style={{
         flex: 1,
+        backgroundColor: COLORS.white,
       }}
     >
       <SigninForm />

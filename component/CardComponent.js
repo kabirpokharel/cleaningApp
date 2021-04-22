@@ -7,8 +7,10 @@ const CardComponent = ({ children, cardStyle }) => {
     <View
       style={[
         {
-          margin: 10,
-          padding: 10,
+          marginHorizontal: 10,
+          marginVertical: 10,
+          paddingHorizontal: 10,
+          paddingVertical: 10,
           borderRadius: SIZES.radius / 4,
           backgroundColor: COLORS.white,
           shadowColor: COLORS.dark1,

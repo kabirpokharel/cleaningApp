@@ -35,7 +35,7 @@ export const SIZES = {
   padding: 16,
 
   // font sizes
-  largeTitle: 50,
+  largeTitle: 40,
   h1: 30,
   h2: 28,
   h3: 22,
@@ -56,20 +56,20 @@ export const SIZES = {
 };
 
 export const FONTS = {
-  largeTitle: { fontFamily: "Roboto-regular", fontSize: SIZES.largeTitle, lineHeight: 55 },
-  h1: { fontFamily: "Roboto-Black", fontSize: SIZES.h1, lineHeight: 36 },
-  h2: { fontFamily: "Roboto-Bold", fontSize: SIZES.h2, lineHeight: 33 },
-  h3: { fontFamily: "Roboto-Bold", fontSize: SIZES.h3, lineHeight: 25 },
-  h4: { fontFamily: "Roboto-Bold", fontSize: SIZES.h4, lineHeight: 22 },
-  h5: { fontFamily: "Roboto-Bold", fontSize: SIZES.h5, lineHeight: 20 },
-  h6: { fontFamily: "Roboto-Bold", fontSize: SIZES.h6, lineHeight: 18 },
-  h7: { fontFamily: "Roboto-Bold", fontSize: SIZES.h6, lineHeight: 18 },
-  body1: { fontFamily: "Roboto-Regular", fontSize: SIZES.body1, lineHeight: 36 },
-  body2: { fontFamily: "Roboto-Regular", fontSize: SIZES.body2, lineHeight: 30 },
-  body3: { fontFamily: "Roboto-Regular", fontSize: SIZES.body3, lineHeight: 25 },
-  body4: { fontFamily: "Roboto-Regular", fontSize: SIZES.body4, lineHeight: 22 },
-  body5: { fontFamily: "Roboto-Regular", fontSize: SIZES.body5, lineHeight: 20 },
-  body6: { fontFamily: "Roboto-Regular", fontSize: SIZES.body6, lineHeight: 18 },
+  largeTitle: { fontFamily: "RobotoRegular", fontSize: SIZES.largeTitle, lineHeight: 40 },
+  h1: { fontFamily: "RobotoBlack", fontSize: SIZES.h1, lineHeight: 36 },
+  h2: { fontFamily: "RobotoBold", fontSize: SIZES.h2, lineHeight: 33 },
+  h3: { fontFamily: "RobotoBold", fontSize: SIZES.h3, lineHeight: 25 },
+  h4: { fontFamily: "RobotoBold", fontSize: SIZES.h4, lineHeight: 22 },
+  h5: { fontFamily: "RobotoBold", fontSize: SIZES.h5, lineHeight: 20 },
+  h6: { fontFamily: "RobotoBold", fontSize: SIZES.h6, lineHeight: 18 },
+  h7: { fontFamily: "RobotoBold", fontSize: SIZES.h6, lineHeight: 18 },
+  body1: { fontFamily: "RobotoRegular", fontSize: SIZES.body1, lineHeight: 36 },
+  body2: { fontFamily: "RobotoRegular", fontSize: SIZES.body2, lineHeight: 30 },
+  body3: { fontFamily: "RobotoRegular", fontSize: SIZES.body3, lineHeight: 25 },
+  body4: { fontFamily: "RobotoRegular", fontSize: SIZES.body4, lineHeight: 22 },
+  body5: { fontFamily: "RobotoRegular", fontSize: SIZES.body5, lineHeight: 20 },
+  body6: { fontFamily: "RobotoRegular", fontSize: SIZES.body6, lineHeight: 18 },
 };
 
 export const blockColor = (blockName) => {

@@ -1,26 +1,19 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  Dimensions,
-  SafeAreaView,
-} from "react-native";
+import { View, Text, Button, StyleSheet, Dimensions, SafeAreaView } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
 const width = Dimensions.get("window").width; //full width
 const height = Dimensions.get("window").height; //full height
 
 const SettingScreen = (props) => {
-  const { navigation } = props;
+  // const { navigation } = props;
   return (
     <View style={styles.containerWrapper}>
       <SafeAreaView />
       <Text>This is setting Page!!!</Text>
       <Button
         title="Update Profile"
-        onPress={() => navigation.navigate("homeStack", { screen: "Home" })}
+        // onPress={() => navigation.navigate("homeStack", { screen: "Home" })}
       />
       <View style={{ flex: 1, backgroundColor: "blue" }}>
         <View style={{ height: 20 }}></View>

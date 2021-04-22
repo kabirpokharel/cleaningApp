@@ -20,14 +20,7 @@ const NavigatePage = (props) => {
   });
   return (
     <NavigationContainer>
-      {!authData.isSignedIn ? (
-        <AuthStack />
-      ) : (
-        // <Stack.Navigator>
-        //   <Stack.Screen name="signin" component={SigninScreen} />
-        // </Stack.Navigator>
-        <DrawerStack />
-      )}
+      {!authData.isSignedIn ? <AuthStack /> : <DrawerStack />}
     </NavigationContainer>
   );
 };
