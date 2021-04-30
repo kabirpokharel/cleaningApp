@@ -103,7 +103,7 @@ const HomeStack = ({ navigation }) => {
           screenOptions: { headerTitleAlign: "center" },
           headerTitle: () => (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-              <LogoTitle title={"Time Log"} />
+              <LogoTitle title={"Summary"} />
             </View>
           ),
           headerLeft: () => (

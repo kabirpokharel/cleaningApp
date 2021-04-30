@@ -34,8 +34,14 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
     return (
       <TouchableOpacity
         style={{
-          height: 112,
-          width: 70,
+          // height: 70,
+          // width: 112,
+          flexDirection: "row",
+          paddingHorizontal: 10,
+          paddingVertical: 8,
+          // height: 112,
+          // width: 70,
+
           // padding: SIZES.padding,
           // paddingBottom: SIZES.padding * 2,
           // borderWidth: 0.3,
@@ -101,9 +107,9 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
         </View>
         <Text
           style={{
-            marginTop: SIZES.padding,
+            padding: SIZES.padding / 2,
             color: selectedBlock === id ? COLORS.white : COLORS.primary1,
-            ...FONTS.body6,
+            ...FONTS.body5,
           }}
         >
           {blockNameFormatter(blockName)}
@@ -130,13 +136,13 @@ const styles = StyleSheet.create({
   //     backgroundColor: COLORS.lightGray4,
   //   },
   shadow: {
-    shadowColor: COLORS.dark1,
+    shadowColor: COLORS.dark3,
     shadowOffset: {
       width: 0,
       height: 3,
     },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.15,
     shadowRadius: 3,
-    elevation: 1,
+    elevation: 5,
   },
 });

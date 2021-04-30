@@ -17,8 +17,8 @@ export default StyleSheet.create({
   },
   //choose block style s
   blockStyle: {
-    width: 50,
-    height: 50,
+    width: 45,
+    height: 45,
     // borderRadius: 26,
     alignItems: "center",
     justifyContent: "center",

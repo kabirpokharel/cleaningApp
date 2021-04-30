@@ -259,17 +259,20 @@ const SummaryScreen = (props) => {
           <CardComponent
             cardStyle={{
               paddingHorizontal: 10,
-              paddingVertical: 20,
+              // paddingVertical: 20,
               width: SIZES.width - 20,
               borderRadius: SIZES.radius / 2,
             }}
           >
             <View
-              style={{ flexDirection: "row", marginBottom: 15, justifyContent: "space-between" }}
+              style={{
+                flexDirection: "row",
+                marginBottom: 10,
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
             >
-              <Text style={[FONTS.body3, { paddingVertical: 5, color: COLORS.primary }]}>
-                Current Shift Details
-              </Text>
+              <Text style={[FONTS.body3, { color: COLORS.primary }]}>Current Shift Details</Text>
               <TouchableOpacity
                 onPress={() => setViewMore((prevState) => !prevState)}
                 style={{
@@ -289,12 +292,19 @@ const SummaryScreen = (props) => {
             {summaryList.map(({ item, measure }, id) => {
               return <SummaryElement key={id + item} {...{ item, measure }} />;
             })}
+            {console.log(
+              "Object.keys(cleanedRoomsStatus).length---------->",
+              Object.keys(cleanedRoomsStatus)
+            )}
             {viewMore && (
               <View style={{ marginTop: 10 }}>
-                {Object.keys(cleanedRoomsStatus).length &&
+                {Object.keys(cleanedRoomsStatus).length ? (
                   cleanedRoomsStatus.blockSummary.map((block, id) => (
                     <IndividualBlockDetails key={id} block={block} />
-                  ))}
+                  ))
+                ) : (
+                  <Text>No entery found for cleanin log</Text>
+                )}
                 {/* <IndividualBlockDetails blockName="green" />
                  <IndividualBlockDetails blockName="blue" /> */}
               </View>
