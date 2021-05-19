@@ -22,10 +22,10 @@ const signUpValidationSchema = yup.object().shape({
     .matches(/^[A-Za-z ]*$/, "Please enter valid last name")
     .max(40)
     .required("Please enter last name"),
-  phoneNumber: yup
-    .string()
-    .matches(/(04)(\d){8}\b/, "Enter a valid phone number (hint: 04 followed by 8 digits)")
-    .required("Phone number is required"),
+  // phoneNumber: yup
+  //   .string()
+  //   .matches(/(04)(\d){8}\b/, "Enter a valid phone number (hint: 04 followed by 8 digits)")
+  //   .required("Phone number is required"),
   email: yup.string().email("Please enter valid email").required("Email is required"),
   password: yup
     .string()
@@ -88,7 +88,7 @@ const Signup = () => {
         initialValues={{
           fullName: "",
           email: "",
-          phoneNumber: "",
+          // phoneNumber: "",
           password: "",
           confirmPassword: "",
         }}
@@ -113,12 +113,12 @@ const Signup = () => {
               placeholder="Email Address"
               keyboardType="email-address"
             />
-            <Field
+            {/* <Field
               component={InputFieldAdaptor}
               name="phoneNumber"
               placeholder="Phone Number"
               keyboardType="numeric"
-            />
+            /> */}
             <Field
               component={InputFieldAdaptor}
               name="password"

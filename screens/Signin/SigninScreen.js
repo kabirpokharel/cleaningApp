@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Keyboard } from "react-native";
+import { Text, View, Keyboard, Image, KeyboardAvoidingView, SafeAreaView } from "react-native";
 import { COLORS, FONTS } from "../../constants/theme";
 import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 // import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -35,11 +35,12 @@ const OtherLinks = ({ navigation }) => (
 const SigninScreen = (props) => {
   const { navigation } = props;
   return (
-    <View
+    <KeyboardAvoidingView
       style={{
         flex: 1,
         backgroundColor: COLORS.white,
       }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback
         style={{
@@ -48,10 +49,64 @@ const SigninScreen = (props) => {
         }}
         onPress={Keyboard.dismiss}
       >
-        <SigninForm {...{ navigation }} />
-        <OtherLinks {...{ navigation }} />
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <Image
+            resizeMode={"cover"}
+            style={{
+              width: 160,
+              height: undefined,
+              aspectRatio: 1.8,
+              marginTop: 30,
+              marginBottom: 40,
+            }}
+            source={require("../../assets/images/acssLogo.png")}
+          />
+          <View style={{ width: "100%" }}>
+            <Text style={[FONTS.h3, { paddingLeft: 30, paddingBottom: 15, color: COLORS.light2 }]}>
+              Welcome!
+            </Text>
+          </View>
+          <SigninForm {...{ navigation }} />
+          <OtherLinks {...{ navigation }} />
+        </View>
+        <View style={{ height: 100 }} />
+        <SafeAreaView />
       </TouchableWithoutFeedback>
-    </View>
+    </KeyboardAvoidingView>
+    // <View
+    //   style={{
+    //     flex: 1,
+    //     backgroundColor: COLORS.white,
+    //   }}
+    // >
+    //   <TouchableWithoutFeedback
+    //     style={{
+    //       height: "100%",
+    //       justifyContent: "center",
+    //     }}
+    //     onPress={Keyboard.dismiss}
+    //   >
+    //     <View style={{ alignItems: "center", width: "100%" }}>
+    //       <Image
+    //         resizeMode={"cover"}
+    //         style={{
+    //           width: 160,
+    //           height: undefined,
+    //           aspectRatio: 1.8,
+    //           marginTop: 30,
+    //           marginBottom: 40,
+    //         }}
+    //         source={require("../../assets/images/acssLogo.png")}
+    //       />
+    //     </View>
+    //     <SigninForm {...{ navigation }} />
+    //     <OtherLinks {...{ navigation }} />
+    //   </TouchableWithoutFeedback>
+    // </View>
   );
 };
 export default SigninScreen;

@@ -79,14 +79,22 @@ const CleaningLog = (props) => {
       <TitleWithDescription
         title="Rooms"
         description="Select cleaned rooms"
-        containerStyle={{ marginTop: -8, flexDirection: "row", justifyContent: "space-between" }}
+        containerStyle={{
+          marginTop: SIZES.baseSize * -8,
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
       >
         {!overlay && (
           <TouchableOpacity
             onPress={() => {
               setOverlay(true);
             }}
-            style={{ height: 40, width: 40, alignItems: "center" }}
+            style={{
+              height: SIZES.baseSize * 40,
+              width: SIZES.baseSize * 40,
+              alignItems: "center",
+            }}
           >
             <AntDesign name="ellipsis1" size={28} color={COLORS.primary1} />
           </TouchableOpacity>
@@ -95,8 +103,8 @@ const CleaningLog = (props) => {
       <View
         style={{
           flex: 1,
-          marginHorizontal: 20,
-          paddingTop: SIZES.padding * 2 - 6,
+          marginHorizontal: SIZES.baseSize * 20,
+          paddingTop: SIZES.baseSize * 32 - 6,
         }}
       >
         <RowElements
@@ -108,7 +116,7 @@ const CleaningLog = (props) => {
           onLongPress={roomLongPress}
           extraStyle={roomButtonStyle}
         />
-        <View style={{ marginBottom: 50 }} />
+        <View style={{ marginBottom: SIZES.baseSize * 50 }} />
       </View>
     </View>
   );

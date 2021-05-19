@@ -54,36 +54,33 @@ const Login = ({ navigation }) => {
 
   return (
     <>
-      <View style={{ alignItems: "center" }}>
-        <Text style={[FONTS.largeTitle, { marginBottom: 40, color: COLORS.primary1 }]}>ACSS</Text>
-        <View style={{ paddingHorizontal: 32, width: "100%" }}>
-          <Formik
-            initialValues={{
-              email: "",
-              password: "",
-            }}
-            validationSchema={signinValidationSchema}
-            onSubmit={(values) => loginFunc(dispatch, values, navigation)}
-          >
-            {({ handleSubmit, isValid }) => (
-              <>
-                <Field
-                  component={InputFieldAdaptor}
-                  name="email"
-                  placeholder="Email Address"
-                  keyboardType="email-address"
-                />
-                <Field
-                  component={InputFieldAdaptor}
-                  name="password"
-                  placeholder="Password"
-                  secureTextEntry
-                />
-                <SigninButton label={"login"} onPress={handleSubmit} disabled={!isValid} />
-              </>
-            )}
-          </Formik>
-        </View>
+      <View style={{ paddingHorizontal: 32, width: "100%" }}>
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          validationSchema={signinValidationSchema}
+          onSubmit={(values) => loginFunc(dispatch, values, navigation)}
+        >
+          {({ handleSubmit, isValid }) => (
+            <>
+              <Field
+                component={InputFieldAdaptor}
+                name="email"
+                placeholder="Email Address"
+                keyboardType="email-address"
+              />
+              <Field
+                component={InputFieldAdaptor}
+                name="password"
+                placeholder="Password"
+                secureTextEntry
+              />
+              <SigninButton label={"login"} onPress={handleSubmit} disabled={!isValid} />
+            </>
+          )}
+        </Formik>
       </View>
       {/* <SigninButton label={"login"} onPress={handleSubmit} /> */}
     </>

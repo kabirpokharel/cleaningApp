@@ -254,14 +254,19 @@ const SummaryScreen = (props) => {
         containerStyle={{ paddingBottom: 20 }}
       ></TitleWithDescription>
 
-      <View style={{ flex: 1, paddingBottom: isPlatformIos ? 70 : 55 }}>
+      <View
+        style={{
+          flex: 1,
+          paddingBottom: isPlatformIos ? SIZES.baseSize * 70 : SIZES.baseSize * 55,
+        }}
+      >
         <ScrollView>
           <CardComponent
             cardStyle={{
               paddingHorizontal: 10,
               // paddingVertical: 20,
               width: SIZES.width - 20,
-              borderRadius: SIZES.radius / 2,
+              borderRadius: SIZES.baseSize * 8,
             }}
           >
             <View
@@ -281,7 +286,7 @@ const SummaryScreen = (props) => {
                   paddingVertical: 8,
                   alignItems: "center",
                   justifyContent: "center",
-                  borderRadius: SIZES.radius * 2,
+                  borderRadius: SIZES.baseSize * 32,
                 }}
               >
                 <Text style={[FONTS.body5, { color: COLORS.primary }]}>

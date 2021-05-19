@@ -3,12 +3,12 @@ import { SIZES, COLORS, FONTS } from "../../constants/theme";
 
 export default StyleSheet.create({
   titleText: {
-    paddingLeft: 20,
+    paddingLeft: SIZES.baseSize * 20,
     color: COLORS.primary1,
   },
   descriptionText: {
     color: COLORS.primary2,
-    paddingLeft: 20,
+    paddingLeft: SIZES.baseSize * 20,
   },
   blockContainerWrapper: {
     flexDirection: "row",
@@ -17,13 +17,13 @@ export default StyleSheet.create({
   },
   //choose block style s
   blockStyle: {
-    width: 45,
-    height: 45,
+    width: SIZES.baseSize * 45,
+    height: SIZES.baseSize * 45,
     // borderRadius: 26,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 0,
-    borderRadius: 26,
+    borderRadius: SIZES.baseSize * 26,
     borderColor: "transparent",
   },
   //choose block style e

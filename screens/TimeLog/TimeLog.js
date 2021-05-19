@@ -154,7 +154,11 @@ const TimeLog = (props) => {
           </View>
         )}
       </TitleWithDescriptionComponent>
-      <SafeAreaView style={[{ flex: 1, marginBottom: isPlatformIos ? 70 : 55 }]}>
+      <SafeAreaView
+        style={[
+          { flex: 1, marginBottom: isPlatformIos ? SIZES.baseSize * 70 : SIZES.baseSize * 55 },
+        ]}
+      >
         <ScrollView style={styles.scrollView}>
           {overlay && (
             <View

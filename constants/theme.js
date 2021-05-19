@@ -1,5 +1,19 @@
-import { Dimensions } from "react-native";
+import { Dimensions, PixelRatio } from "react-native";
 const { width, height } = Dimensions.get("window");
+const pixelRatio = PixelRatio.get();
+
+const fontSize = (fontObj) => {
+  if (pixelRatio > 2) {
+    let newObj = {};
+    Object.keys(fontObj).forEach((key) => {
+      newObj[key] = fontObj[key] * 0.9;
+    });
+    return newObj;
+  } else return fontObj;
+};
+//  height: pixelRatio > 2 ? 200 * 0.9 : 200,
+// width: pixelRatio > 2 ? 200 * 0.9 : 200,
+// fontSize: pixelRatio > 2 ? 30 * 0.85 : 30;
 
 export const COLORS = {
   // base colors
@@ -27,14 +41,7 @@ export const COLORS = {
   white: "#ffffff",
 };
 
-export const SIZES = {
-  // global sizes
-  base: 8,
-  font: 14,
-  radius: 16,
-  padding: 16,
-
-  // font sizes
+const fontSizeFunc = fontSize({
   largeTitle: 40,
   h1: 30,
   h2: 28,
@@ -49,6 +56,18 @@ export const SIZES = {
   body4: 16,
   body5: 14,
   body6: 12,
+});
+
+export const SIZES = {
+  // global sizes
+  baseSize: pixelRatio > 2 ? 1 * 0.88 : 1,
+  // baseSize: 1,
+  font: 14,
+  radius: 10,
+  padding: 10,
+
+  // font sizes
+  ...fontSizeFunc,
 
   // app dimensions
   width,

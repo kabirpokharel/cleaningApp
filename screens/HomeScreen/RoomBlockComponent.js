@@ -37,22 +37,23 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
           // height: 70,
           // width: 112,
           flexDirection: "row",
-          paddingHorizontal: 10,
-          paddingVertical: 8,
+          paddingHorizontal: SIZES.baseSize * 10,
+          paddingVertical: SIZES.baseSize * 8,
           // height: 112,
           // width: 70,
 
           // padding: SIZES.padding,
-          // paddingBottom: SIZES.padding * 2,
+          // paddingBottom: SIZES.baseSize * 2
           // borderWidth: 0.3,
           // borderColor: COLORS.light4,
+
           backgroundColor: selectedBlock === id ? COLORS.primary : COLORS.white,
-          borderRadius: SIZES.radius * 2.1,
+          borderRadius: SIZES.baseSize * 33.6,
           alignItems: "center",
           justifyContent: "center",
-          marginRight: SIZES.padding,
-          marginRight: SIZES.padding - SIZES.padding / 4,
-          marginLeft: SIZES.padding / 4,
+          marginRight: SIZES.baseSize * 16,
+          marginRight: SIZES.baseSize * 16 - SIZES.baseSize * 4,
+          marginLeft: SIZES.baseSize * 4,
           ...styles.shadow,
         }}
         onPress={() => {
@@ -74,11 +75,11 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
         >
           <View
             style={{
-              height: 30,
-              width: 30,
+              height: SIZES.baseSize * 30,
+              width: SIZES.baseSize * 30,
               borderWidth: 0,
               borderColor: "transparent",
-              borderRadius: 15,
+              borderRadius: SIZES.baseSize * 15,
               overflow: "hidden",
               flexDirection: "row",
             }}
@@ -87,8 +88,8 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
               style={[
                 blockStyle(blockName),
                 {
-                  width: 15,
-                  height: 30,
+                  width: SIZES.baseSize * 15,
+                  height: SIZES.baseSize * 30,
                   // borderRadius: 7.5,
                 },
               ]}
@@ -97,8 +98,8 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
               style={[
                 blockStyle(blockName === "pinkBlue" ? "blue" : blockName),
                 {
-                  width: 15,
-                  height: 30,
+                  width: SIZES.baseSize * 15,
+                  height: SIZES.baseSize * 30,
                   // borderRadius: 15,
                 },
               ]}
@@ -107,7 +108,7 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
         </View>
         <Text
           style={{
-            padding: SIZES.padding / 2,
+            padding: SIZES.baseSize * 8,
             color: selectedBlock === id ? COLORS.white : COLORS.primary1,
             ...FONTS.body5,
           }}
@@ -125,7 +126,10 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
       showsHorizontalScrollIndicator={false}
       keyExtractor={(item) => `${item.id}`}
       renderItem={renderItem}
-      contentContainerStyle={{ paddingTop: SIZES.padding * 2, paddingBottom: 8 }}
+      contentContainerStyle={{
+        paddingTop: SIZES.baseSize * 32,
+        paddingBottom: SIZES.baseSize * 8,
+      }}
     />
   );
 };

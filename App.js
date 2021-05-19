@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, ActivityIndicator, PixelRatio } from "react-native";
+import React, { useState } from "react";
+import { View, Text, ActivityIndicator, PixelRatio, TouchableOpacity } from "react-native";
 import { useFonts } from "expo-font";
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -39,6 +39,9 @@ import CleaningApp from "./CleaningApp";
 // export default App;
 const pixelRatio = PixelRatio.get();
 export default () => {
+  const [clickCount, setClickCount] = useState(0);
+  const [singleClickTimer, setSingleClickTimer] = useState("");
+
   let [fontsLoaded] = useFonts({
     RobotoBlack: require("./assets/fonts/Roboto-Black.ttf"),
     RobotoRegular: require("./assets/fonts/Roboto-Regular.ttf"),

@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     // height: 70,
     height: isPlatformIos ? 70 : 55,
-    paddingHorizontal: 10,
+    paddingHorizontal: SIZES.baseSize * 10,
     width: SIZES.width,
   },
   btnTextStyle: {

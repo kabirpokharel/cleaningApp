@@ -1,4 +1,4 @@
-export const users = {
+export const user = {
   "001": {
     name: "Kabir Pokharel",
     role: "cleaner",

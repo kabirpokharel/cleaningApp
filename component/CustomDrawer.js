@@ -6,7 +6,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { DrawerItemList } from "@react-navigation/drawer";
 
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, FONTS } from "../constants/theme";
+import { COLORS, FONTS, SIZES } from "../constants/theme";
 
 // import colors from "../../assets/colors";
 
@@ -16,11 +16,11 @@ const Profile = ({ email, name, img }) => {
       style={{
         // flexDirection: "column",
         // alignItems: "center",
-        paddingTop: 20,
-        paddingLeft: 20,
-        paddingBottom: 35,
-        marginBottom: 35,
-        paddingHorizontal: 10,
+        paddingTop: SIZES.baseSize * 20,
+        paddingLeft: SIZES.baseSize * 20,
+        paddingBottom: SIZES.baseSize * 35,
+        marginBottom: SIZES.baseSize * 35,
+        paddingHorizontal: SIZES.baseSize * 10,
         backgroundColor: COLORS.primary,
       }}
     >
@@ -29,17 +29,17 @@ const Profile = ({ email, name, img }) => {
       >
         <View
           style={{
-            width: 90,
-            height: 90,
-            borderRadius: 45,
-            borderWidth: 2,
+            width: SIZES.baseSize * 90,
+            height: SIZES.baseSize * 90,
+            borderRadius: SIZES.baseSize * 45,
+            borderWidth: SIZES.baseSize * 2,
             borderColor: COLORS.white,
             // alignItems: "center",
             // justifyContent: "center",
             overflow: "hidden",
-            marginBottom: 15,
-            borderBottomLeftRadius: 45,
-            borderBottomRightRadius: 45,
+            marginBottom: SIZES.baseSize * 15,
+            borderBottomLeftRadius: SIZES.baseSize * 45,
+            borderBottomRightRadius: SIZES.baseSize * 45,
           }}
         >
           {img}
