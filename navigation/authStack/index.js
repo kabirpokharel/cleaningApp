@@ -14,6 +14,36 @@ import {
 import { COLORS, FONTS } from "../../constants/theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+const titleObj = (title, navigation) => {
+  return {
+    headerStyle: {
+      backgroundColor: COLORS.white,
+    },
+    screenOptions: { headerTitleAlign: "center" },
+    headerTitle: () => (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <LogoTitle title={title} />
+      </View>
+    ),
+    headerLeft: () => {
+      if (title === "Signin") return null;
+      return (
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{
+            paddingHorizontal: 10,
+            marginBottom: 9,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <AntDesign name="arrowleft" size={33} color={COLORS.primary2} />
+        </TouchableOpacity>
+      );
+    },
+  };
+};
+
 const LogoTitle = ({ title }) => {
   return (
     <View
@@ -35,23 +65,18 @@ const LogoTitle = ({ title }) => {
 
 const Stack = createStackNavigator();
 
-const AuthStack = () => {
+const AuthStack = ({ navigation }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="summaryScreen"
+        name="Signin"
         component={SigninScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.white,
-          },
-          screenOptions: { headerTitleAlign: "center" },
-          headerTitle: () => (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-              <LogoTitle title={"Signin"} />
-            </View>
-          ),
-        }}
+        options={({ navigation }) => titleObj("Signin", navigation)}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={SignupScreen}
+        options={({ navigation }) => titleObj("Signup", navigation)}
       />
 
       {/* <Stack.Screen name="Signup" component={SignupScreen} options={{ title: "Signup" }} />

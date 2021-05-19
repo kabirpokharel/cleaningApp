@@ -5,8 +5,8 @@ import TimeLog from "./TimeLog/TimeLog";
 import SummaryScreen from "./SummaryScreen/SummaryScreen";
 import ResetPassword from "./ResetPassword";
 import SettingScreen from "./SettingScreen";
-import SigninScreen from "./SigninScreen";
-import SignupScreen from "./SignupScreen";
+import SigninScreen from "./Signin/SigninScreen";
+import SignupScreen from "./Signup/SignupScreen";
 
 export {
   ForgotPassword,

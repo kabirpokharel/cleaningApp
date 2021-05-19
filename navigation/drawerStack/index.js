@@ -5,7 +5,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeStack from "../homeStack";
 import AuthStack from "../authStack";
 import CustomDrawer from "../../component/CustomDrawer";
-import SigninScreen from "../../screens/SigninScreen";
+import SigninScreen from "../../screens/Signin/SigninScreen";
+
 import { ResetPassword, SettingScreen, SignupScreen } from "../../screens";
 import { AntDesign } from "@expo/vector-icons";
 import { COLORS } from "../../constants/theme";
@@ -29,6 +30,9 @@ const DummyComp3 = () => (
   </View>
 );
 
+const IconComponent = ({ size, focused, name }) => {
+  return <AntDesign name={name} size={size} color={focused ? COLORS.dark3 : COLORS.primary} />;
+};
 const DrawerStack = () => {
   return (
     <Drawer.Navigator drawerContent={(props) => <CustomDrawer {...props} />}>
@@ -40,10 +44,7 @@ const DrawerStack = () => {
       <Drawer.Screen
         options={{
           title: "Home",
-          drawerIcon: ({ focused, size }) => (
-            // <Ionicons name="md-home" size={size} color={focused ? "#7cc" : "#ccc"} />
-            <AntDesign name="home" size={size} color={focused ? COLORS.dark3 : COLORS.primary} />
-          ),
+          drawerIcon: ({ focused, size }) => <IconComponent {...{ size, focused, name: "home" }} />,
         }}
         name="homeStack"
         component={HomeStack}
@@ -52,7 +53,7 @@ const DrawerStack = () => {
         options={{
           title: "Settings",
           drawerIcon: ({ focused, size }) => (
-            <AntDesign name="setting" size={size} color={focused ? COLORS.dark3 : COLORS.primary} />
+            <IconComponent {...{ size, focused, name: "setting" }} />
           ),
         }}
         name="authStack"
@@ -62,7 +63,7 @@ const DrawerStack = () => {
         options={{
           title: "Notificaitons",
           drawerIcon: ({ focused, size }) => (
-            <AntDesign name="bells" size={size} color={focused ? COLORS.dark3 : COLORS.primary} />
+            <IconComponent {...{ size, focused, name: "bells" }} />
           ),
         }}
         name="dummy1"
@@ -72,7 +73,7 @@ const DrawerStack = () => {
         options={{
           title: "Logout",
           drawerIcon: ({ focused, size }) => (
-            <AntDesign name="logout" size={size} color={focused ? COLORS.dark3 : COLORS.primary} />
+            <IconComponent {...{ size, focused, name: "logout" }} />
           ),
         }}
         name="dummy2"

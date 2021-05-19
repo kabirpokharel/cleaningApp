@@ -33,6 +33,7 @@ const LogoTitle = ({ title }) => {
 const title = "Cleaning Log";
 
 const HomeStack = ({ navigation }) => {
+  console.log("see this is navigation from HomeStack=========>", navigation);
   return (
     <Stack.Navigator>
       <Stack.Screen

@@ -14,32 +14,44 @@ const Profile = ({ email, name, img }) => {
   return (
     <View
       style={{
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 20,
-        marginBottom: 20,
-        marginHorizontal: 10,
-        // backgroundColor: "green",
+        // flexDirection: "column",
+        // alignItems: "center",
+        paddingTop: 20,
+        paddingLeft: 20,
+        paddingBottom: 35,
+        marginBottom: 35,
+        paddingHorizontal: 10,
+        backgroundColor: COLORS.primary,
       }}
     >
       <View
-        style={{
-          width: 50,
-          height: 50,
-          borderRadius: 25,
-          borderWidth: 2,
-          borderColor: COLORS.light1,
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden",
-          marginRight: 10,
-        }}
+      // style={{ alignItems: "center" }}
       >
-        {img}
+        <View
+          style={{
+            width: 90,
+            height: 90,
+            borderRadius: 45,
+            borderWidth: 2,
+            borderColor: COLORS.white,
+            // alignItems: "center",
+            // justifyContent: "center",
+            overflow: "hidden",
+            marginBottom: 15,
+            borderBottomLeftRadius: 45,
+            borderBottomRightRadius: 45,
+          }}
+        >
+          {img}
+        </View>
       </View>
-      <View>
-        <Text style={[FONTS.body3, { color: COLORS.primary, letterSpacing: 0.5 }]}>{name}</Text>
-        <Text style={[FONTS.body5, { color: COLORS.primary1 }]}>{email}</Text>
+      <View
+      // style={{ alignItems: "center" }}
+      >
+        <Text style={[FONTS.body3, { fontSize: 24, color: COLORS.white, letterSpacing: 0.5 }]}>
+          {name}
+        </Text>
+        <Text style={[FONTS.body5, { color: COLORS.white }]}>{email}</Text>
       </View>
     </View>
   );
@@ -48,10 +60,14 @@ const Profile = ({ email, name, img }) => {
 const CustomDrawer = (props) => {
   const [active, setActive] = useState("");
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.white }}>
       <ScrollView>
-        <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-          {/* <View
+        <SafeAreaView style={{ backgroundColor: COLORS.primary }} />
+        {/* <SafeAreaView
+          style={{ backgroundColor: COLORS.white }}
+          forceInset={{ top: "always", horizontal: "never" }}
+        > */}
+        {/* <View
         style={{
           height: 150,
           alignItems: "center",
@@ -62,26 +78,33 @@ const CustomDrawer = (props) => {
         <Text style={{ fontSize: 10, color: "grey", fontWeight: "200" }}>*Logo Here</Text>
         <Text style={[FONTS.h3, { color: COLORS.secondary }]}>ACSS</Text>
       </View> */}
-          <Profile
-            name={"Kabir Pokharel"}
-            email={"kabirpokharel12@gmail.com"}
-            img={<AntDesign name="user" size={34} color={COLORS.light1} />}
-          />
-          <View
-            style={{
-              height: 1,
-              backgroundColor: COLORS.light4,
-              marginHorizontal: 10,
-              marginBottom: 20,
-            }}
-          />
+        <Profile
+          name={"Kabir Pokharel"}
+          email={"kabirpokharel12@gmail.com"}
+          // img={<AntDesign name="user" size={34} color={COLORS.light1} />}
+          img={
+            <Image
+              resizeMode={"cover"}
+              style={{ width: "100%", height: undefined, aspectRatio: 1 }}
+              source={require("../assets/images/profilePic.jpg")}
+            />
+          }
+        />
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            height: "100%",
+            borderTopLeftRadius: 45,
+            borderTopRightRadius: 45,
+          }}
+        >
           <DrawerItemList
             inactiveTintColor={COLORS.primary}
             activeTintColor={COLORS.dark3}
             activeBackgroundColor={COLORS.light3}
             {...props}
           />
-        </SafeAreaView>
+        </View>
       </ScrollView>
     </View>
   );

@@ -17,6 +17,11 @@ export const signinUser = (enteredEmaiPassword) => {
     payload: enteredEmaiPassword,
   };
 };
+export const logoutUser = () => {
+  return { type: LOGOUT_USER };
+};
+
+// *********************************below are rooms and time actions******************************************
 
 export const loadRooms = (id) => {
   return {

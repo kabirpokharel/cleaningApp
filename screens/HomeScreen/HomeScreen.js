@@ -76,7 +76,7 @@ const HomeScreen = (props) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5,
-            top: 255,
+            top: 205,
             right: 20,
           }}
         >

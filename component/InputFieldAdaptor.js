@@ -1,10 +1,16 @@
 import React, { forwardRef } from "react";
-import { TextInput as RNTextInput, Text, View, StyleSheet } from "react-native";
+import { TextInput, Text, View, StyleSheet } from "react-native";
 import { Entypo as Icon } from "@expo/vector-icons";
 import { COLORS, FONTS } from "../constants/theme";
 
-const TextInput = forwardRef(({ icon, error, touched, ...otherProps }, ref) => {
-  const validationColor = !touched ? COLORS.primary : error ? COLORS.secondary : COLORS.primary;
+const InputFieldAdaptor = (props) => {
+  const {
+    field: { name, onBlur, onChange, value },
+    form: { errors, touched, setFieldTouched },
+    ...inputProps
+  } = props;
+  const hasError = errors[name] && touched[name];
+  const validationColor = hasError ? COLORS.secondary : COLORS.primary;
   return (
     <View>
       <View
@@ -18,26 +24,96 @@ const TextInput = forwardRef(({ icon, error, touched, ...otherProps }, ref) => {
           padding: 8,
         }}
       >
-        <View style={{ padding: 8 }}>
-          <Icon name={icon} color={validationColor} size={16} />
-        </View>
-        <View style={{ flex: 1 }}>
-          <RNTextInput
-            style={{ color: COLORS.dark3 }}
+        {inputProps.icon && (
+          <View style={{ padding: 8 }}>
+            <Icon name={icon} color={validationColor} size={16} />
+          </View>
+        )}
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <TextInput
+            style={{
+              color: COLORS.dark3,
+              height: "100%",
+            }}
             underlineColorAndroid="transparent"
             placeholderTextColor={COLORS.primary2}
-            ref={ref}
-            {...otherProps}
+            value={value}
+            onChangeText={(text) => onChange(name)(text)}
+            onBlur={() => {
+              setFieldTouched(name);
+              onBlur(name);
+            }}
+            {...inputProps}
           />
         </View>
       </View>
-      <View style={{ height: 15 }}>
-        {validationColor === COLORS.secondary && (
-          <Text style={[FONTS.body6, { color: COLORS.secondary }]}>Invalid input</Text>
-        )}
+      <View style={{ height: 20, marginTop: -3 }}>
+        {hasError && <Text style={[FONTS.body6, { color: validationColor }]}>{errors[name]}</Text>}
       </View>
     </View>
   );
-});
+};
 
-export default TextInput;
+export default InputFieldAdaptor;
+
+//  <RNTextInput
+//              style={{ color: COLORS.dark3 }}
+//              underlineColorAndroid="transparent"
+//              placeholderTextColor={COLORS.primary2}
+//              ref={ref}
+//              {...otherProps}
+//            />
+
+// import React from "react";
+// import { Text, TextInput, StyleSheet } from "react-native";
+
+// const CustomInput = (props) => {
+//   const {
+//     field: { name, onBlur, onChange, value },
+//     form: { errors, touched, setFieldTouched },
+//     ...inputProps
+//   } = props;
+
+//   const hasError = errors[name] && touched[name];
+
+//   return (
+//     <>
+//       <TextInput
+//         style={[styles.textInput, hasError && styles.errorInput]}
+//         value={value}
+//         onChangeText={(text) => onChange(name)(text)}
+//         onBlur={() => {
+//           setFieldTouched(name);
+//           onBlur(name);
+//         }}
+//         {...inputProps}
+//       />
+//       {hasError && <Text style={styles.errorText}>{errors[name]}</Text>}
+//     </>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   textInput: {
+//     height: 40,
+//     width: "100%",
+//     margin: 10,
+//     backgroundColor: "white",
+//     borderColor: "gray",
+//     borderWidth: StyleSheet.hairlineWidth,
+//     borderRadius: 10,
+//   },
+//   errorText: {
+//     fontSize: 10,
+//     color: "red",
+//   },
+//   errorInput: {
+//     borderColor: "red",
+//   },
+// });
+
+// export default CustomInput;

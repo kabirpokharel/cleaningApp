@@ -1,4 +1,5 @@
 export const SIGN_IN = "SIGN_IN";
+export const LOGOUT_USER = "LOGOUT_USER";
 
 export const LOAD_ROOM = "LOAD_ROOM";
 export const ROOM_CLEANED = "ROOM_CLEANED";

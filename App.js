@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, PixelRatio } from "react-native";
 import { useFonts } from "expo-font";
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -37,7 +37,7 @@ import CleaningApp from "./CleaningApp";
 // }
 
 // export default App;
-
+const pixelRatio = PixelRatio.get();
 export default () => {
   let [fontsLoaded] = useFonts({
     RobotoBlack: require("./assets/fonts/Roboto-Black.ttf"),
@@ -55,27 +55,19 @@ export default () => {
   }
   return (
     <Provider store={store}>
+      {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <View
+          style={{
+            height: pixelRatio > 2 ? 200 * 0.9 : 200,
+            width: pixelRatio > 2 ? 200 * 0.9 : 200,
+            backgroundColor: "pink",
+            margin: 20,
+          }}
+        >
+          <Text style={{ fontSize: pixelRatio > 2 ? 30 * 0.85 : 30 }}>Hello World</Text>
+        </View>
+      </View> */}
       <CleaningApp />
     </Provider>
   );
-
-  // let [loaded] = useFonts({
-  //   RobotoBlack: require("./assets/fonts/Roboto-Black.ttf"),
-  //   RobotoBold: require("./assets/fonts/Roboto-Bold.ttf"),
-  //   RobotoCondensedBold: require("./assets/fonts/RobotoCondensed-Bold.ttf"),
-  // });
-
-  // if (!loaded) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-  //       <ActivityIndicator size="large" color="#00ff00" />
-  //     </View>
-  //   );
-  // }
-
-  // return (
-  //   <Provider store={store}>
-  //     <CleaningApp />
-  //   </Provider>
-  // );
 };

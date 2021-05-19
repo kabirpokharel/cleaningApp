@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 
 import { SIZES, COLORS } from "../constants/theme";
 

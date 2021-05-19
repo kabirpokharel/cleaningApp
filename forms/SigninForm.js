@@ -1,20 +1,28 @@
 import React, { useRef } from "react";
-import { Text, View, Keyboard } from "react-native";
+import { Text, View, Keyboard, Button } from "react-native";
 import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { useFormik, Formik, Field } from "formik";
+import * as yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import TextInput from "../component/InputFieldAdaptor";
+import InputFieldAdaptor from "../component/InputFieldAdaptor";
 import { COLORS, FONTS, SIZES } from "../constants/theme";
 import CustomButton from "../component/CustomButton";
 import { Title } from "../component/TitleWithDescriptionComponent";
 import CardComponent from "../component/CardComponent";
 import { signinUser } from "../redux/actions";
 
-const LoginSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string().min(2, "Too Short!").max(10, "Too Long!").required("Required"),
+const signinValidationSchema = yup.object().shape({
+  email: yup.string().email("Please enter valid email").required("Email is required"),
+  password: yup
+    .string()
+    .min(8, ({ min }) => `Password must be at least ${min} characters`)
+    .required("Password is required"),
 });
+
+// const LoginSchema = Yup.object().shape({
+//   email: Yup.string().email("Invalid email").required("Required"),
+//   password: Yup.string().min(2, "Too Short!").max(10, "Too Long!").required("Required"),
+// });
 
 const SigninButton = ({ label, onPress }) => (
   <TouchableOpacity
@@ -36,91 +44,49 @@ const SigninButton = ({ label, onPress }) => (
   </TouchableOpacity>
 );
 
-const onSubmitFunc = (dispatch, values) => {
-  dispatch(signinUser({ ...values }));
+const loginFunc = (dispatch, values, navigation) => {
+  dispatch(signinUser(values));
+  console.log("this is sign up value", values);
 };
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } = useFormik({
-    validationSchema: LoginSchema,
-    initialValues: { email: "", password: "" },
-    // onSubmit: (values) => alert(`Email: ${values.email}, Password: ${values.password}`),
-    onSubmit: (values) => onSubmitFunc(dispatch, values),
-  });
-
-  const password = useRef(null);
 
   return (
-    <TouchableWithoutFeedback
-      style={{
-        height: "100%",
-        justifyContent: "center",
-      }}
-      onPress={Keyboard.dismiss}
-    >
+    <>
       <View style={{ alignItems: "center" }}>
         <Text style={[FONTS.largeTitle, { marginBottom: 40, color: COLORS.primary1 }]}>ACSS</Text>
         <View style={{ paddingHorizontal: 32, width: "100%" }}>
-          <TextInput
-            icon="mail"
-            placeholder="Enter your email"
-            autoCapitalize="none"
-            autoCompleteType="email"
-            keyboardType="email-address"
-            keyboardAppearance="dark"
-            returnKeyType="next"
-            returnKeyLabel="next"
-            onChangeText={handleChange("email")}
-            onBlur={handleBlur("email")}
-            error={errors.email}
-            touched={touched.email}
-            onSubmitEditing={() => password.current?.focus()}
-          />
-        </View>
-        <View style={{ paddingHorizontal: 32, width: "100%" }}>
-          <TextInput
-            ref={password}
-            icon="key"
-            placeholder="Enter your password"
-            secureTextEntry
-            autoCompleteType="password"
-            autoCapitalize="none"
-            keyboardAppearance="dark"
-            returnKeyType="go"
-            returnKeyLabel="go"
-            onChangeText={handleChange("password")}
-            onBlur={handleBlur("password")}
-            error={errors.password}
-            touched={touched.password}
-            onSubmitEditing={() => handleSubmit()}
-          />
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            validationSchema={signinValidationSchema}
+            onSubmit={(values) => loginFunc(dispatch, values, navigation)}
+          >
+            {({ handleSubmit, isValid }) => (
+              <>
+                <Field
+                  component={InputFieldAdaptor}
+                  name="email"
+                  placeholder="Email Address"
+                  keyboardType="email-address"
+                />
+                <Field
+                  component={InputFieldAdaptor}
+                  name="password"
+                  placeholder="Password"
+                  secureTextEntry
+                />
+                <SigninButton label={"login"} onPress={handleSubmit} disabled={!isValid} />
+              </>
+            )}
+          </Formik>
         </View>
       </View>
-      <SigninButton label={"login"} onPress={handleSubmit} />
-      <View style={{ justifyContent: "center", alignItems: "center", marginVertical: 15 }}>
-        <TouchableOpacity
-          onPress={() => alert("resetPassword")}
-          style={{
-            padding: 10,
-          }}
-        >
-          <Text style={[FONTS.h6, { color: COLORS.primary }]}>Forgot Password?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => alert("create an account?")}
-          style={{
-            flexDirection: "row",
-            padding: 10,
-          }}
-        >
-          <Text style={[FONTS.body4, { color: COLORS.primary1, lineHeight: 18 }]}>
-            Don't have an account?{" "}
-          </Text>
-          <Text style={[FONTS.h6, { color: COLORS.primary }]}>Sign up </Text>
-        </TouchableOpacity>
-      </View>
-    </TouchableWithoutFeedback>
+      {/* <SigninButton label={"login"} onPress={handleSubmit} /> */}
+    </>
   );
 };
 
