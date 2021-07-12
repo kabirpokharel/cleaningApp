@@ -1,3 +1,4 @@
+import { ScaledSheet } from "react-native-size-matters";
 import {
   deleteTimeLog,
   initilizeTimeLog,
@@ -16,7 +17,7 @@ const initialState = {
   //     rooms: [
   //       {
   //         id: 1,
-  //         cleaningType: "",
+  //         cleaningType: "thorogh or normal",
   //       },
   //     ],
   //   },
