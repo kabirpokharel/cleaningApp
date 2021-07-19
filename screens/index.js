@@ -7,6 +7,7 @@ import ResetPassword from "./ResetPassword";
 import SettingScreen from "./SettingScreen";
 import SigninScreen from "./Signin/SigninScreen";
 import SignupScreen from "./Signup/SignupScreen";
+import LocationScreen from "./Location/LocationScreen";
 
 export {
   ForgotPassword,
@@ -18,4 +19,5 @@ export {
   SettingScreen,
   SigninScreen,
   SignupScreen,
+  LocationScreen,
 };

@@ -12,7 +12,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { SIZES, FONTS, COLORS } from "../../constants/theme";
 import TitleWithDescription from "../../component/TitleWithDescriptionComponent";
 
-const NUM_COL = 6;
+const NUM_COL = SIZES.width > 480 ? 8 : 6;
+
 
 const ElementChildren = ({ item, dynamicStyle }) => {
   return <Text style={dynamicStyle}>{item}</Text>;

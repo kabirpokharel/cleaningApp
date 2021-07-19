@@ -58,18 +58,6 @@ export default () => {
   }
   return (
     <Provider store={store}>
-      {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <View
-          style={{
-            height: pixelRatio > 2 ? 200 * 0.9 : 200,
-            width: pixelRatio > 2 ? 200 * 0.9 : 200,
-            backgroundColor: "pink",
-            margin: 20,
-          }}
-        >
-          <Text style={{ fontSize: pixelRatio > 2 ? 30 * 0.85 : 30 }}>Hello World</Text>
-        </View>
-      </View> */}
       <CleaningApp />
     </Provider>
   );

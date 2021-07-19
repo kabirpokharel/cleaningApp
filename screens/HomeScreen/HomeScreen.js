@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import axios from 'axios';
 import commonStyle from "../style";
 import styles from "./homeScreeStyle";
 import { blockStyle } from "./homeScreenFunc";
@@ -22,6 +23,7 @@ import { SIZES, FONTS, COLORS } from "../../constants/theme";
 import FooterButton from "../../component/FooterButton";
 import TitleWithDescription from "../../component/TitleWithDescriptionComponent";
 import PageTemplate from "../../component/PageTemplate";
+import {baseUrl} from "../../constants/constants";
 
 const isPlatformIos = Platform.OS === "ios";
 
@@ -52,6 +54,10 @@ const HomeScreen = (props) => {
     const isEmpty = !selectedRoomsLength;
     return { isFull, isEmpty };
   };
+
+
+
+
   // const customOnClick = (item) =>
   //   navigation.navigate("cleaningLog", {
   //     block: item,
@@ -206,8 +212,8 @@ const HomeScreen = (props) => {
       </View>
 
       <FooterButton
-        onPress={() => navigation.navigate("timeLog")}
-        btnText="Continue"
+        onPress={() => navigation.navigate("timeLog")}  
+        // onPress={showData}  
         // containerStyle
         // textStyle
       />

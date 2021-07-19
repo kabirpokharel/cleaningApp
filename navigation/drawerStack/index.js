@@ -11,6 +11,7 @@ import { ResetPassword, SettingScreen, SignupScreen } from "../../screens";
 import { AntDesign } from "@expo/vector-icons";
 import { COLORS } from "../../constants/theme";
 import { color } from "react-native-reanimated";
+import LocationScreen from "../../screens/Location/LocationScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -36,11 +37,6 @@ const IconComponent = ({ size, focused, name }) => {
 const DrawerStack = () => {
   return (
     <Drawer.Navigator drawerContent={(props) => <CustomDrawer {...props} />}>
-      {/* <Drawer.Screen
-        options={{ title: "Signin" }}
-        name="Signin"
-        component={SigninScreen}
-      /> */}
       <Drawer.Screen
         options={{
           title: "Home",

@@ -8,6 +8,7 @@ import {
 } from "./cleaningReducerFunc";
 
 const initialState = {
+  location : "",
   roomsLoading: true,
   taskLog: [],
   // taskLog: [
@@ -31,6 +32,9 @@ const initialState = {
 const cleaningDetail = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case "SET_LOCATION":
+      return { ...state, location:payload };
+      break;
     case "LOAD_ROOM":
       const newTaskLog = state.taskLog.filter(
         (block) => !!block.rooms.length || block.id === payload

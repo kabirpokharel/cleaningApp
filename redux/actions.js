@@ -9,6 +9,7 @@ import {
   INITILIZE_TIME_LOG,
   SELECT_ALL_ROOMS,
   RESET_BLOCK,
+  SET_LOCATION,
 } from "./actionsConstant";
 
 export const signinUser = (enteredEmaiPassword) => {
@@ -22,6 +23,13 @@ export const logoutUser = () => {
 };
 
 // *********************************below are rooms and time actions******************************************
+
+export const setLocation = (location) => {
+  return {
+    type: SET_LOCATION,
+    payload: location,
+  };
+};
 
 export const loadRooms = (id) => {
   return {
