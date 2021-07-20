@@ -1,14 +1,12 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { COLORS, FONTS, SIZES } from "../constants/theme";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { COLORS, FONTS, SIZES } from '../constants/theme';
 
-const PageTemplate = ({ children }) => {
-  return (
-    <View style={[styles.containerWrapper, { flex: 1, backgroundColor: COLORS.white }]}>
-      {children}
-    </View>
-  );
-};
+const PageTemplate = ({ children }) => (
+  <View style={[styles.containerWrapper, { flex: 1, backgroundColor: COLORS.white }]}>
+    {children}
+  </View>
+);
 
 export default PageTemplate;
 
@@ -27,8 +25,8 @@ const styles = StyleSheet.create({
     color: COLORS.primary2,
   },
   blockContainerWrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
 });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,24 +8,24 @@ import {
   FlatList,
   SafeAreaView,
   ActivityIndicator,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import commonStyle from "../style";
-import styles from "./homeScreeStyle";
-import { blockStyle } from "./homeScreenFunc";
-import { selectAllRooms, commonAreaCleanedAct, resetCurrentBlock } from "../../redux/actions";
-import { roomsBlock } from "../../dummyValues/roomsBlock";
-import RowElements from "../../component/RowElements";
-import RoomBlockComponent from "./RoomBlockComponent";
-import CleaningLog from "../CleaningLog/CleaningLog";
-import { SIZES, FONTS, COLORS } from "../../constants/theme";
-import FooterButton from "../../component/FooterButton";
-import TitleWithDescription from "../../component/TitleWithDescriptionComponent";
-import PageTemplate from "../../component/PageTemplate";
-import {baseUrl} from "../../constants/constants";
+import commonStyle from '../style';
+import styles from './homeScreeStyle';
+import { blockStyle } from './homeScreenFunc';
+import { selectAllRooms, commonAreaCleanedAct, resetCurrentBlock } from '../../redux/actions';
+import { roomsBlock } from '../../dummyValues/roomsBlock';
+import RowElements from '../../component/RowElements';
+import RoomBlockComponent from './RoomBlockComponent';
+import CleaningLog from '../CleaningLog/CleaningLog';
+import { SIZES, FONTS, COLORS } from '../../constants/theme';
+import FooterButton from '../../component/FooterButton';
+import TitleWithDescription from '../../component/TitleWithDescriptionComponent';
+import PageTemplate from '../../component/PageTemplate';
+import { baseUrl } from '../../constants/constants';
 
-const isPlatformIos = Platform.OS === "ios";
+const isPlatformIos = Platform.OS === 'ios';
 
 const NUM_COLL = 3;
 
@@ -38,7 +38,7 @@ const HomeScreen = (props) => {
   const [commonAreaCleaned, setCommonAreaCleaned] = useState(false);
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
-  console.log("this is cleaning detail==========>", cleaningDetail);
+  console.log('this is cleaning detail==========>', cleaningDetail);
   const { currentBlockId, taskLog } = cleaningDetail;
 
   const toggleSwitch = () => {
@@ -55,8 +55,7 @@ const HomeScreen = (props) => {
     return { isFull, isEmpty };
   };
 
-
-
+  
 
   // const customOnClick = (item) =>
   //   navigation.navigate("cleaningLog", {
@@ -70,11 +69,11 @@ const HomeScreen = (props) => {
         <View
           style={{
             width: 150,
-            position: "absolute",
-            backgroundColor: "#ffffff",
+            position: 'absolute',
+            backgroundColor: '#ffffff',
             borderRadius: 4,
             zIndex: 2,
-            shadowColor: "#000",
+            shadowColor: '#000',
             shadowOffset: {
               width: 0,
               height: 2,
@@ -91,7 +90,7 @@ const HomeScreen = (props) => {
             style={{
               paddingHorizontal: 8,
               paddingVertical: 5,
-              justifyContent: "center",
+              justifyContent: 'center',
             }}
             onPress={() => {
               setOverlay(false);
@@ -123,10 +122,10 @@ const HomeScreen = (props) => {
             style={{
               paddingHorizontal: 8,
               paddingVertical: 5,
-              justifyContent: "center",
+              justifyContent: 'center',
             }}
             onPress={() => {
-              console.log("currentBlockid from Home screen", currentBlockId);
+              console.log('currentBlockid from Home screen', currentBlockId);
               setOverlay(false);
               dispatch(resetCurrentBlock(currentBlockId));
             }}
@@ -152,11 +151,11 @@ const HomeScreen = (props) => {
       {overlay && (
         <View
           style={{
-            position: "absolute",
+            position: 'absolute',
             height: SIZES.height,
             width: SIZES.width,
             opacity: 0.4,
-            backgroundColor: "#000",
+            backgroundColor: '#000',
             zIndex: 1,
           }}
         >
@@ -175,8 +174,8 @@ const HomeScreen = (props) => {
         <View
           style={{
             flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <Text style={[FONTS.h1, { color: COLORS.light1 }]}>No Block Selected</Text>
@@ -184,8 +183,8 @@ const HomeScreen = (props) => {
       )}
       <View
         style={{
-          flexDirection: "row",
-          alignItems: "center",
+          flexDirection: 'row',
+          alignItems: 'center',
           marginBottom: isPlatformIos ? 70 : 55,
           height: 90,
           borderTopWidth: 0.5,
@@ -195,14 +194,17 @@ const HomeScreen = (props) => {
         }}
       >
         <View style={{ paddingRight: 20, flex: 1 }}>
-          <Text style={[FONTS.h6, { color: COLORS.primary1 }]}>{`Common area cleaning`}</Text>
+          <Text style={[FONTS.h6, { color: COLORS.primary1 }]}>Common area cleaning</Text>
           <Text
             style={[FONTS.body5, { color: COLORS.primary2, lineHeight: 16 }]}
-          >{`(eg. Door knobs, activity room surfaces, hand rails, toilets, staff rooms, dining rooms)`}</Text>
+          >
+            (eg. Door knobs, activity room surfaces, hand rails, toilets, staff rooms, dining rooms)
+
+          </Text>
         </View>
-        <View style={{ flex: 0.3, alignItems: "flex-start" }}>
+        <View style={{ flex: 0.3, alignItems: 'flex-start' }}>
           <Switch
-            trackColor={{ false: "#767577", true: "#05c46b" }}
+            trackColor={{ false: '#767577', true: '#05c46b' }}
             thumbColor={commonAreaCleaned ? COLORS.white : COLORS.white}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitch}
@@ -212,8 +214,8 @@ const HomeScreen = (props) => {
       </View>
 
       <FooterButton
-        onPress={() => navigation.navigate("timeLog")}  
-        // onPress={showData}  
+        onPress={() => navigation.navigate('timeLog')}
+        // onPress={showData}
         // containerStyle
         // textStyle
       />

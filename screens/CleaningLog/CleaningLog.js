@@ -1,36 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet, SafeAreaView } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { AntDesign } from "@expo/vector-icons";
-import commonStyle from "../style";
-import styles from "./cleaningLogStyle";
-import RowElements from "../../component/RowElements";
-import { roomsBlock, blocks } from "../../dummyValues/roomsBlock";
-import { loadRooms, removeRoom, roomCleaned } from "../../redux/actions";
-import { roomStyle } from "./cleaningLogFunc";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { SIZES, FONTS, COLORS } from "../../constants/theme";
-import TitleWithDescription from "../../component/TitleWithDescriptionComponent";
+import React, { useState, useEffect } from 'react';
+import {
+  View, Text, Button, StyleSheet, SafeAreaView,
+} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { AntDesign } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import commonStyle from '../style';
+import styles from './cleaningLogStyle';
+import RowElements from '../../component/RowElements';
+import { roomsBlock, blocks } from '../../dummyValues/roomsBlock';
+import { loadRooms, removeRoom, roomCleaned } from '../../redux/actions';
+import { roomStyle } from './cleaningLogFunc';
+import { SIZES, FONTS, COLORS } from '../../constants/theme';
+import TitleWithDescription from '../../component/TitleWithDescriptionComponent';
 
 const NUM_COL = SIZES.width > 480 ? 8 : 6;
 
-
-const ElementChildren = ({ item, dynamicStyle }) => {
-  return <Text style={dynamicStyle}>{item}</Text>;
-};
+const ElementChildren = ({ item, dynamicStyle }) => <Text style={dynamicStyle}>{item}</Text>;
 
 const CleaningLog = (props) => {
   const { overlay, setOverlay } = props;
 
   const dispatch = useDispatch();
-  const cleaningDetail = useSelector((state) => {
-    return state.cleaning;
-  });
+  const cleaningDetail = useSelector((state) => state.cleaning);
   const { currentBlockId, taskLog } = cleaningDetail;
 
-  const roomButtonStyle = (roomId) => {
-    return roomStyle(roomId, cleaningDetail);
-  };
+  const roomButtonStyle = (roomId) => roomStyle(roomId, cleaningDetail);
 
   const blockNameFinder = (blockId) => {
     const block = roomsBlock.find((block) => block.id === blockId);
@@ -48,18 +43,18 @@ const CleaningLog = (props) => {
     const roomFound = blockFound.rooms.find((room) => room.id === roomNumber);
     if (!roomFound) {
       return false;
-    } else return true;
+    } return true;
   };
   const roomClicked = (roomNumber) => {
     dispatch(
       roomAlreadySelected(roomNumber)
         ? removeRoom(currentBlockId, roomNumber)
         : roomCleaned({
-            currentBlockId,
-            blockName: blockNameFinder(currentBlockId),
-            roomNumber,
-            cleaningType: "daily",
-          })
+          currentBlockId,
+          blockName: blockNameFinder(currentBlockId),
+          roomNumber,
+          cleaningType: 'daily',
+        }),
     );
   };
 
@@ -68,11 +63,11 @@ const CleaningLog = (props) => {
       roomAlreadySelected(roomNumber)
         ? removeRoom(currentBlockId, roomNumber)
         : roomCleaned({
-            currentBlockId,
-            blockName: blockNameFinder(currentBlockId),
-            roomNumber,
-            cleaningType: "thorough",
-          })
+          currentBlockId,
+          blockName: blockNameFinder(currentBlockId),
+          roomNumber,
+          cleaningType: 'thorough',
+        }),
     );
   };
   return (
@@ -82,8 +77,8 @@ const CleaningLog = (props) => {
         description="Select cleaned rooms"
         containerStyle={{
           marginTop: SIZES.baseSize * -8,
-          flexDirection: "row",
-          justifyContent: "space-between",
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         }}
       >
         {!overlay && (
@@ -94,7 +89,7 @@ const CleaningLog = (props) => {
             style={{
               height: SIZES.baseSize * 40,
               width: SIZES.baseSize * 40,
-              alignItems: "center",
+              alignItems: 'center',
             }}
           >
             <AntDesign name="ellipsis1" size={28} color={COLORS.primary1} />

@@ -1,64 +1,60 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, SafeAreaView, Platform, Image } from "react-native";
+import React, { useState } from 'react';
+import {
+  View, Text, StyleSheet, ScrollView, SafeAreaView, Platform, Image,
+} from 'react-native';
 // import { DrawerItems } from "react-navigation";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons';
 
-import { DrawerItemList } from "@react-navigation/drawer";
+import { DrawerItemList } from '@react-navigation/drawer';
 
-import { Ionicons } from "@expo/vector-icons";
-import { COLORS, FONTS, SIZES } from "../constants/theme";
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS, FONTS, SIZES } from '../constants/theme';
 
 // import colors from "../../assets/colors";
 
-const Profile = ({ email, name, img }) => {
-  return (
-    <View
-      style={{
-        // flexDirection: "column",
-        // alignItems: "center",
-        paddingTop: SIZES.baseSize * 20,
-        paddingLeft: SIZES.baseSize * 20,
-        paddingBottom: SIZES.baseSize * 35,
-        marginBottom: SIZES.baseSize * 35,
-        paddingHorizontal: SIZES.baseSize * 10,
-        backgroundColor: COLORS.primary,
-      }}
-    >
+const Profile = ({ email, name, img }) => (
+  <View
+    style={{
+      // flexDirection: "column",
+      // alignItems: "center",
+      paddingTop: SIZES.baseSize * 20,
+      paddingLeft: SIZES.baseSize * 20,
+      paddingBottom: SIZES.baseSize * 35,
+      marginBottom: SIZES.baseSize * 35,
+      paddingHorizontal: SIZES.baseSize * 10,
+      backgroundColor: COLORS.primary,
+    }}
+  >
+    <View>
       <View
-      // style={{ alignItems: "center" }}
+        style={{
+          width: SIZES.baseSize * 90,
+          height: SIZES.baseSize * 90,
+          borderRadius: SIZES.baseSize * 45,
+          borderWidth: SIZES.baseSize * 2,
+          borderColor: COLORS.white,
+          // alignItems: "center",
+          // justifyContent: "center",
+          overflow: 'hidden',
+          marginBottom: SIZES.baseSize * 15,
+          borderBottomLeftRadius: SIZES.baseSize * 45,
+          borderBottomRightRadius: SIZES.baseSize * 45,
+        }}
       >
-        <View
-          style={{
-            width: SIZES.baseSize * 90,
-            height: SIZES.baseSize * 90,
-            borderRadius: SIZES.baseSize * 45,
-            borderWidth: SIZES.baseSize * 2,
-            borderColor: COLORS.white,
-            // alignItems: "center",
-            // justifyContent: "center",
-            overflow: "hidden",
-            marginBottom: SIZES.baseSize * 15,
-            borderBottomLeftRadius: SIZES.baseSize * 45,
-            borderBottomRightRadius: SIZES.baseSize * 45,
-          }}
-        >
-          {img}
-        </View>
-      </View>
-      <View
-      // style={{ alignItems: "center" }}
-      >
-        <Text style={[FONTS.body3, { fontSize: 24, color: COLORS.white, letterSpacing: 0.5 }]}>
-          {name}
-        </Text>
-        <Text style={[FONTS.body5, { color: COLORS.white }]}>{email}</Text>
+        {img}
       </View>
     </View>
-  );
-};
+    <View>
+      <Text style={[FONTS.body3, { fontSize: 24, color: COLORS.white, letterSpacing: 0.5 }]}>
+        {name}
+      </Text>
+      <Text style={[FONTS.body5, { color: COLORS.white }]}>{email}</Text>
+    </View>
+  </View>
+);
 
 const CustomDrawer = (props) => {
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState('');
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.white }}>
       <ScrollView>
@@ -79,21 +75,21 @@ const CustomDrawer = (props) => {
         <Text style={[FONTS.h3, { color: COLORS.secondary }]}>ACSS</Text>
       </View> */}
         <Profile
-          name={"Kabir Pokharel"}
-          email={"kabirpokharel12@gmail.com"}
+          name="Kabir Pokharel"
+          email="kabirpokharel12@gmail.com"
           // img={<AntDesign name="user" size={34} color={COLORS.light1} />}
-          img={
+          img={(
             <Image
-              resizeMode={"cover"}
-              style={{ width: "100%", height: undefined, aspectRatio: 1 }}
-              source={require("../assets/images/profilePic.jpg")}
+              resizeMode="cover"
+              style={{ width: '100%', height: undefined, aspectRatio: 1 }}
+              source={require('../assets/images/profilePic.jpg')}
             />
-          }
+          )}
         />
         <View
           style={{
             backgroundColor: COLORS.white,
-            height: "100%",
+            height: '100%',
             borderTopLeftRadius: 45,
             borderTopRightRadius: 45,
           }}
@@ -115,8 +111,8 @@ export default CustomDrawer;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   drawerLogo: {
     width: 50,

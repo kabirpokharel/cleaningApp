@@ -1,14 +1,14 @@
-import { ScaledSheet } from "react-native-size-matters";
+import { ScaledSheet } from 'react-native-size-matters';
 import {
   deleteTimeLog,
   initilizeTimeLog,
   updateTime,
   resetBlock,
   roomAdded,
-} from "./cleaningReducerFunc";
+} from './cleaningReducerFunc';
 
 const initialState = {
-  location : "",
+  location: '',
   roomsLoading: true,
   taskLog: [],
   // taskLog: [
@@ -18,7 +18,7 @@ const initialState = {
   //     rooms: [
   //       {
   //         id: 1,
-  //         cleaningType: "thorogh or normal",
+  //         cleaningType: "thorogh or daily",
   //       },
   //     ],
   //   },
@@ -32,41 +32,39 @@ const initialState = {
 const cleaningDetail = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case "SET_LOCATION":
-      return { ...state, location:payload };
+    case 'SET_LOCATION':
+      return { ...state, location: payload };
       break;
-    case "LOAD_ROOM":
+    case 'LOAD_ROOM':
       const newTaskLog = state.taskLog.filter(
-        (block) => !!block.rooms.length || block.id === payload
+        (block) => !!block.rooms.length || block.id === payload,
       );
       return { ...state, taskLog: newTaskLog, currentBlockId: payload };
       break;
-    case "ROOM_CLEANED": {
-      let newState = { ...state };
-      newState.taskLog = roomAdded(state, payload); //returns updated taskLog (ie. collection of block) with selected room
+    case 'ROOM_CLEANED': {
+      const newState = { ...state };
+      newState.taskLog = roomAdded(state, payload); // returns updated taskLog (ie. collection of block) with selected room
       return newState;
       break;
     }
-    case "REMOVE_ROOM":
+    case 'REMOVE_ROOM':
       {
-        let newTaskLog = state.taskLog.map((block) => {
+        const newTaskLog = state.taskLog.map((block) => {
           if (block.id === payload.currentBlockId) {
-            let updatedRooms = block.rooms.filter((room) => {
-              return room.id !== payload.roomNumber;
-            });
+            const updatedRooms = block.rooms.filter((room) => room.id !== payload.roomNumber);
             return { ...block, rooms: updatedRooms };
-          } else return block;
+          } return block;
         });
         return { ...state, taskLog: newTaskLog };
       }
       break;
-    case "COMMON_AREA_CLEANED":
+    case 'COMMON_AREA_CLEANED':
       return {
         ...state,
         commonAreaCleaned: payload,
       };
       break;
-    case "INITILIZE_TIME_LOG": {
+    case 'INITILIZE_TIME_LOG': {
       const updatedTime = initilizeTimeLog(payload, [...state.time]);
       return {
         ...state,
@@ -74,7 +72,7 @@ const cleaningDetail = (state = initialState, action) => {
       };
       break;
     }
-    case "ADD_SHIFT_TIME": {
+    case 'ADD_SHIFT_TIME': {
       const updatedTime = updateTime(payload, [...state.time]);
       return {
         ...state,
@@ -82,7 +80,7 @@ const cleaningDetail = (state = initialState, action) => {
       };
       break;
     }
-    case "DELETE_TIMELOG": {
+    case 'DELETE_TIMELOG': {
       const updatedTime = deleteTimeLog(payload, [...state.time]);
       return {
         ...state,
@@ -90,15 +88,15 @@ const cleaningDetail = (state = initialState, action) => {
       };
       break;
     }
-    case "SELECT_ALL_ROOMS": {
+    case 'SELECT_ALL_ROOMS': {
       const { blockId, blockName, rooms } = payload;
       const newTaskLog = [...state.taskLog].filter((block) => block.id !== blockId);
-      const allRooms = rooms.map((room) => ({ id: room, cleaningType: "daily" }));
+      const allRooms = rooms.map((room) => ({ id: room, cleaningType: 'daily' }));
       const newBlock = { id: blockId, blockName, rooms: allRooms };
       return { ...state, taskLog: [...newTaskLog, newBlock] };
       break;
     }
-    case "RESET_BLOCK": {
+    case 'RESET_BLOCK': {
       return resetBlock(state, payload.currentBlockId);
       break;
     }
