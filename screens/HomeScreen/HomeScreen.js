@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import axios from 'axios';
 import commonStyle from '../style';
 import styles from './homeScreeStyle';
 import { blockStyle } from './homeScreenFunc';
-import { selectAllRooms, commonAreaCleanedAct, resetCurrentBlock } from '../../redux/actions';
+import { selectAllRooms, commonAreaCleanedAct, resetCurrentBlock, initilizeTaskLog } from '../../redux/actions';
 import { roomsBlock } from '../../dummyValues/roomsBlock';
 import RowElements from '../../component/RowElements';
 import RoomBlockComponent from './RoomBlockComponent';
@@ -30,6 +30,63 @@ const isPlatformIos = Platform.OS === 'ios';
 const NUM_COLL = 3;
 
 const ElementChildren = ({ item }) => <Text>{item.blockName}</Text>;
+const dummyRoomStatus = {
+  name: 'new location',
+  rate: 10,
+  shortid: 'gvr-QXU8c',
+  blocks: [
+    {
+      name: 'block 1',
+      shortid: 'XhkSOQwCX',
+      rooms: [
+        {
+          _id: '60f77b6dbd76a33a7b110fd4',
+          roomId: 1,
+          cleaningType: 'daily',
+        },
+        {
+          _id: '60f77b6dbd76a33a7b110fd5',
+          roomId: 2,
+          cleaningType: 'thorough',
+        },
+        { roomId: 3 },
+        { roomId: 4 },
+      ],
+    },
+    {
+      name: 'block 2',
+      shortid: 'Tq-T9MAnZ',
+      rooms: [
+        {
+          _id: '60f77b6dbd76a33a7b110fd7',
+          roomId: 11,
+          cleaningType: 'daily',
+        },
+        {
+          _id: '60f77b6dbd76a33a7b110fd8',
+          roomId: 12,
+          cleaningType: 'thorough',
+        },
+        {
+          _id: '60f77b6dbd76a33a7b110fd9',
+          roomId: 13,
+          cleaningType: 'thorough',
+        },
+        { roomId: 14 },
+      ],
+    },
+    {
+      name: 'block 3',
+      shortid: '8ST2igVly',
+      rooms: [
+        { roomId: 21 },
+        { roomId: 22 },
+        { roomId: 23 },
+        { roomId: 24 },
+      ],
+    },
+  ],
+};
 
 const HomeScreen = (props) => {
   const { navigation } = props;
@@ -38,8 +95,26 @@ const HomeScreen = (props) => {
   const [commonAreaCleaned, setCommonAreaCleaned] = useState(false);
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
+
   console.log('this is cleaning detail==========>', cleaningDetail);
-  const { currentBlockId, taskLog } = cleaningDetail;
+  const { currentBlockId, taskLog, location } = cleaningDetail;
+
+  useEffect(() => {
+    // const locationId = location.shortid;
+    // axios({
+    //   method: 'get',
+    //   url: `${baseUrl}/location/${locationId}/roomStatus`,
+    // }).then((res) => {
+    //   console.log('see this block and room data ------->', res.data);
+    // })
+    //   .catch((err) => console.log('see this is an error***--------> ', err));
+
+
+    //(S) working with dummy data dummyRoomStatus
+    dispatch(initilizeTaskLog(dummyRoomStatus.blocks));
+    //(E) working with dummy data dummyRoomStatus
+    
+  }, []);
 
   const toggleSwitch = () => {
     dispatch(commonAreaCleanedAct(!commonAreaCleaned));
@@ -54,8 +129,6 @@ const HomeScreen = (props) => {
     const isEmpty = !selectedRoomsLength;
     return { isFull, isEmpty };
   };
-
-  
 
   // const customOnClick = (item) =>
   //   navigation.navigate("cleaningLog", {
@@ -169,7 +242,7 @@ const HomeScreen = (props) => {
         </View>
       )}
       {selectedBlock ? (
-        <CleaningLog {...{ selectedBlock, overlay, setOverlay }} />
+        <CleaningLog {...{overlay, setOverlay }} />
       ) : (
         <View
           style={{

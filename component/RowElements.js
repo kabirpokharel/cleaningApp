@@ -1,8 +1,10 @@
-import React from "react";
-import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
-import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+import React from 'react';
+import {
+  View, StyleSheet, TouchableOpacity, FlatList,
+} from 'react-native';
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
-import { SIZES, COLORS } from "../constants/theme";
+import { SIZES, COLORS } from '../constants/theme';
 
 const ElementComponent = ({
   index,
@@ -27,8 +29,8 @@ const ElementComponent = ({
     <TouchableOpacity
       style={[
         {
-          justifyContent: "center",
-          alignItems: "center",
+          justifyContent: 'center',
+          alignItems: 'center',
           marginVertical: [singleGutterWidth] / 2,
           marginRight,
           height: cardWidth,
@@ -55,33 +57,31 @@ const RowElements = ({
   ElementChildren,
   extraStyle,
 }) => {
-  let itemLength = item.length;
+  const itemLength = item.length;
   return (
     <View style={{ marginBottom: 0 }}>
       <FlatList
         data={item}
         numColumns={numColumns}
-        renderItem={({ item, index }) => {
-          return (
-            <ElementComponent
-              numColumns={numColumns}
-              index={index}
-              round={round}
-              extraStyle={extraStyle ? extraStyle(item) : {}}
-              onPress={() => onPress(item)}
-              onLongPress={() => onLongPress(item)}
-              ElementChildren={() => (
-                <ElementChildren
-                  dynamicStyle={{
-                    color: extraStyle ? extraStyle(item).color : COLORS.dark1,
-                  }}
-                  item={item}
-                />
-              )}
-              lastElement={itemLength === parseInt(index) + 1}
-            />
-          );
-        }}
+        renderItem={({ item, index }) => (
+          <ElementComponent
+            numColumns={numColumns}
+            index={index}
+            round={round}
+            extraStyle={extraStyle ? extraStyle(item) : {}}
+            onPress={() => onPress(item)}
+            onLongPress={() => onLongPress(item)}
+            ElementChildren={() => (
+              <ElementChildren
+                dynamicStyle={{
+                  color: extraStyle ? extraStyle(item).color : COLORS.dark1,
+                }}
+                item={item}
+              />
+            )}
+            lastElement={itemLength === parseInt(index) + 1}
+          />
+        )}
         keyExtractor={(item, index) => index.toString()}
       />
     </View>

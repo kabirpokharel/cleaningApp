@@ -10,13 +10,15 @@ import {
   SELECT_ALL_ROOMS,
   RESET_BLOCK,
   SET_LOCATION,
+  INITILIZE_TASK_LOG,
+  UPDATE_CURRENT_BLOCK_ID,
 } from './actionsConstant';
 
 export const signinUser = (enteredEmaiPassword) => ({
   type: SIGN_IN,
   payload: enteredEmaiPassword,
 });
-export const logoutUser = () => ({ type: LOGOUT_USER });
+// export const logoutUser = () => ({ type: LOGOUT_USER });
 
 // *********************************below are rooms and time actions******************************************
 
@@ -24,6 +26,18 @@ export const setLocation = (location) => ({
   type: SET_LOCATION,
   payload: location,
 });
+
+export const initilizeTaskLog = (taskLog) => ({
+  type: INITILIZE_TASK_LOG,
+  payload: taskLog,
+});
+
+export const updateCurrentBlockId = (blockId) => ({
+  type: UPDATE_CURRENT_BLOCK_ID,
+  payload: blockId,
+});
+
+// *********************below are old action creators
 
 export const loadRooms = (id) => ({
   type: LOAD_ROOM,

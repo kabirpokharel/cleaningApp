@@ -1,5 +1,6 @@
 import ForgotPassword from './ForgotPasswordScreen';
-import HomeScreen from './HomeScreen/HomeScreen';
+// import HomeScreen from './HomeScreen/HomeScreen';
+import HomeScreen from './HomeScreen/HomeScreenNew';
 import CleaningLog from './CleaningLog/CleaningLog';
 import TimeLog from './TimeLog/TimeLog';
 import SummaryScreen from './SummaryScreen/SummaryScreen';

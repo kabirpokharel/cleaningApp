@@ -1,13 +1,15 @@
-export const SIGN_IN = "SIGN_IN";
-export const LOGOUT_USER = "LOGOUT_USER";
+export const SIGN_IN = 'SIGN_IN';
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const UPDATE_CURRENT_BLOCK_ID = 'UPDATE_CURRENT_BLOCK_ID';
 
-export const SET_LOCATION = "SET_LOCATION";
-export const LOAD_ROOM = "LOAD_ROOM";
-export const ROOM_CLEANED = "ROOM_CLEANED";
-export const REMOVE_ROOM = "REMOVE_ROOM";
-export const COMMON_AREA_CLEANED = "COMMON_AREA_CLEANED";
-export const ADD_SHIFT_TIME = "ADD_SHIFT_TIME";
-export const DELETE_TIMELOG = "DELETE_TIMELOG";
-export const INITILIZE_TIME_LOG = "INITILIZE_TIME_LOG";
-export const SELECT_ALL_ROOMS = "SELECT_ALL_ROOMS";
-export const RESET_BLOCK = "RESET_BLOCK";
+export const SET_LOCATION = 'SET_LOCATION';
+export const LOAD_ROOM = 'LOAD_ROOM';
+export const ROOM_CLEANED = 'ROOM_CLEANED';
+export const REMOVE_ROOM = 'REMOVE_ROOM';
+export const COMMON_AREA_CLEANED = 'COMMON_AREA_CLEANED';
+export const ADD_SHIFT_TIME = 'ADD_SHIFT_TIME';
+export const DELETE_TIMELOG = 'DELETE_TIMELOG';
+export const INITILIZE_TIME_LOG = 'INITILIZE_TIME_LOG';
+export const INITILIZE_TASK_LOG = 'INITILIZE_TASK_LOG';
+export const SELECT_ALL_ROOMS = 'SELECT_ALL_ROOMS';
+export const RESET_BLOCK = 'RESET_BLOCK';

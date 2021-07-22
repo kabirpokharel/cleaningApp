@@ -8,25 +8,24 @@ import {
 } from './cleaningReducerFunc';
 
 const initialState = {
-  location: '',
+  location: null,
   roomsLoading: true,
   taskLog: [],
   // taskLog: [
-  //   {
-  //     id: 1,
-  //     blockName:"green",
-  //     rooms: [
-  //       {
-  //         id: 1,
-  //         cleaningType: "thorogh or daily",
-  //       },
-  //     ],
-  //   },
+  //    {
+  //   name: 'block 3',
+  //   shortid: '8ST2igVly',
+  //   rooms: [
+  //     { roomId: 21 },
+  //     { roomId: 22 },
+  //     { roomId: 23 },
+  //     { roomId: 24 },
+  //   ],
+  // },
   // ],
   currentBlockId: null,
   time: [],
   error: null,
-  commonAreaCleaned: false,
 };
 
 const cleaningDetail = (state = initialState, action) => {
@@ -35,14 +34,25 @@ const cleaningDetail = (state = initialState, action) => {
     case 'SET_LOCATION':
       return { ...state, location: payload };
       break;
-    case 'LOAD_ROOM':
+    case 'INITILIZE_TASK_LOG':
+      return { ...state, taskLog: payload };
+      break;
+    case 'UPDATE_CURRENT_BLOCK_ID':
+      return { ...state, currentBlockId: payload };
+      break;
+
+      // ***********************below is old redux code
+
+    case 'LOAD_ROOM': {
       const newTaskLog = state.taskLog.filter(
         (block) => !!block.rooms.length || block.id === payload,
       );
       return { ...state, taskLog: newTaskLog, currentBlockId: payload };
       break;
+    }
     case 'ROOM_CLEANED': {
       const newState = { ...state };
+      // eslint-disable-next-line max-len
       newState.taskLog = roomAdded(state, payload); // returns updated taskLog (ie. collection of block) with selected room
       return newState;
       break;
