@@ -93,19 +93,19 @@ const dummyRoomStatus = {
 };
 
 const itemExtractor = (taskLog, currentBlockId) => {
-  const selectedBlock = taskLog.find((block) => currentBlockId === block.shortid);
-  const rooms = selectedBlock?.map((room) => room.roomId);
+  const currentBlock = taskLog.find((block) => currentBlockId === block.shortid);
+  const rooms = currentBlock?.map((room) => room.roomId);
   return rooms;
 };
 const HomeScreen = (props) => {
   const { navigation } = props;
-  const [selectedBlock, setSelectedBlock] = useState(null);
+  const [selectedBlockId, setSelectedBlockId] = useState(null);
   const [overlay, setOverlay] = useState(false);
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
 
   console.log('this is cleaning detail==========>', cleaningDetail);
-  const { currentBlockId, taskLog } = cleaningDetail;
+  const { taskLog } = cleaningDetail;
 
   useEffect(() => {
     // const locationId = location.shortid;
@@ -143,32 +143,29 @@ const HomeScreen = (props) => {
       <View>
         {taskLog.map((block) => (
           <CustomButton
-            key={block.name}
+            key={block.shortid}
             label={block.name}
-            onPress={() => dispatch(updateCurrentBlockId(block.shortid))}
+            onPress={() => setSelectedBlockId(block.shortid)}
             // btnStyle
           />
         ))}
       </View>
-      <View
-        style={{
-          flex: 1,
-          marginHorizontal: SIZES.baseSize * 20,
-          paddingTop: SIZES.baseSize * 32 - 6,
+      {selectedBlockId ? (
+        <CleaningLog {...{
+          overlay, setOverlay, selectedBlockId, taskLog,
         }}
-      >
-        <RowElements
-          item={itemExtractor(taskLog, currentBlockId)}
-          // numColumns={NUM_COL}
-          numColumns={6}
-          round
-          ElementChildren={ElementChildren}
-          // onPress={roomClicked}
-          // onLongPress={roomLongPress}
-          // extraStyle={roomButtonStyle}
         />
-      </View>
-
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Text style={[FONTS.h1, { color: COLORS.light1 }]}>No Block Selected</Text>
+        </View>
+      )}
       <FooterButton
         onPress={() => navigation.navigate('timeLog')}
         // onPress={showData}

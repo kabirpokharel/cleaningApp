@@ -32,10 +32,10 @@ export const initilizeTaskLog = (taskLog) => ({
   payload: taskLog,
 });
 
-export const updateCurrentBlockId = (blockId) => ({
-  type: UPDATE_CURRENT_BLOCK_ID,
-  payload: blockId,
-});
+// export const updateCurrentBlockId = (blockId) => ({
+//   type: UPDATE_CURRENT_BLOCK_ID,
+//   payload: blockId,
+// });
 
 // *********************below are old action creators
 

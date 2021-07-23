@@ -8,71 +8,71 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import commonStyle from '../style';
 import styles from './cleaningLogStyle';
 import RowElements from '../../component/RowElements';
-import { roomsBlock, blocks } from '../../dummyValues/roomsBlock';
+// import { roomsBlock, blocks } from '../../dummyValues/roomsBlock';
 import { loadRooms, removeRoom, roomCleaned } from '../../redux/actions';
-import { roomStyle } from './cleaningLogFunc';
+import roomStyle from './cleaningLogFunc';
 import { SIZES, FONTS, COLORS } from '../../constants/theme';
 import TitleWithDescription from '../../component/TitleWithDescriptionComponent';
 
 const NUM_COL = SIZES.width > 480 ? 8 : 6;
 
-const ElementChildren = ({ item, dynamicStyle }) => <Text style={dynamicStyle}>{item}</Text>;
+const ElementChildren = ({ item, dynamicStyle }) => <Text style={dynamicStyle}>{item.roomId}</Text>;
 
 const CleaningLog = (props) => {
-  const { overlay, setOverlay } = props;
+  const { overlay, setOverlay, selectedBlockId } = props;
 
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
-  const { currentBlockId, taskLog } = cleaningDetail;
+  const { taskLog } = cleaningDetail;
 
-  const roomButtonStyle = (roomId) => roomStyle(roomId, cleaningDetail);
+  // const roomButtonStyle = (roomId) => roomStyle(taskLog, selectedBlockId, roomId);
 
-  const blockNameFinder = (blockId) => {
-    const block = roomsBlock.find((block) => block.id === blockId);
-    return block.blockName;
-  };
+  // const blockNameFinder = (blockId) => {
+  //   const block = roomsBlock.find((block) => block.id === blockId);
+  //   return block.blockName;
+  // };
 
-  const roomAlreadySelected = (roomNumber) => {
-    if (!taskLog.length) {
-      return false;
-    }
-    const blockFound = taskLog.find((block) => block.id === currentBlockId);
-    if (!blockFound) {
-      return false;
-    }
-    const roomFound = blockFound.rooms.find((room) => room.id === roomNumber);
-    if (!roomFound) {
-      return false;
-    } return true;
-  };
-  const roomClicked = (roomNumber) => {
-    dispatch(
-      roomAlreadySelected(roomNumber)
-        ? removeRoom(currentBlockId, roomNumber)
-        : roomCleaned({
-          currentBlockId,
-          blockName: blockNameFinder(currentBlockId),
-          roomNumber,
-          cleaningType: 'daily',
-        }),
-    );
-  };
+  // const roomAlreadySelected = (roomNumber) => {
+  //   if (!taskLog.length) {
+  //     return false;
+  //   }
+  //   const blockFound = taskLog.find((block) => block.id === selectedBlockId);
+  //   if (!blockFound) {
+  //     return false;
+  //   }
+  //   const roomFound = blockFound.rooms.find((room) => room.id === roomNumber);
+  //   if (!roomFound) {
+  //     return false;
+  //   } return true;
+  // };
+  // const roomClicked = (roomNumber) => {
+  //   dispatch(
+  //     roomAlreadySelected(roomNumber)
+  //       ? removeRoom(selectedBlockId, roomNumber)
+  //       : roomCleaned({
+  //         selectedBlockId,
+  //         blockName: blockNameFinder(selectedBlockId),
+  //         roomNumber,
+  //         cleaningType: 'daily',
+  //       }),
+  //   );
+  // };
 
-  const roomLongPress = (roomNumber) => {
-    dispatch(
-      roomAlreadySelected(roomNumber)
-        ? removeRoom(currentBlockId, roomNumber)
-        : roomCleaned({
-          currentBlockId,
-          blockName: blockNameFinder(currentBlockId),
-          roomNumber,
-          cleaningType: 'thorough',
-        }),
-    );
-  };
+  // const roomLongPress = (roomNumber) => {
+  //   dispatch(
+  //     roomAlreadySelected(roomNumber)
+  //       ? removeRoom(selectedBlockId, roomNumber)
+  //       : roomCleaned({
+  //         selectedBlockId,
+  //         blockName: blockNameFinder(selectedBlockId),
+  //         roomNumber,
+  //         cleaningType: 'thorough',
+  //       }),
+  //   );
+  // };
   return (
     <View style={{ flex: 1 }}>
-      <TitleWithDescription
+      {/* <TitleWithDescription
         title="Rooms"
         description="Select cleaned rooms"
         containerStyle={{
@@ -82,20 +82,20 @@ const CleaningLog = (props) => {
         }}
       >
         {!overlay && (
-          <TouchableOpacity
-            onPress={() => {
-              setOverlay(true);
-            }}
-            style={{
-              height: SIZES.baseSize * 40,
-              width: SIZES.baseSize * 40,
-              alignItems: 'center',
-            }}
-          >
-            <AntDesign name="ellipsis1" size={28} color={COLORS.primary1} />
-          </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setOverlay(true);
+          }}
+          style={{
+            height: SIZES.baseSize * 40,
+            width: SIZES.baseSize * 40,
+            alignItems: 'center',
+          }}
+        >
+          <AntDesign name="ellipsis1" size={28} color={COLORS.primary1} />
+        </TouchableOpacity>
         )}
-      </TitleWithDescription>
+      </TitleWithDescription> */}
       <View
         style={{
           flex: 1,
@@ -103,14 +103,19 @@ const CleaningLog = (props) => {
           paddingTop: SIZES.baseSize * 32 - 6,
         }}
       >
+        {console.log('kabir kabir ----- ----> ', taskLog.find((block) => selectedBlockId === block.shortid).rooms)}
+
         <RowElements
-          item={roomsBlock.find((roomBlockElem) => currentBlockId === roomBlockElem.id).rooms}
+          item={taskLog.find((block) => selectedBlockId === block.shortid).rooms}
           numColumns={NUM_COL}
           round
           ElementChildren={ElementChildren}
-          onPress={roomClicked}
-          onLongPress={roomLongPress}
-          extraStyle={roomButtonStyle}
+          // onPress={roomClicked}
+          // onLongPress={roomLongPress}
+          // extraStyle={roomButtonStyle}
+          onPress={() => alert('yey')}
+          onLongPress={() => alert('yey')}
+          // extraStyle={}
         />
         <View style={{ marginBottom: SIZES.baseSize * 50 }} />
       </View>

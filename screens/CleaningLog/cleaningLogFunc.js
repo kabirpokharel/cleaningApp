@@ -1,4 +1,4 @@
-import { COLORS } from "../../constants/theme";
+import { COLORS } from '../../constants/theme';
 
 const roomButtonStyle = {
   defaultStyle: {
@@ -10,33 +10,32 @@ const roomButtonStyle = {
   thoroughStyle: {
     color: COLORS.white,
     borderWidth: 4,
-    borderColor: "#05c46b",
-    backgroundColor: "#05c46b",
+    borderColor: '#05c46b',
+    backgroundColor: '#05c46b',
   },
   dailyStyle: {
     color: COLORS.primary1,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     borderWidth: 4,
-    borderColor: "#05c46b",
+    borderColor: '#05c46b',
     backgroundColor: COLORS.white,
   },
 };
 
-const roomStyle = (roomId, cleaningDetail) => {
-  const { currentBlockId, taskLog } = cleaningDetail;
+const roomStyle = (taskLog, selectedBlockId, roomId) => {
   const { defaultStyle, thoroughStyle, dailyStyle } = roomButtonStyle;
 
-  if (!taskLog.length) return defaultStyle;
-  const currentBlock = taskLog.find((block) => block.id === currentBlockId);
+  // if (!taskLog.length) return defaultStyle;
+  const currentBlock = taskLog.find((block) => block.shortId === selectedBlockId);
   if (!currentBlock) return defaultStyle;
-  const room = currentBlock.rooms.find((room) => room.id === roomId);
-  if (!room) return defaultStyle;
+  const selectedRoom = currentBlock.rooms.find((aRoom) => aRoom.roomId === roomId);
+  if (!selectedRoom) return defaultStyle;
 
-  switch (room.cleaningType) {
-    case "daily":
+  switch (selectedRoom.cleaningType) {
+    case 'daily':
       return dailyStyle;
       break;
-    case "thorough":
+    case 'thorough':
       return thoroughStyle;
       break;
     default:
@@ -44,4 +43,4 @@ const roomStyle = (roomId, cleaningDetail) => {
   }
 };
 
-export { roomStyle };
+export default roomStyle;

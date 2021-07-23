@@ -38,10 +38,19 @@ const LocationScreen = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get(`${baseUrl}/location/viewAll`).then((res) => {
-      console.log('see this kabir--------> ', res.data);
-      setAllLocation(res.data.locations);
-    });
+    // !!!!!!!!!!!!!(s) code
+    // axios.get(`${baseUrl}/location/viewAll`).then((res) => {
+    //   console.log('see this kabir--------> ', res.data);
+    //   setAllLocation(res.data.locations);
+    // });
+    setAllLocation([
+      {
+        name: 'new location',
+        shortid: 'gvr-QXU8c',
+        noOfBlocks: 3,
+      },
+    ]);
+    // !!!!!!!!!!!!!(e) code
 
     // axios({
     //   method: 'post',

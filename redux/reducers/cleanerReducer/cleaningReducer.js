@@ -23,7 +23,7 @@ const initialState = {
   //   ],
   // },
   // ],
-  currentBlockId: null,
+  // currentBlockId: null,
   time: [],
   error: null,
 };
@@ -37,9 +37,9 @@ const cleaningDetail = (state = initialState, action) => {
     case 'INITILIZE_TASK_LOG':
       return { ...state, taskLog: payload };
       break;
-    case 'UPDATE_CURRENT_BLOCK_ID':
-      return { ...state, currentBlockId: payload };
-      break;
+    // case 'UPDATE_CURRENT_BLOCK_ID':
+    //   return { ...state, currentBlockId: payload };
+    //   break;
 
       // ***********************below is old redux code
 
