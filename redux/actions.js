@@ -11,6 +11,7 @@ import {
   RESET_BLOCK,
   SET_LOCATION,
   INITILIZE_TASK_LOG,
+  RESET_ROOM,
   UPDATE_CURRENT_BLOCK_ID,
 } from './actionsConstant';
 
@@ -32,11 +33,18 @@ export const initilizeTaskLog = (taskLog) => ({
   payload: taskLog,
 });
 
-export const roomCleaned = (selectedBlockId, roomId, cleaningType) => ({
-  type: ROOM_CLEANED,
-  payload: { selectedBlockId, roomId, cleaningType },
-});
+export const roomCleaned = (selectedBlockId, roomIndex, cleaningType) => {
+  console.log('reached to roomCleaned action creator');
+  return ({
+    type: ROOM_CLEANED,
+    payload: { selectedBlockId, roomIndex, cleaningType },
+  });
+};
 
+export const resetRoom = (selectedBlockId, roomIndex) => ({
+  type: RESET_ROOM,
+  payload: { selectedBlockId, roomIndex },
+});
 // export const updateCurrentBlockId = (blockId) => ({
 //   type: UPDATE_CURRENT_BLOCK_ID,
 //   payload: blockId,

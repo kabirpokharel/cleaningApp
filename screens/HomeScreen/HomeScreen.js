@@ -14,7 +14,9 @@ import axios from 'axios';
 import commonStyle from '../style';
 import styles from './homeScreeStyle';
 import { blockStyle } from './homeScreenFunc';
-import { selectAllRooms, commonAreaCleanedAct, resetCurrentBlock, initilizeTaskLog } from '../../redux/actions';
+import {
+  selectAllRooms, commonAreaCleanedAct, resetCurrentBlock, initilizeTaskLog,
+} from '../../redux/actions';
 import { roomsBlock } from '../../dummyValues/roomsBlock';
 import RowElements from '../../component/RowElements';
 import RoomBlockComponent from './RoomBlockComponent';
@@ -96,7 +98,7 @@ const HomeScreen = (props) => {
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
 
-  console.log('this is cleaning detail==========>', cleaningDetail);
+  // console.log('this is cleaning detail==========>', cleaningDetail);
   const { currentBlockId, taskLog, location } = cleaningDetail;
 
   useEffect(() => {
@@ -109,11 +111,9 @@ const HomeScreen = (props) => {
     // })
     //   .catch((err) => console.log('see this is an error***--------> ', err));
 
-
-    //(S) working with dummy data dummyRoomStatus
+    // (S) working with dummy data dummyRoomStatus
     dispatch(initilizeTaskLog(dummyRoomStatus.blocks));
-    //(E) working with dummy data dummyRoomStatus
-    
+    // (E) working with dummy data dummyRoomStatus
   }, []);
 
   const toggleSwitch = () => {
@@ -242,7 +242,7 @@ const HomeScreen = (props) => {
         </View>
       )}
       {selectedBlock ? (
-        <CleaningLog {...{overlay, setOverlay }} />
+        <CleaningLog {...{ overlay, setOverlay }} />
       ) : (
         <View
           style={{

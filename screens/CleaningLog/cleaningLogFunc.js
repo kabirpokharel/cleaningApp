@@ -22,25 +22,28 @@ const roomButtonStyle = {
   },
 };
 
-const roomStyle = (taskLog, selectedBlockId, roomId) => {
+const roomStyle = (roomObj) => {
   const { defaultStyle, thoroughStyle, dailyStyle } = roomButtonStyle;
+  if ('cleaningType' in roomObj) {
+    const buttonStyle = roomObj.cleaningType === 'daily' ? dailyStyle : thoroughStyle;
+    return buttonStyle;
+  } return defaultStyle;
+  // // if (!taskLog.length) return defaultStyle;
+  // const currentBlock = taskLog.find((block) => block.shortId === selectedBlockId);
+  // if (!currentBlock) return defaultStyle;
+  // const selectedRoom = currentBlock.rooms.find((aRoom) => aRoom.roomId === roomId);
+  // if (!selectedRoom) return defaultStyle;
 
-  // if (!taskLog.length) return defaultStyle;
-  const currentBlock = taskLog.find((block) => block.shortId === selectedBlockId);
-  if (!currentBlock) return defaultStyle;
-  const selectedRoom = currentBlock.rooms.find((aRoom) => aRoom.roomId === roomId);
-  if (!selectedRoom) return defaultStyle;
-
-  switch (selectedRoom.cleaningType) {
-    case 'daily':
-      return dailyStyle;
-      break;
-    case 'thorough':
-      return thoroughStyle;
-      break;
-    default:
-      return defaultStyle;
-  }
+  // switch (selectedRoom.cleaningType) {
+  //   case 'daily':
+  //     return dailyStyle;
+  //     break;
+  //   case 'thorough':
+  //     return thoroughStyle;
+  //     break;
+  //   default:
+  //     return defaultStyle;
+  // }
 };
 
 export default roomStyle;

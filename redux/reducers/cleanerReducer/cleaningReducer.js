@@ -5,6 +5,8 @@ import {
   updateTime,
   resetBlock,
   roomAdded,
+  roomIsCleaned,
+  resettingRoom,
 } from './cleaningReducerFunc';
 
 const initialState = {
@@ -37,11 +39,21 @@ const cleaningDetail = (state = initialState, action) => {
     case 'INITILIZE_TASK_LOG':
       return { ...state, taskLog: payload };
       break;
+    case 'RESET_ROOM': {
+      const updatedTaskLog = resettingRoom(payload, [...state.taskLog]);
+      return { ...state, taskLog: updatedTaskLog };
+      break;
+    }
+    case 'ROOM_CLEANED': {
+      const updatedTaskLog = roomIsCleaned(payload, [...state.taskLog]);
+      return { ...state, taskLog: updatedTaskLog };
+      break;
+    }
     // case 'UPDATE_CURRENT_BLOCK_ID':
     //   return { ...state, currentBlockId: payload };
     //   break;
 
-      // ***********************below is old redux code
+    // ***********************below is old redux code
 
     case 'LOAD_ROOM': {
       const newTaskLog = state.taskLog.filter(
@@ -50,13 +62,13 @@ const cleaningDetail = (state = initialState, action) => {
       return { ...state, taskLog: newTaskLog, currentBlockId: payload };
       break;
     }
-    case 'ROOM_CLEANED': {
-      const newState = { ...state };
-      // eslint-disable-next-line max-len
-      newState.taskLog = roomAdded(state, payload); // returns updated taskLog (ie. collection of block) with selected room
-      return newState;
-      break;
-    }
+    // case 'ROOM_CLEANED': {
+    //   const newState = { ...state };
+    //   // eslint-disable-next-line max-len
+    //   newState.taskLog = roomAdded(state, payload); // returns updated taskLog (ie. collection of block) with selected room
+    //   return newState;
+    //   break;
+    // }
     case 'REMOVE_ROOM':
       {
         const newTaskLog = state.taskLog.map((block) => {

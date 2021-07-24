@@ -69,8 +69,8 @@ const RowElements = ({
             index={index}
             round={round}
             extraStyle={extraStyle ? extraStyle(item) : {}}
-            onPress={() => onPress(item)}
-            onLongPress={() => onLongPress(item)}
+            onPress={() => onPress(item, index)}
+            onLongPress={() => onLongPress(item, index)}
             ElementChildren={() => (
               <ElementChildren
                 dynamicStyle={{

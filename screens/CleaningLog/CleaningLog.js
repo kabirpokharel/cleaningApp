@@ -9,7 +9,9 @@ import commonStyle from '../style';
 import styles from './cleaningLogStyle';
 import RowElements from '../../component/RowElements';
 // import { roomsBlock, blocks } from '../../dummyValues/roomsBlock';
-import { loadRooms, removeRoom, roomCleaned } from '../../redux/actions';
+import {
+  loadRooms, removeRoom, roomCleaned, resetRoom,
+} from '../../redux/actions';
 import roomStyle from './cleaningLogFunc';
 import { SIZES, FONTS, COLORS } from '../../constants/theme';
 import TitleWithDescription from '../../component/TitleWithDescriptionComponent';
@@ -25,23 +27,26 @@ const CleaningLog = (props) => {
   const cleaningDetail = useSelector((state) => state.cleaning);
   const { taskLog } = cleaningDetail;
 
-  const roomButtonStyle = (roomId) => roomStyle(taskLog, selectedBlockId, roomId);
+  const roomButtonStyle = (roomObj) => roomStyle(roomObj);
 
   const roomClickHandler = (roomObj, roomIndex, cleaningType) => {
+    console.log('kabir see this --- --- >', roomObj);
+    console.log("!('_id' in roomObj) --->", !('_id' in roomObj));
     if (!('_id' in roomObj)) {
       if ('cleaningType' in roomObj) {
-        dispatch(resetRoom(selectedBlockId, roomObj.roomId, roomIndex));
+        console.log('reached here  888888888888888888888888888888888888888888888');
+        dispatch(resetRoom(selectedBlockId, roomIndex));
       } else {
-        dispatch(roomCleaned(selectedBlockId, roomObj.roomId, cleaningType));
+        dispatch(roomCleaned(selectedBlockId, roomIndex, cleaningType));
       }
     }
   };
 
   const roomClicked = (roomObj, roomIndex) => {
-    roomClickHandler(roomIndex, 'daily');
+    roomClickHandler(roomObj, roomIndex, 'daily');
   };
   const roomLongPress = (roomObj, roomIndex) => {
-    roomClickHandler(roomIndex, 'thorough');
+    roomClickHandler(roomObj, roomIndex, 'thorough');
   };
 
   return (
@@ -77,7 +82,7 @@ const CleaningLog = (props) => {
           paddingTop: SIZES.baseSize * 32 - 6,
         }}
       >
-        {console.log('kabir kabir 0 ----> ', taskLog.find((block) => selectedBlockId === block.shortid).rooms)}
+        {/* {console.log('kabir kabir 0 ----> ', taskLog.find((block) => selectedBlockId === block.shortid).rooms)} */}
 
         <RowElements
           item={taskLog.find((block) => selectedBlockId === block.shortid).rooms}
