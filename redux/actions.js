@@ -32,6 +32,11 @@ export const initilizeTaskLog = (taskLog) => ({
   payload: taskLog,
 });
 
+export const roomCleaned = (selectedBlockId, roomId, cleaningType) => ({
+  type: ROOM_CLEANED,
+  payload: { selectedBlockId, roomId, cleaningType },
+});
+
 // export const updateCurrentBlockId = (blockId) => ({
 //   type: UPDATE_CURRENT_BLOCK_ID,
 //   payload: blockId,
@@ -44,14 +49,14 @@ export const loadRooms = (id) => ({
   payload: id,
 });
 
-export const roomCleaned = ({
-  currentBlockId, blockName, roomNumber, cleaningType,
-}) => ({
-  type: ROOM_CLEANED,
-  payload: {
-    currentBlockId, blockName, roomNumber, cleaningType,
-  },
-});
+// export const roomCleaned = ({
+//   currentBlockId, blockName, roomNumber, cleaningType,
+// }) => ({
+//   type: ROOM_CLEANED,
+//   payload: {
+//     currentBlockId, blockName, roomNumber, cleaningType,
+//   },
+// });
 
 export const removeRoom = (currentBlockId, roomNumber) => ({
   type: REMOVE_ROOM,

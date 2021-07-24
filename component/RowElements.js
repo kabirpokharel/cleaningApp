@@ -68,13 +68,13 @@ const RowElements = ({
             numColumns={numColumns}
             index={index}
             round={round}
-            extraStyle={extraStyle ? extraStyle(item.rooId) : {}}
-            onPress={() => onPress(item.roomId)}
-            onLongPress={() => onLongPress(item.roomId)}
+            extraStyle={extraStyle ? extraStyle(item) : {}}
+            onPress={() => onPress(item)}
+            onLongPress={() => onLongPress(item)}
             ElementChildren={() => (
               <ElementChildren
                 dynamicStyle={{
-                  color: extraStyle ? extraStyle(item.roomId).color : COLORS.dark1,
+                  color: extraStyle ? extraStyle(item).color : COLORS.dark1,
                 }}
                 item={item}
               />

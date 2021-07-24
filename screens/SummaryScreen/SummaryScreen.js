@@ -1,25 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet, SafeAreaView } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { AntDesign, Entypo } from "@expo/vector-icons";
-import symmaryStyles from "./summaryScreenStyle";
-import RowElements from "../../component/RowElements";
+import React, { useState, useEffect } from 'react';
+import {
+  View, Text, Button, StyleSheet, SafeAreaView,
+} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { AntDesign, Entypo } from '@expo/vector-icons';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import symmaryStyles from './summaryScreenStyle';
 
-import { roomsBlock, blocks } from "../../dummyValues/roomsBlock";
-import { loadRooms, roomCleaned } from "../../redux/actions";
-import { roomButtonStyle } from "./summaryScreenFunc";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { blockColor, COLORS, FONTS, SIZES } from "../../constants/theme";
-import TitleWithDescription from "../../component/TitleWithDescriptionComponent";
-import FooterButton from "../../component/FooterButton";
-import CardComponent from "../../component/CardComponent";
-import PageTemplate from "../../component/PageTemplate";
+import { roomsBlock, blocks } from '../../dummyValues/roomsBlock';
+import { loadRooms, roomCleaned } from '../../redux/actions';
+import { roomButtonStyle } from './summaryScreenFunc';
+import {
+  blockColor, COLORS, FONTS, SIZES,
+} from '../../constants/theme';
+import TitleWithDescription from '../../component/TitleWithDescriptionComponent';
+import FooterButton from '../../component/FooterButton';
+import CardComponent from '../../component/CardComponent';
+import PageTemplate from '../../component/PageTemplate';
 
-const SummaryRoomComponent = ({ rooms }) => {
+const SummaryRoomComponent = ({ rooms }) =>
   // console.log("see rooms===================================>", rooms);
-  return (
-    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-      {!!rooms.length ? (
+  (
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      {rooms.length ? (
         rooms.map((room) => (
           <View
             key={room}
@@ -27,10 +30,10 @@ const SummaryRoomComponent = ({ rooms }) => {
               height: 23,
               width: 23,
               margin: 3,
-              justifyContent: "center",
-              alignItems: "center",
+              justifyContent: 'center',
+              alignItems: 'center',
               borderRadius: 12.5,
-              backgroundColor: "#d9ebe9",
+              backgroundColor: '#d9ebe9',
             }}
           >
             <Text style={[FONTS.body6, { color: COLORS.primary, fontSize: 9 }]}>{room}</Text>
@@ -38,28 +41,28 @@ const SummaryRoomComponent = ({ rooms }) => {
         ))
       ) : (
         <View style={{ height: 25 }} />
-        // <View
-        //   style={{
-        //     backgroundColor: "#d9ebe9",
-        //     height: 25,
-        //     paddingHorizontal: 10,
-        //     justifyContent: "center",
-        //     alignItems: "center",
-        //     borderRadius: SIZES.radius * 2,
-        //   }}
-        // >
-        //   <Text style={[FONTS.body6, { color: COLORS.primary, fontSize: 9 }]}>none</Text>
-        // </View>
+      // <View
+      //   style={{
+      //     backgroundColor: "#d9ebe9",
+      //     height: 25,
+      //     paddingHorizontal: 10,
+      //     justifyContent: "center",
+      //     alignItems: "center",
+      //     borderRadius: SIZES.radius * 2,
+      //   }}
+      // >
+      //   <Text style={[FONTS.body6, { color: COLORS.primary, fontSize: 9 }]}>none</Text>
+      // </View>
       )}
     </View>
   );
-};
-
-const isPlatformIos = Platform.OS === "ios";
+const isPlatformIos = Platform.OS === 'ios';
 // const IndividualBlockDetails = ({ blockName, daily, thorough, unattended }) => {
 const IndividualBlockDetails = ({ block }) => {
-  const { blockName, daily, thorough, unattended } = block;
-  console.log("see this is props for indivigualBLockDetails--------------->", block);
+  const {
+    blockName, daily, thorough, unattended,
+  } = block;
+  console.log('see this is props for indivigualBLockDetails--------------->', block);
   // console.log("see this is block Name--------------->", blockName);
   return (
     <View
@@ -74,7 +77,7 @@ const IndividualBlockDetails = ({ block }) => {
     >
       <View
         style={{
-          position: "absolute",
+          position: 'absolute',
           backgroundColor: COLORS.white,
           // backgroundColor: "pink",
 
@@ -103,8 +106,8 @@ const IndividualBlockDetails = ({ block }) => {
   );
 };
 const timeFormatter = (totalHrs, totalMins) => {
-  let newHrs = totalHrs + Math.floor(totalMins / 60);
-  let newMins = totalMins % 60;
+  const newHrs = totalHrs + Math.floor(totalMins / 60);
+  const newMins = totalMins % 60;
   return `${newHrs}h:${newMins}m`;
 };
 const calculateTotalTime = (time) => {
@@ -112,28 +115,26 @@ const calculateTotalTime = (time) => {
   let totalMins = 0;
   time.forEach((timeObj) => {
     const { status } = timeObj;
-    totalHrs += parseInt(status.substring(0, status.indexOf(":")));
-    totalMins += parseInt(status.substring(status.indexOf(":") + 1));
+    totalHrs += parseInt(status.substring(0, status.indexOf(':')));
+    totalMins += parseInt(status.substring(status.indexOf(':') + 1));
   });
   return timeFormatter(totalHrs, totalMins);
 };
 
-const SummaryElement = ({ item, measure }) => {
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        height: 35,
-        marginHorizontal: 20,
-      }}
-    >
-      <SummaryText text={item} />
-      <SummaryText isQuantity text={measure} />
-    </View>
-  );
-};
+const SummaryElement = ({ item, measure }) => (
+  <View
+    style={{
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      height: 35,
+      marginHorizontal: 20,
+    }}
+  >
+    <SummaryText text={item} />
+    <SummaryText isQuantity text={measure} />
+  </View>
+);
 
 const SummaryText = ({ text, isQuantity }) => {
   const textStyle = isQuantity ? { ...FONTS.h5, color: COLORS.primary } : FONTS.body4;
@@ -142,8 +143,8 @@ const SummaryText = ({ text, isQuantity }) => {
       style={[
         {
           color: COLORS.primary1,
-          alignItems: "center",
-          justifyContent: "center",
+          alignItems: 'center',
+          justifyContent: 'center',
         },
         textStyle,
       ]}
@@ -156,9 +157,7 @@ const SummaryText = ({ text, isQuantity }) => {
 const SummaryScreen = (props) => {
   const [cleanedRoomsStatus, setCleanedRoomsStatus] = useState({});
   const [viewMore, setViewMore] = useState(false);
-  const cleaningDetail = useSelector((state) => {
-    return state.cleaning;
-  });
+  const cleaningDetail = useSelector((state) => state.cleaning);
   const { commonAreaCleaned, time, taskLog } = cleaningDetail;
 
   // console.log("this is taskLog=============>", taskLog);
@@ -167,17 +166,16 @@ const SummaryScreen = (props) => {
   };
 
   useEffect(() => {
-    let blockSummary = [];
+    const blockSummary = [];
     let dailyCleanedCount = 0;
     let thoroughCleanedCount = 0;
     taskLog.forEach((block) => {
-      let currentBlockOriginal = roomsBlock.find((aBlock) => {
+      const currentBlockOriginal = roomsBlock.find((aBlock) =>
         // console.log("$$$$$$$$$$$$$$$------>", aBlock);
-        return aBlock.blockName === block.blockName;
-      });
+        aBlock.blockName === block.blockName);
       // console.log("currentBlockOriginal**********************------->", currentBlockOriginal);
       // let unattended = currentBlockOriginal.rooms;
-      let blockDetail = {
+      const blockDetail = {
         blockName: block.blockName,
         daily: [],
         thorough: [],
@@ -187,19 +185,19 @@ const SummaryScreen = (props) => {
 
       block.rooms.forEach((room) => {
         switch (room.cleaningType) {
-          case "daily":
+          case 'daily':
             blockDetail.daily.push(room.id);
-            if (!!blockDetail.unattended.length) {
+            if (blockDetail.unattended.length) {
               blockDetail.unattended = blockDetail.unattended.filter(
-                (roomId) => room.id !== roomId
+                (roomId) => room.id !== roomId,
               );
             }
             break;
-          case "thorough":
+          case 'thorough':
             blockDetail.thorough.push(room.id);
-            if (!!blockDetail.unattended.length) {
+            if (blockDetail.unattended.length) {
               blockDetail.unattended = blockDetail.unattended.filter(
-                (roomId) => room.id !== roomId
+                (roomId) => room.id !== roomId,
               );
             }
             break;
@@ -224,7 +222,7 @@ const SummaryScreen = (props) => {
 
   const summaryList = [
     {
-      item: "Common area cleaned?",
+      item: 'Common area cleaned?',
       measure: commonAreaCleaned ? (
         <Entypo name="check" size={22} color={COLORS.primary} />
       ) : (
@@ -234,16 +232,16 @@ const SummaryScreen = (props) => {
       ),
     },
     {
-      item: "Shift duration",
+      item: 'Shift duration',
       measure: calculateTotalTime(time),
     },
     {
-      item: "Daily Clean",
-      measure: cleanedRoomsStatus.dailyCleanedCount || "0",
+      item: 'Daily Clean',
+      measure: cleanedRoomsStatus.dailyCleanedCount || '0',
     },
     {
-      item: "Thorough Clean",
-      measure: cleanedRoomsStatus.thoroughCleanedCount || "0",
+      item: 'Thorough Clean',
+      measure: cleanedRoomsStatus.thoroughCleanedCount || '0',
     },
   ];
   return (
@@ -252,7 +250,7 @@ const SummaryScreen = (props) => {
         title="Summary"
         description="Check your entry before submitting"
         containerStyle={{ paddingBottom: 20 }}
-      ></TitleWithDescription>
+      />
 
       <View
         style={{
@@ -271,35 +269,33 @@ const SummaryScreen = (props) => {
           >
             <View
               style={{
-                flexDirection: "row",
+                flexDirection: 'row',
                 marginBottom: 10,
-                alignItems: "center",
-                justifyContent: "space-between",
+                alignItems: 'center',
+                justifyContent: 'space-between',
               }}
             >
               <Text style={[FONTS.body3, { color: COLORS.primary }]}>Current Shift Details</Text>
               <TouchableOpacity
                 onPress={() => setViewMore((prevState) => !prevState)}
                 style={{
-                  backgroundColor: "#d9ebe9",
+                  backgroundColor: '#d9ebe9',
                   paddingHorizontal: 12,
                   paddingVertical: 8,
-                  alignItems: "center",
-                  justifyContent: "center",
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   borderRadius: SIZES.baseSize * 32,
                 }}
               >
                 <Text style={[FONTS.body5, { color: COLORS.primary }]}>
-                  {viewMore ? "View Less" : "View More"}
+                  {viewMore ? 'View Less' : 'View More'}
                 </Text>
               </TouchableOpacity>
             </View>
-            {summaryList.map(({ item, measure }, id) => {
-              return <SummaryElement key={id + item} {...{ item, measure }} />;
-            })}
+            {summaryList.map(({ item, measure }, id) => <SummaryElement key={id + item} {...{ item, measure }} />)}
             {console.log(
-              "Object.keys(cleanedRoomsStatus).length---------->",
-              Object.keys(cleanedRoomsStatus)
+              'Object.keys(cleanedRoomsStatus).length---------->',
+              Object.keys(cleanedRoomsStatus),
             )}
             {viewMore && (
               <View style={{ marginTop: 10 }}>
@@ -320,7 +316,7 @@ const SummaryScreen = (props) => {
       {/* <View style={{ flex: 1 }}> */}
       {/* </View> */}
       <FooterButton
-        onPress={() => alert("From summary screen")}
+        onPress={() => alert('From summary screen')}
         btnText="Submit"
         // disabled={}
         // containerStyle

@@ -25,51 +25,25 @@ const CleaningLog = (props) => {
   const cleaningDetail = useSelector((state) => state.cleaning);
   const { taskLog } = cleaningDetail;
 
-  // const roomButtonStyle = (roomId) => roomStyle(taskLog, selectedBlockId, roomId);
+  const roomButtonStyle = (roomId) => roomStyle(taskLog, selectedBlockId, roomId);
 
-  // const blockNameFinder = (blockId) => {
-  //   const block = roomsBlock.find((block) => block.id === blockId);
-  //   return block.blockName;
-  // };
+  const roomClickHandler = (roomObj, roomIndex, cleaningType) => {
+    if (!('_id' in roomObj)) {
+      if ('cleaningType' in roomObj) {
+        dispatch(resetRoom(selectedBlockId, roomObj.roomId, roomIndex));
+      } else {
+        dispatch(roomCleaned(selectedBlockId, roomObj.roomId, cleaningType));
+      }
+    }
+  };
 
-  // const roomAlreadySelected = (roomNumber) => {
-  //   if (!taskLog.length) {
-  //     return false;
-  //   }
-  //   const blockFound = taskLog.find((block) => block.id === selectedBlockId);
-  //   if (!blockFound) {
-  //     return false;
-  //   }
-  //   const roomFound = blockFound.rooms.find((room) => room.id === roomNumber);
-  //   if (!roomFound) {
-  //     return false;
-  //   } return true;
-  // };
-  // const roomClicked = (roomNumber) => {
-  //   dispatch(
-  //     roomAlreadySelected(roomNumber)
-  //       ? removeRoom(selectedBlockId, roomNumber)
-  //       : roomCleaned({
-  //         selectedBlockId,
-  //         blockName: blockNameFinder(selectedBlockId),
-  //         roomNumber,
-  //         cleaningType: 'daily',
-  //       }),
-  //   );
-  // };
+  const roomClicked = (roomObj, roomIndex) => {
+    roomClickHandler(roomIndex, 'daily');
+  };
+  const roomLongPress = (roomObj, roomIndex) => {
+    roomClickHandler(roomIndex, 'thorough');
+  };
 
-  // const roomLongPress = (roomNumber) => {
-  //   dispatch(
-  //     roomAlreadySelected(roomNumber)
-  //       ? removeRoom(selectedBlockId, roomNumber)
-  //       : roomCleaned({
-  //         selectedBlockId,
-  //         blockName: blockNameFinder(selectedBlockId),
-  //         roomNumber,
-  //         cleaningType: 'thorough',
-  //       }),
-  //   );
-  // };
   return (
     <View style={{ flex: 1 }}>
       {/* <TitleWithDescription
@@ -103,18 +77,19 @@ const CleaningLog = (props) => {
           paddingTop: SIZES.baseSize * 32 - 6,
         }}
       >
-        {console.log('kabir kabir ----- ----> ', taskLog.find((block) => selectedBlockId === block.shortid).rooms)}
+        {console.log('kabir kabir 0 ----> ', taskLog.find((block) => selectedBlockId === block.shortid).rooms)}
 
         <RowElements
           item={taskLog.find((block) => selectedBlockId === block.shortid).rooms}
           numColumns={NUM_COL}
           round
           ElementChildren={ElementChildren}
-          // onPress={roomClicked}
-          // onLongPress={roomLongPress}
-          // extraStyle={roomButtonStyle}
-          onPress={() => alert('yey')}
-          onLongPress={() => alert('yey')}
+          onPress={roomClicked}
+          onLongPress={roomLongPress}
+          extraStyle={roomButtonStyle}
+
+          // onPress={() => alert('yey')}
+          // onLongPress={() => alert('yey')}
           // extraStyle={}
         />
         <View style={{ marginBottom: SIZES.baseSize * 50 }} />
