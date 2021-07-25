@@ -30,11 +30,8 @@ const CleaningLog = (props) => {
   const roomButtonStyle = (roomObj) => roomStyle(roomObj);
 
   const roomClickHandler = (roomObj, roomIndex, cleaningType) => {
-    console.log('kabir see this --- --- >', roomObj);
-    console.log("!('_id' in roomObj) --->", !('_id' in roomObj));
     if (!('_id' in roomObj)) {
       if ('cleaningType' in roomObj) {
-        console.log('reached here  888888888888888888888888888888888888888888888');
         dispatch(resetRoom(selectedBlockId, roomIndex));
       } else {
         dispatch(roomCleaned(selectedBlockId, roomIndex, cleaningType));
@@ -51,7 +48,7 @@ const CleaningLog = (props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* <TitleWithDescription
+      <TitleWithDescription
         title="Rooms"
         description="Select cleaned rooms"
         containerStyle={{
@@ -60,12 +57,15 @@ const CleaningLog = (props) => {
           justifyContent: 'space-between',
         }}
       >
-        {!overlay && (
+        {/* {!overlay && ( */}
+        {true && (
         <TouchableOpacity
           onPress={() => {
-            setOverlay(true);
+            // setOverlay(true);
+            console.log('clicked ellipses');
           }}
           style={{
+            zIndex: 4,
             height: SIZES.baseSize * 40,
             width: SIZES.baseSize * 40,
             alignItems: 'center',
@@ -74,7 +74,7 @@ const CleaningLog = (props) => {
           <AntDesign name="ellipsis1" size={28} color={COLORS.primary1} />
         </TouchableOpacity>
         )}
-      </TitleWithDescription> */}
+      </TitleWithDescription>
       <View
         style={{
           flex: 1,
@@ -82,8 +82,6 @@ const CleaningLog = (props) => {
           paddingTop: SIZES.baseSize * 32 - 6,
         }}
       >
-        {/* {console.log('kabir kabir 0 ----> ', taskLog.find((block) => selectedBlockId === block.shortid).rooms)} */}
-
         <RowElements
           item={taskLog.find((block) => selectedBlockId === block.shortid).rooms}
           numColumns={NUM_COL}
@@ -92,10 +90,6 @@ const CleaningLog = (props) => {
           onPress={roomClicked}
           onLongPress={roomLongPress}
           extraStyle={roomButtonStyle}
-
-          // onPress={() => alert('yey')}
-          // onLongPress={() => alert('yey')}
-          // extraStyle={}
         />
         <View style={{ marginBottom: SIZES.baseSize * 50 }} />
       </View>

@@ -1,75 +1,38 @@
-import React from "react";
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native";
-import { COLORS, SIZES, FONTS } from "../../constants/theme";
-import { blockStyle } from "./homeScreenFunc";
-// import { roomsBlock } from "../../dummyValues/roomsBlock";
-import { loadRooms, roomCleaned } from "../../redux/actions";
-import { useDispatch } from "react-redux";
-import homeStyles from "./homeScreeStyle";
+import React from 'react';
+import {
+  View, Text, FlatList, TouchableOpacity, StyleSheet,
+} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { COLORS, SIZES, FONTS } from '../../constants/theme';
+import homeStyles from './homeScreeStyle';
 
-const capitalizeEachWord = (text) => {
-  return text.replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase());
-};
-
-const camelCaseBreaker = (text) => {
-  const regex = /([a-z])([A-Z])/g;
-  const spaces = text.replace(regex, "$1 $2");
-  const lowercase = spaces.toLowerCase();
-  return lowercase;
-};
-
-const blockNameFormatter = (blockName) => {
-  if (/[A-Z]/.test(blockName)) {
-    const capatilizedSplitString = capitalizeEachWord(camelCaseBreaker(blockName));
-    return capatilizedSplitString;
-  } else {
-    return capitalizeEachWord(blockName);
-  }
-};
-
-export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
+export default ({ taskLog, selectedBlockId, setSelectedBlockId }) => {
   const dispatch = useDispatch();
   const renderItem = ({ item }) => {
-    const { id, blockName, rooms } = item;
+    const { name, shortid } = item;
+    const isBlockSelected = selectedBlockId === shortid;
     return (
       <TouchableOpacity
         style={{
-          // height: 70,
-          // width: 112,
-          flexDirection: "row",
+          flexDirection: 'row',
           paddingHorizontal: SIZES.baseSize * 10,
           paddingVertical: SIZES.baseSize * 8,
-          // height: 112,
-          // width: 70,
-
-          // padding: SIZES.padding,
-          // paddingBottom: SIZES.baseSize * 2
-          // borderWidth: 0.3,
-          // borderColor: COLORS.light4,
-
-          backgroundColor: selectedBlock === id ? COLORS.primary : COLORS.white,
+          backgroundColor: isBlockSelected ? '#05c46b' : COLORS.white,
           borderRadius: SIZES.baseSize * 33.6,
-          alignItems: "center",
-          justifyContent: "center",
-          marginRight: SIZES.baseSize * 16,
+          alignItems: 'center',
+          justifyContent: 'center',
+          // marginRight: SIZES.baseSize * 16,
           marginRight: SIZES.baseSize * 16 - SIZES.baseSize * 4,
           marginLeft: SIZES.baseSize * 4,
           ...styles.shadow,
         }}
-        onPress={() => {
-          // const roomArray = rooms.map((roomNumber) => ({
-          //   id: roomNumber,
-          //   // cleaningType: "",
-          // }));
-          dispatch(loadRooms(id, blockName, rooms));
-          setSelectedBlock(id);
-        }}
+        onPress={() => setSelectedBlockId(shortid)}
       >
         <View
           style={[
             homeStyles.blockStyle,
             {
-              backgroundColor: selectedBlock === id ? COLORS.white : COLORS.lightGray,
+              backgroundColor: isBlockSelected ? COLORS.white : COLORS.lightGray,
             },
           ]}
         >
@@ -78,29 +41,18 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
               height: SIZES.baseSize * 30,
               width: SIZES.baseSize * 30,
               borderWidth: 0,
-              borderColor: "transparent",
+              borderColor: 'transparent',
               borderRadius: SIZES.baseSize * 15,
-              overflow: "hidden",
-              flexDirection: "row",
+              overflow: 'hidden',
+              flexDirection: 'row',
             }}
           >
             <View
               style={[
-                blockStyle(blockName),
                 {
-                  width: SIZES.baseSize * 15,
+                  width: SIZES.baseSize * 30,
                   height: SIZES.baseSize * 30,
-                  // borderRadius: 7.5,
-                },
-              ]}
-            />
-            <View
-              style={[
-                blockStyle(blockName === "pinkBlue" ? "blue" : blockName),
-                {
-                  width: SIZES.baseSize * 15,
-                  height: SIZES.baseSize * 30,
-                  // borderRadius: 15,
+                  backgroundColor: isBlockSelected ? '#05c46b' : COLORS.light1,
                 },
               ]}
             />
@@ -108,12 +60,13 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
         </View>
         <Text
           style={{
+            textTransform: 'capitalize',
             padding: SIZES.baseSize * 8,
-            color: selectedBlock === id ? COLORS.white : COLORS.primary1,
+            color: isBlockSelected ? COLORS.white : COLORS.primary1,
             ...FONTS.body5,
           }}
         >
-          {blockNameFormatter(blockName)}
+          {name}
         </Text>
       </TouchableOpacity>
     );
@@ -121,10 +74,10 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
 
   return (
     <FlatList
-      data={roomsBlock}
+      data={taskLog}
       horizontal
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(item) => `${item.id}`}
+      keyExtractor={(item) => `${item.name}`}
       renderItem={renderItem}
       contentContainerStyle={{
         paddingTop: SIZES.baseSize * 32,
@@ -135,10 +88,6 @@ export default ({ roomsBlock, selectedBlock, setSelectedBlock }) => {
 };
 
 const styles = StyleSheet.create({
-  //   container: {
-  //     flex: 1,
-  //     backgroundColor: COLORS.lightGray4,
-  //   },
   shadow: {
     shadowColor: COLORS.dark3,
     shadowOffset: {

@@ -12,6 +12,8 @@ const roomButtonStyle = {
     borderWidth: 4,
     borderColor: '#05c46b',
     backgroundColor: '#05c46b',
+    // borderColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
   },
   dailyStyle: {
     color: COLORS.primary1,

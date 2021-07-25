@@ -13,11 +13,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import commonStyle from '../style';
 import styles from './homeScreeStyle';
-import { blockStyle } from './homeScreenFunc';
 import {
   selectAllRooms, commonAreaCleanedAct, resetCurrentBlock, updateCurrentBlockId, initilizeTaskLog,
 } from '../../redux/actions';
-import { roomsBlock } from '../../dummyValues/roomsBlock';
 import RowElements from '../../component/RowElements';
 import RoomBlockComponent from './RoomBlockComponent';
 import CleaningLog from '../CleaningLog/CleaningLog';
@@ -139,16 +137,23 @@ const HomeScreen = (props) => {
   return (
     <PageTemplate>
       <TitleWithDescription title="Block" description="Slect block to access rooms" />
-
-      <View>
-        {taskLog.map((block) => (
-          <CustomButton
-            key={block.shortid}
-            label={block.name}
-            onPress={() => setSelectedBlockId(block.shortid)}
-            // btnStyle
-          />
-        ))}
+      {overlay && (
+      <View style={{
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'black',
+        opacity: 0.4,
+        zIndex: 1,
+      }}
+      />
+      )}
+      <View style={{ marginHorizontal: 20 }}>
+        <RoomBlockComponent {...{ taskLog, selectedBlockId, setSelectedBlockId }} />
       </View>
       {selectedBlockId ? (
         <CleaningLog {...{
@@ -163,14 +168,15 @@ const HomeScreen = (props) => {
             justifyContent: 'center',
           }}
         >
-          <Text style={[FONTS.h1, { color: COLORS.light1 }]}>No Block Selected</Text>
+          <Text style={[FONTS.h2, { color: COLORS.light1 }]}>Slect a block</Text>
         </View>
       )}
       <FooterButton
         onPress={() => navigation.navigate('timeLog')}
         // onPress={showData}
-        // containerStyle
-        // textStyle
+        containerStyle
+        textStyle
+        btnText="Continue"
       />
       {/* <SafeAreaView /> */}
     </PageTemplate>
