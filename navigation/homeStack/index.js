@@ -8,7 +8,7 @@ import { Entypo, AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS, SIZES, FONTS } from '../../constants/theme';
 import {
-  HomeScreen, CleaningLog, TimeLog, SummaryScreen, LocationScreen,
+  HomeScreen, TimeLog, SummaryScreen, LocationScreen,
 } from '../../screens';
 
 const Stack = createStackNavigator();

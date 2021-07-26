@@ -58,7 +58,7 @@ const CleaningLog = (props) => {
         }}
       >
         {/* {!overlay && ( */}
-        {true && (
+        {selectedBlockId && (
         <TouchableOpacity
           onPress={() => {
             // setOverlay(true);
@@ -75,24 +75,38 @@ const CleaningLog = (props) => {
         </TouchableOpacity>
         )}
       </TitleWithDescription>
-      <View
-        style={{
-          flex: 1,
-          marginHorizontal: SIZES.baseSize * 20,
-          paddingTop: SIZES.baseSize * 32 - 6,
-        }}
-      >
-        <RowElements
-          item={taskLog.find((block) => selectedBlockId === block.shortid).rooms}
-          numColumns={NUM_COL}
-          round
-          ElementChildren={ElementChildren}
-          onPress={roomClicked}
-          onLongPress={roomLongPress}
-          extraStyle={roomButtonStyle}
-        />
-        <View style={{ marginBottom: SIZES.baseSize * 50 }} />
-      </View>
+      {selectedBlockId
+        ? (
+          <View
+            style={{
+              flex: 1,
+              marginHorizontal: SIZES.baseSize * 20,
+              paddingTop: SIZES.baseSize * 32 - 6,
+            }}
+          >
+            <RowElements
+              item={taskLog.find((block) => selectedBlockId === block.shortid).rooms}
+              numColumns={NUM_COL}
+              round
+              ElementChildren={ElementChildren}
+              onPress={roomClicked}
+              onLongPress={roomLongPress}
+              extraStyle={roomButtonStyle}
+            />
+            <View style={{ marginBottom: SIZES.baseSize * 50 }} />
+          </View>
+        )
+        : (
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={[FONTS.h2, { color: COLORS.light1 }]}>Slect a block</Text>
+          </View>
+        )}
     </View>
   );
 };
