@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { ScaledSheet } from 'react-native-size-matters';
 import {
   deleteTimeLog,
@@ -10,8 +11,9 @@ import {
 } from './cleaningReducerFunc';
 
 const initialState = {
+  user: 'X4WQRHEvQ', // replace with dynamic user
   location: null,
-  roomsLoading: true,
+  startAt: '',
   taskLog: [],
   // taskLog: [
   //    {
@@ -26,7 +28,13 @@ const initialState = {
   // },
   // ],
   // currentBlockId: null,
-  time: [],
+
+  cleaningTypeCount: {
+    daily: 0,
+    thorough: 0,
+  },
+
+  roomsLoading: true,
   error: null,
 };
 
@@ -34,19 +42,17 @@ const cleaningDetail = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case 'SET_LOCATION':
-      return { ...state, location: payload };
+      return { ...state, location: payload, startAt: moment() };
       break;
     case 'INITILIZE_TASK_LOG':
       return { ...state, taskLog: payload };
       break;
     case 'RESET_ROOM': {
-      const updatedTaskLog = resettingRoom(payload, [...state.taskLog]);
-      return { ...state, taskLog: updatedTaskLog };
+      return resettingRoom(payload, { ...state });
       break;
     }
     case 'ROOM_CLEANED': {
-      const updatedTaskLog = roomIsCleaned(payload, [...state.taskLog]);
-      return { ...state, taskLog: updatedTaskLog };
+      return roomIsCleaned(payload, { ...state });
       break;
     }
     // case 'UPDATE_CURRENT_BLOCK_ID':

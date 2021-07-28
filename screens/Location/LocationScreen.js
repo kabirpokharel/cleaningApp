@@ -10,27 +10,9 @@ import TitleWithDescription from '../../component/TitleWithDescriptionComponent'
 import { baseUrl } from '../../constants/constants';
 import { setLocation } from '../../redux/actions';
 
-const temp = {
-  user: 'X4WQRHEvQ',
-  tasks: [
-    {
-      block: 'XhkSOQwCX',
-      rooms: [
-        { roomId: 1, cleaningType: 'daily' },
-        { roomId: 2, cleaningType: 'thorough' },
-      ],
-    },
-    {
-      block: 'Tq-T9MAnZ',
-      rooms: [
-        { roomId: 11, cleaningType: 'daily' },
-        { roomId: 12, cleaningType: 'thorough' },
-        { roomId: 13, cleaningType: 'thorough' },
-      ],
-    }],
-  location: 'gvr-QXU8c',
-  startAt: 'Tue Jul 20 2021 22:34:58 GMT+0930',
-};
+
+
+
 
 const LocationScreen = (props) => {
   const { navigation } = props;
@@ -39,17 +21,17 @@ const LocationScreen = (props) => {
 
   useEffect(() => {
     // !!!!!!!!!!!!!(s) code
-    // axios.get(`${baseUrl}/location/viewAll`).then((res) => {
-    //   console.log('see this kabir--------> ', res.data);
-    //   setAllLocation(res.data.locations);
-    // });
-    setAllLocation([
-      {
-        name: 'new location',
-        shortid: 'gvr-QXU8c',
-        noOfBlocks: 3,
-      },
-    ]);
+    axios.get(`${baseUrl}/location/viewAll`).then((res) => {
+      console.log('see this kabir--------> ', res.data);
+      setAllLocation(res.data.locations);
+    });
+    // setAllLocation([
+    //   {
+    //     name: 'new location',
+    //     shortid: 'gvr-QXU8c',
+    //     noOfBlocks: 3,
+    //   },
+    // ]);
     // !!!!!!!!!!!!!(e) code
 
     // axios({
@@ -68,7 +50,7 @@ const LocationScreen = (props) => {
           label={location.name}
           onPress={() => {
             dispatch(setLocation(location));
-            navigation.navigate('home');
+            navigation.navigate('home', { location });
           }}
         />
       ))}
@@ -80,7 +62,7 @@ const LocationScreen = (props) => {
       <TitleWithDescription title="Location" description="Slect your site" />
       <View style={styles.containerWrapper}>
         {!allLocation ? <ActivityIndicator size="large" color="#00ff00" />
-          : <LocationSelection locations={allLocation} dispatch={dispatch} />}
+          : <LocationSelection locations={allLocation} />}
       </View>
     </PageTemplate>
   );
@@ -96,3 +78,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+

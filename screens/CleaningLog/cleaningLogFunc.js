@@ -25,9 +25,11 @@ const roomButtonStyle = {
 };
 
 const roomStyle = (roomObj) => {
+  console.log('see this @@@@@@@@@@@@@@@@@@ >', roomObj);
   const { defaultStyle, thoroughStyle, dailyStyle } = roomButtonStyle;
   if ('cleaningType' in roomObj) {
     const buttonStyle = roomObj.cleaningType === 'daily' ? dailyStyle : thoroughStyle;
+    console.log('buttonStyle @@@@@@@@@@@@@@>', buttonStyle);
     return buttonStyle;
   } return defaultStyle;
   // // if (!taskLog.length) return defaultStyle;

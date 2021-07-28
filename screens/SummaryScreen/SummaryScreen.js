@@ -1,46 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   StyleSheet, Text, View, Platform,
 } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { Entypo } from '@expo/vector-icons';
+
 import { block } from 'react-native-reanimated';
+import moment from 'moment';
 import CardComponent from '../../component/CardComponent';
 import FooterButton from '../../component/FooterButton';
 import PageTemplate from '../../component/PageTemplate';
 import TitleWithDescription from '../../component/TitleWithDescriptionComponent';
-import {
-  blockColor, COLORS, FONTS, SIZES,
-} from '../../constants/theme';
+import { COLORS, FONTS, SIZES } from '../../constants/theme';
+import { baseUrl } from '../../constants/constants';
 
-const reduxState = {
-  error: null,
-  location: {
-    name: 'new location',
-    noOfBlocks: 3,
-    shortid: 'gvr-QXU8c',
-  },
-  roomsLoading: true,
-  taskLog: [
+const isPlatformIos = Platform.OS === 'ios';
+
+const temp = {
+  location: 'gvr-QXU8c',
+  startAt: '2021-07-28T15:15:46.765Z',
+  tasks: [
     {
       name: 'block 1',
       rooms: [
         {
-          _id: '60f77b6dbd76a33a7b110fd4',
           cleaningType: 'daily',
           roomId: 1,
         },
         {
-          _id: '60f77b6dbd76a33a7b110fd5',
-          cleaningType: 'thorough',
+          cleaningType: 'daily',
           roomId: 2,
         },
         {
           cleaningType: 'daily',
           roomId: 3,
-        },
-        {
-          cleaningType: 'thorough',
-          roomId: 4,
         },
       ],
       shortid: 'XhkSOQwCX',
@@ -49,22 +44,16 @@ const reduxState = {
       name: 'block 2',
       rooms: [
         {
-          _id: '60f77b6dbd76a33a7b110fd7',
           cleaningType: 'daily',
           roomId: 11,
         },
         {
-          _id: '60f77b6dbd76a33a7b110fd8',
-          cleaningType: 'thorough',
+          cleaningType: 'daily',
           roomId: 12,
         },
         {
-          _id: '60f77b6dbd76a33a7b110fd9',
           cleaningType: 'thorough',
           roomId: 13,
-        },
-        {
-          roomId: 14,
         },
       ],
       shortid: 'Tq-T9MAnZ',
@@ -73,27 +62,19 @@ const reduxState = {
       name: 'block 3',
       rooms: [
         {
-          roomId: 21,
-        },
-        {
-          cleaningType: 'thorough',
+          cleaningType: 'daily',
           roomId: 22,
         },
         {
-          cleaningType: 'daily',
+          cleaningType: 'thorough',
           roomId: 23,
-        },
-        {
-          roomId: 24,
         },
       ],
       shortid: '8ST2igVly',
     },
   ],
-  time: [],
+  user: 'X4WQRHEvQ',
 };
-
-const isPlatformIos = Platform.OS === 'ios';
 
 const SummaryText = ({ text, isQuantity }) => {
   const textStyle = isQuantity ? { ...FONTS.h5, color: COLORS.primary } : FONTS.body4;
@@ -124,48 +105,160 @@ const SummaryElement = ({ item, measure }) => (
     }}
   >
     <SummaryText text={item} />
-    <SummaryText isQuantity text={measure} />
+    <SummaryText
+    // isQuantity
+      text={measure}
+    />
   </View>
 );
 
-const SummaryItems = ({
-  blockName, dailyCleaned, thoroughCleaned, unAttended,
-}) => {
-
-};
-
 const SummaryScreen = () => {
   const [viewMore, setViewMore] = useState(false);
+  const [blockDetails, setblockDetails] = useState({});
 
+  const cleaningDetail = useSelector((state) => state.cleaning);
+  const {
+    taskLog, cleaningTypeCount, location, user, startAt,
+  } = cleaningDetail;
+
+  const SummaryRoomComponent = ({ rooms }) => (
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      {rooms.length ? (
+        rooms.map((room) => (
+          <View
+            key={room}
+            style={{
+              height: 23,
+              width: 23,
+              margin: 3,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 12.5,
+              backgroundColor: '#d9ebe9',
+            }}
+          >
+            <Text style={[FONTS.body6, { color: COLORS.primary, fontSize: 9 }]}>{room}</Text>
+          </View>
+        ))
+      ) : (
+        <View
+          style={{
+            height: 23,
+            margin: 3,
+          }}
+        >
+          <Entypo name="cross" size={20} color={COLORS.secondary1} />
+        </View>
+      )}
+    </View>
+  );
+
+  const processBlockRoomStatus = (blockName, cleaningTypeObj) => {
+    if (blockName in cleaningTypeObj) {
+      return cleaningTypeObj[blockName];
+    } return [];
+  };
+  const IndividualBlockDetails = (props) => {
+    const {
+      blockName, daily, thorough, unattended,
+    } = props;
+    return (
+      <View
+        style={{
+          borderWidth: 4,
+          marginTop: 30,
+          marginVertical: 20,
+          marginHorizontal: 10,
+          paddingHorizontal: 10,
+          paddingVertical: 10,
+          borderColor: COLORS.light3,
+        }}
+      >
+        <View
+          style={{
+            position: 'absolute',
+            backgroundColor: COLORS.white,
+            paddingVertical: 10,
+            paddingHorizontal: 5,
+            top: -25,
+            left: 7,
+          }}
+        >
+          <Text style={[FONTS.body3, { color: COLORS.primary, textTransform: 'capitalize' }]}>{`${blockName}`}</Text>
+        </View>
+        <View>
+          <View style={{ margin: 2 }}>
+            <Text style={{ color: COLORS.dark3 }}>Daily Cleaned:</Text>
+            <SummaryRoomComponent rooms={daily} />
+          </View>
+          <View style={{ margin: 2 }}>
+            <Text style={{ color: COLORS.dark3 }}>Thorough Cleaned:</Text>
+            <SummaryRoomComponent rooms={thorough} />
+          </View>
+          <View style={{ margin: 2 }}>
+            <Text style={{ color: COLORS.dark3 }}>Unattended:</Text>
+            <SummaryRoomComponent rooms={unattended} />
+          </View>
+        </View>
+      </View>
+    );
+  };
+  const submitTaskLog = () => {
+    const refinedTasklog = taskLog.map((block) => { // data to send to server
+      const filterdRooms = block.rooms.filter((room) => !('_id' in room) && ('cleaningType' in room));
+      return { ...block, rooms: filterdRooms };
+    }).filter((block) => !!block.rooms.length);
+    const tempData = {
+      user, startAt, location: location.shortid, tasks: refinedTasklog,
+    };
+    console.log('this data is for the server ***** --- -- &&&&& > ', tempData);
+    axios({
+      method: 'post',
+      url: `${baseUrl}/tasklog/create`,
+      // data: {
+      //   user, startAt, location: location.shortid, tasks: refinedTasklog,
+      // },
+      data: temp,
+    }).then((res) => {
+      console.log('see this block and room data ------->', res.data);
+    })
+      .catch((err) => console.log('see this is an error***--------> ', err));
+  };
   const dataFormatter = () => {
     const dailyCleaned = {};
     const thoroughCleaned = {};
     const unAttended = {};
     const blockNames = [];
-    reduxState.taskLog.forEach((block) => {
+    taskLog.forEach((block) => {
       blockNames.push(block.name);
-      const dailyCleanedHolder = [];
-      const thoroughCleanedHolder = [];
-      const unAttendedArrayHolder = [];
+      let dailyCleanedHolder = [];
+      let thoroughCleanedHolder = [];
+      let unAttendedArrayHolder = [];
       block.rooms.forEach((room) => {
         if (!('_id' in room)) {
           if ('cleaningType' in room) {
             if (room.cleaningType === 'daily') {
-              dailyCleaned[block.name] = dailyCleanedHolder.push(room.roomId);
+              console.log('watch out for cleaning type daily --- --> ', room.roomId);
+              dailyCleanedHolder = [...dailyCleanedHolder, room.roomId];
+              dailyCleaned[block.name] = dailyCleanedHolder;
             } else {
-              thoroughCleaned[block.name] = thoroughCleanedHolder.push(room.roomId);
+              thoroughCleanedHolder = [...thoroughCleanedHolder, room.roomId];
+              thoroughCleaned[block.name] = thoroughCleanedHolder;
             }
           } else {
-            unAttended[block.name] = unAttendedArrayHolder.push(room.roomId);
+            unAttendedArrayHolder = [...unAttendedArrayHolder, room.roomId];
+            unAttended[block.name] = unAttendedArrayHolder;
           }
         }
       });
     });
-    const dailyCleanedCount = Object.keys(dailyCleaned).reduce((blockId, counter) => counter + dailyCleaned[blockId].length, 0);
-    const thoroughCleanedCount = Object.keys(thoroughCleaned).reduce((blockId, counter) => counter + thoroughCleaned[blockId].length, 0);
-    return {
+    // console.log(`blockNames - >${blockNames}`);
+    // console.log(`dailyCleaned ${JSON.stringify(dailyCleaned)}`);
+    // console.log(`thoroughCleaned ${JSON.stringify(thoroughCleaned)}`);
+    // console.log(`unAttended ${JSON.stringify(unAttended)}`);
+    setblockDetails({
       blockNames, dailyCleaned, thoroughCleaned, unAttended,
-    };
+    });
   };
 
   return (
@@ -196,8 +289,10 @@ const SummaryScreen = () => {
             >
               <Text style={[FONTS.body3, { color: COLORS.primary }]}>Current Shift Details</Text>
               <TouchableOpacity
-                // onPress={() => setViewMore((prevState) => !prevState)}
-                onPress={() => dataFormatter()}
+                onPress={() => {
+                  dataFormatter();
+                  setViewMore((prevState) => !prevState);
+                }}
                 style={{
                   backgroundColor: '#d9ebe9',
                   paddingHorizontal: 12,
@@ -212,13 +307,27 @@ const SummaryScreen = () => {
                 </Text>
               </TouchableOpacity>
             </View>
-            <SummaryElement item="attended" measure="12" />
+            <SummaryElement item="Daily Cleaning" measure={cleaningTypeCount.daily} />
+            <SummaryElement item="Thorough Cleaning" measure={cleaningTypeCount.thorough} />
+            <SummaryElement item="Total rooms attended" measure={`${cleaningTypeCount.daily + cleaningTypeCount.thorough}`} />
+            <SummaryElement item="Start time" measure={startAt.format('h:mm a')} />
+            {viewMore && (
+              blockDetails.blockNames.map((blockName) => (
+                <IndividualBlockDetails
+                  key={blockName}
+                  blockName={blockName}
+                  daily={processBlockRoomStatus(blockName, blockDetails.dailyCleaned)}
+                  thorough={processBlockRoomStatus(blockName, blockDetails.thoroughCleaned)}
+                  unattended={processBlockRoomStatus(blockName, blockDetails.unAttended)}
+                />
+              ))
+            )}
             {/* <SummaryItems data={dataFormatter()} /> */}
           </CardComponent>
         </ScrollView>
       </View>
       <FooterButton
-        onPress={() => alert('From summary screen')}
+        onPress={submitTaskLog}
         btnText="Submit"
       />
     </PageTemplate>

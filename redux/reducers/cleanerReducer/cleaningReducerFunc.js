@@ -1,15 +1,24 @@
 import moment from 'moment';
 
-const resettingRoom = ({ selectedBlockId, roomIndex }, taskLog) => {
+const resettingRoom = ({ selectedBlockId, roomIndex }, stateCopy) => {
+  const { taskLog, cleaningTypeCount } = stateCopy;
   const blockIndex = taskLog.findIndex((block) => block.shortid === selectedBlockId);
+
+  if (taskLog[blockIndex].rooms[roomIndex].cleaningType === 'daily') {
+    cleaningTypeCount.daily -= 1;
+  } else cleaningTypeCount.thorough -= 1;
   delete taskLog[blockIndex].rooms[roomIndex].cleaningType;
-  return taskLog;
+  return stateCopy;
   // removing cleaningType to reset the room
 };
-const roomIsCleaned = ({ selectedBlockId, roomIndex, cleaningType }, taskLog) => {
+const roomIsCleaned = ({ selectedBlockId, roomIndex, cleaningType }, stateCopy) => {
+  const { taskLog, cleaningTypeCount } = stateCopy;
   const blockIndex = taskLog.findIndex((block) => block.shortid === selectedBlockId);
   taskLog[blockIndex].rooms[roomIndex].cleaningType = cleaningType;
-  return taskLog;
+  if (cleaningType === 'daily') {
+    cleaningTypeCount.daily += 1;
+  } else cleaningTypeCount.thorough += 1;
+  return stateCopy;
 };
 
 const timeError = (diff) => (!(diff.hours() >= 0 && diff.minutes() >= 0));

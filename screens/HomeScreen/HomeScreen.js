@@ -25,6 +25,7 @@ import TitleWithDescription from '../../component/TitleWithDescriptionComponent'
 import PageTemplate from '../../component/PageTemplate';
 import { baseUrl } from '../../constants/constants';
 import CustomButton from '../../component/CustomButton';
+import CardComponent from '../../component/CardComponent';
 
 const isPlatformIos = Platform.OS === 'ios';
 
@@ -96,9 +97,10 @@ const itemExtractor = (taskLog, currentBlockId) => {
   return rooms;
 };
 const HomeScreen = (props) => {
-  const { navigation } = props;
+  const { navigation, route } = props;
   const [selectedBlockId, setSelectedBlockId] = useState(null);
   const [overlay, setOverlay] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
 
@@ -106,40 +108,127 @@ const HomeScreen = (props) => {
   const { taskLog } = cleaningDetail;
 
   useEffect(() => {
-    // const locationId = location.shortid;
-    // axios({
-    //   method: 'get',
-    //   url: `${baseUrl}/location/${locationId}/roomStatus`,
-    // }).then((res) => {
-    //   console.log('see this block and room data ------->', res.data);
-    // })
-    //   .catch((err) => console.log('see this is an error***--------> ', err));
+    const locationId = route.params.location.shortid;
+    axios({
+      method: 'get',
+      url: `${baseUrl}/location/${locationId}/roomStatus`,
+    }).then((res) => {
+      console.log('see this is res.data.blocks ------->', res.data.data.blocks);
+      // console.log('see this is dummyRoomStatus.blocks ------->', dummyRoomStatus.blocks);
+      // dispatch(initilizeTaskLog(res.data.blocks));
+      dispatch(initilizeTaskLog(res.data.data.blocks));
+      setLoading(false);
+    })
+      .catch((err) => console.log('see this is an error from home screen***--------> ', err));
 
     // (S) working with dummy data dummyRoomStatus
-    dispatch(initilizeTaskLog(dummyRoomStatus.blocks));
+    // dispatch(initilizeTaskLog(dummyRoomStatus.blocks));
     // (E) working with dummy data dummyRoomStatus
   }, []);
   return (
     <PageTemplate>
       <TitleWithDescription title="Block" description="Slect block to access rooms" />
       {overlay && (
-      <View style={{
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'black',
-        opacity: 0.4,
-        zIndex: 1,
-      }}
-      />
+      <TouchableOpacity
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'black',
+          opacity: 0.4,
+          zIndex: 1,
+        }}
+        onPress={() => setOverlay(false)}
+      >
+        {/* <TouchableOpacity style={{ backgroundColor: 'green', height: '100%', width: '100%' }} onPress={() => setOverlay(false)} /> */}
+      </TouchableOpacity>
       )}
-      <View style={{ marginHorizontal: 20 }}>
-        <RoomBlockComponent {...{ taskLog, selectedBlockId, setSelectedBlockId }} />
+      {loading ? (
+        <View style={{
+          alignItems: 'center', justifyContent: 'center', height: 89,
+        }}
+        >
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      ) : (
+        <View style={{ marginHorizontal: 20 }}>
+          <RoomBlockComponent {...{ taskLog, selectedBlockId, setSelectedBlockId }} />
+        </View>
+
+      )}
+      {overlay && (
+      <View style={{
+        zIndex: 2,
+        position: 'absolute',
+        top: 190,
+        right: 0,
+      }}
+      >
+        <CardComponent cardStyle={{ borderRadius: 7 }}>
+          <TouchableOpacity
+            style={{
+              paddingHorizontal: 8,
+              paddingVertical: 5,
+              justifyContent: 'center',
+            }}
+            onPress={() => {
+              console.log('currentBlockid from Home screen', currentBlockId);
+              // setOverlay(false);
+              // dispatch(resetCurrentBlock(currentBlockId));
+            }}
+          >
+            <Text
+              style={[
+                FONTS.body4,
+                // {
+                //   color: checkBlockStatus(currentBlockId, taskLog).isEmpty
+                //     ? COLORS.light1
+                //     : COLORS.primary,
+                // },
+              ]}
+            >
+              Reset current Block
+            </Text>
+          </TouchableOpacity>
+          <View
+            style={{
+              marginHorizontal: 5,
+              borderBottomColor: COLORS.light1,
+              borderBottomWidth: 1,
+            }}
+          />
+          <TouchableOpacity
+            style={{
+              paddingHorizontal: 8,
+              paddingVertical: 5,
+              justifyContent: 'center',
+            }}
+            onPress={() => {
+              console.log('currentBlockid from Home screen', currentBlockId);
+              setOverlay(false);
+              // dispatch(resetCurrentBlock(currentBlockId));
+            }}
+          >
+            <Text
+              style={[
+                FONTS.body4,
+                // {
+                //   color: checkBlockStatus(currentBlockId, taskLog).isEmpty
+                //     ? COLORS.light1
+                //     : COLORS.primary,
+                // },
+              ]}
+            >
+              Reset all
+            </Text>
+          </TouchableOpacity>
+        </CardComponent>
       </View>
+      )}
       <CleaningLog {...{
         overlay, setOverlay, selectedBlockId, taskLog,
       }}
