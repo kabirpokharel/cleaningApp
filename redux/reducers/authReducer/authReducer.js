@@ -1,34 +1,33 @@
-import { checkUser } from "./authReducerFunc";
+import { checkUser } from './authReducerFunc';
 
 const initialState = {
-  isLoading: true,
+  // isLoading: true,
   isSignedIn: false,
-  currentUser: {},
+  currentUser: {
+    // "message": "Successful login",
+    // "type": "success",
+    // "shortid": "DVGeKlbeD",
+    // "role": "user",
+    // "email": "kabirpokharel12@gmail.com"
+  },
   error: null,
 };
 
 const auth = (state = initialState, action) => {
-  switch (action.type) {
-    case "SIGN_IN":
-      // const user = checkUser(action.payload);
-      // const loginSuccessful = !!Object.keys(user).length;
-      // console.log("this is user from redux!!!!!=====>", user);
+  const { type, payload } = action;
+  switch (type) {
+    case 'SIGN_IN':
       return {
         ...state,
         isSignedIn: true,
-
-        // isSignedIn: loginSuccessful,
-        // currentUser: user,
-        // isLoading: false,
-        // error: loginSuccessful ? null : "Invalid login, please try again",
+        currentUser: payload,
       };
-
-    case "SIGN_OUT":
+    case 'SIGN_OUT':
       return {
         ...state,
         isSignedIn: false,
         currentUser: null,
-        isLoading: false,
+        // isLoading: false,
       };
     default:
       return state;

@@ -26,10 +26,7 @@ const CleaningLog = (props) => {
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
   const { taskLog } = cleaningDetail;
-  console.log('this is tasklog from redux from cleaning log page -- %%% --->', taskLog);
-
   const roomButtonStyle = (roomObj) => roomStyle(roomObj);
-
   const roomClickHandler = (roomObj, roomIndex, cleaningType) => {
     if (!('_id' in roomObj)) {
       if ('cleaningType' in roomObj) {

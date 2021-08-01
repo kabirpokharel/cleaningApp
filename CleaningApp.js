@@ -19,8 +19,8 @@ const NavigatePage = (props) => {
     state.auth);
   return (
     <NavigationContainer>
-      {/* {!authData.isSignedIn ? <AuthStack /> : <DrawerStack />} */}
-      <DrawerStack />
+      {!authData.isSignedIn ? <AuthStack /> : <DrawerStack />}
+      {/* <DrawerStack /> */}
     </NavigationContainer>
   );
 };

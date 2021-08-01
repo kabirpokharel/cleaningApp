@@ -1,5 +1,4 @@
-import React from "react";
-import SignupForm from "../../forms/SignupForm";
+import React from 'react';
 import {
   View,
   Text,
@@ -8,33 +7,35 @@ import {
   Image,
   Platform,
   SafeAreaView,
-} from "react-native";
-import { COLORS, FONTS } from "../../constants/theme";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+} from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import SignupForm from '../../forms/SignupForm';
+import { COLORS, FONTS } from '../../constants/theme';
 
 const SignupScreen = () => {
+  console.log('from signup screen');
   return (
     <KeyboardAvoidingView
       style={{
         flex: 1,
         backgroundColor: COLORS.white,
       }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <TouchableWithoutFeedback
         style={{
-          height: "100%",
-          justifyContent: "center",
+          height: '100%',
+          justifyContent: 'center',
         }}
         onPress={Keyboard.dismiss}
       >
         <View
           style={{
-            alignItems: "center",
+            alignItems: 'center',
           }}
         >
           <Image
-            resizeMode={"cover"}
+            resizeMode="cover"
             style={{
               width: 160,
               height: undefined,
@@ -42,9 +43,9 @@ const SignupScreen = () => {
               marginTop: 30,
               marginBottom: 40,
             }}
-            source={require("../../assets/images/acssLogo.png")}
+            source={require('../../assets/images/acssLogo.png')}
           />
-          <View style={{ width: "100%" }}>
+          <View style={{ width: '100%' }}>
             <Text style={[FONTS.h3, { paddingLeft: 30, paddingBottom: 15, color: COLORS.light2 }]}>
               Hello mate!
             </Text>

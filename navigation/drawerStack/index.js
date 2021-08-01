@@ -57,7 +57,7 @@ const DrawerStack = () => (
           <IconComponent {...{ size, focused, name: 'setting' }} />
         ),
       }}
-      name="authStack"
+      name="authauthStack"
       component={SettingScreen}
     />
     <Drawer.Screen

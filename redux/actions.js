@@ -15,9 +15,14 @@ import {
   UPDATE_CURRENT_BLOCK_ID,
 } from './actionsConstant';
 
-export const signinUser = (enteredEmaiPassword) => ({
+
+// export const signinUser = (userCredentials) => ({
+//   type: SIGN_UP,
+//   payload: userCredentials,
+// });
+export const signinUser = (userCredentials) => ({
   type: SIGN_IN,
-  payload: enteredEmaiPassword,
+  payload: userCredentials,
 });
 // export const logoutUser = () => ({ type: LOGOUT_USER });
 

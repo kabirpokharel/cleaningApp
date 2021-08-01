@@ -11,7 +11,7 @@ import {
 } from './cleaningReducerFunc';
 
 const initialState = {
-  user: 'X4WQRHEvQ', // replace with dynamic user
+  // user: 'X4WQRHEvQ', // replace with dynamic user
   location: null,
   startAt: '',
   taskLog: [],
@@ -42,7 +42,7 @@ const cleaningDetail = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case 'SET_LOCATION':
-      return { ...state, location: payload, startAt: moment() };
+      return { ...state, location: payload, startAt: new Date() };
       break;
     case 'INITILIZE_TASK_LOG':
       return { ...state, taskLog: payload };

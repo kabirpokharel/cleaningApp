@@ -18,62 +18,84 @@ import { baseUrl } from '../../constants/constants';
 
 const isPlatformIos = Platform.OS === 'ios';
 
-const temp = {
-  location: 'gvr-QXU8c',
-  startAt: '2021-07-28T15:15:46.765Z',
+// const temp = {
+//   location: 'gvr-QXU8c',
+//   startAt: '2021-07-28T15:15:46.765Z',
+//   tasks: [
+//     {
+//       name: 'block 1',
+//       rooms: [
+//         {
+//           cleaningType: 'daily',
+//           roomId: 1,
+//         },
+//         {
+//           cleaningType: 'daily',
+//           roomId: 2,
+//         },
+//         {
+//           cleaningType: 'daily',
+//           roomId: 3,
+//         },
+//       ],
+//       shortid: 'XhkSOQwCX',
+//     },
+//     {
+//       name: 'block 2',
+//       rooms: [
+//         {
+//           cleaningType: 'daily',
+//           roomId: 11,
+//         },
+//         {
+//           cleaningType: 'daily',
+//           roomId: 12,
+//         },
+//         {
+//           cleaningType: 'thorough',
+//           roomId: 13,
+//         },
+//       ],
+//       shortid: 'Tq-T9MAnZ',
+//     },
+//     {
+//       name: 'block 3',
+//       rooms: [
+//         {
+//           cleaningType: 'daily',
+//           roomId: 22,
+//         },
+//         {
+//           cleaningType: 'thorough',
+//           roomId: 23,
+//         },
+//       ],
+//       shortid: '8ST2igVly',
+//     },
+//   ],
+//   user: 'X4WQRHEvQ',
+// };
+
+const temp2 = {
+  user: 'X4WQRHEvQ',
   tasks: [
     {
-      name: 'block 1',
+      block: 'XhkSOQwCX',
       rooms: [
-        {
-          cleaningType: 'daily',
-          roomId: 1,
-        },
-        {
-          cleaningType: 'daily',
-          roomId: 2,
-        },
-        {
-          cleaningType: 'daily',
-          roomId: 3,
-        },
+        { roomId: 1, cleaningType: 'daily' },
+        { roomId: 2, cleaningType: 'thorough' },
       ],
-      shortid: 'XhkSOQwCX',
     },
     {
-      name: 'block 2',
+      block: 'Tq-T9MAnZ',
       rooms: [
-        {
-          cleaningType: 'daily',
-          roomId: 11,
-        },
-        {
-          cleaningType: 'daily',
-          roomId: 12,
-        },
-        {
-          cleaningType: 'thorough',
-          roomId: 13,
-        },
+        { roomId: 11, cleaningType: 'daily' },
+        { roomId: 12, cleaningType: 'thorough' },
+        { roomId: 13, cleaningType: 'thorough' },
       ],
-      shortid: 'Tq-T9MAnZ',
-    },
-    {
-      name: 'block 3',
-      rooms: [
-        {
-          cleaningType: 'daily',
-          roomId: 22,
-        },
-        {
-          cleaningType: 'thorough',
-          roomId: 23,
-        },
-      ],
-      shortid: '8ST2igVly',
-    },
-  ],
-  user: 'X4WQRHEvQ',
+    }],
+  location: 'gvr-QXU8c',
+  startAt: 'Tue Jul 20 2021 22:34:58 GMT+0930',
 };
 
 const SummaryText = ({ text, isQuantity }) => {
@@ -117,10 +139,11 @@ const SummaryScreen = () => {
   const [blockDetails, setblockDetails] = useState({});
 
   const cleaningDetail = useSelector((state) => state.cleaning);
+  const authenticationDetail = useSelector((state) => state.auth);
   const {
-    taskLog, cleaningTypeCount, location, user, startAt,
+    taskLog, cleaningTypeCount, location, startAt,
   } = cleaningDetail;
-
+  const { currentUser } = authenticationDetail;
   const SummaryRoomComponent = ({ rooms }) => (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
       {rooms.length ? (
@@ -204,21 +227,18 @@ const SummaryScreen = () => {
     );
   };
   const submitTaskLog = () => {
+    console.log('hey check for block id in this taskLog ^^^^^^^^>', taskLog);
     const refinedTasklog = taskLog.map((block) => { // data to send to server
+      delete Object.assign(block, { block: block.shortid }).shortid; // jsut to change shortid to block in tasks array
       const filterdRooms = block.rooms.filter((room) => !('_id' in room) && ('cleaningType' in room));
       return { ...block, rooms: filterdRooms };
     }).filter((block) => !!block.rooms.length);
-    const tempData = {
-      user, startAt, location: location.shortid, tasks: refinedTasklog,
-    };
-    console.log('this data is for the server ***** --- -- &&&&& > ', tempData);
     axios({
       method: 'post',
       url: `${baseUrl}/tasklog/create`,
-      // data: {
-      //   user, startAt, location: location.shortid, tasks: refinedTasklog,
-      // },
-      data: temp,
+      data: {
+        user: currentUser.shortid, startAt, location: location.shortid, tasks: refinedTasklog,
+      },
     }).then((res) => {
       console.log('see this block and room data ------->', res.data);
     })
@@ -310,7 +330,7 @@ const SummaryScreen = () => {
             <SummaryElement item="Daily Cleaning" measure={cleaningTypeCount.daily} />
             <SummaryElement item="Thorough Cleaning" measure={cleaningTypeCount.thorough} />
             <SummaryElement item="Total rooms attended" measure={`${cleaningTypeCount.daily + cleaningTypeCount.thorough}`} />
-            <SummaryElement item="Start time" measure={startAt.format('h:mm a')} />
+            {/* <SummaryElement item="Start time" measure={startAt.format('h:mm a')} /> */}
             {viewMore && (
               blockDetails.blockNames.map((blockName) => (
                 <IndividualBlockDetails
@@ -322,7 +342,6 @@ const SummaryScreen = () => {
                 />
               ))
             )}
-            {/* <SummaryItems data={dataFormatter()} /> */}
           </CardComponent>
         </ScrollView>
       </View>

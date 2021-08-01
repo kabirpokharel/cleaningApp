@@ -1,3 +1,4 @@
+export const SIGN_UP = 'SIGN_UP';
 export const SIGN_IN = 'SIGN_IN';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const UPDATE_CURRENT_BLOCK_ID = 'UPDATE_CURRENT_BLOCK_ID';
