@@ -108,7 +108,8 @@ const HomeScreen = (props) => {
   const { taskLog } = cleaningDetail;
 
   useEffect(() => {
-    const locationId = route.params.location.shortid;
+    const { locationId } = route.params;
+    console.log('see this locaiton id', locationId);
     axios({
       method: 'get',
       url: `${baseUrl}/location/${locationId}/roomStatus`,

@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   View, Text, Button, StyleSheet, SafeAreaView, Styles, ActivityIndicator,
 } from 'react-native';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useSelector, useDispatch } from 'react-redux';
 import CustomButton from '../../component/CustomButton';
 import PageTemplate from '../../component/PageTemplate';
@@ -10,72 +11,63 @@ import TitleWithDescription from '../../component/TitleWithDescriptionComponent'
 import { baseUrl } from '../../constants/constants';
 import { setLocation } from '../../redux/actions';
 
-
-
-
-
-const LocationScreen = (props) => {
+export default function App(props) {
   const { navigation } = props;
   const [allLocation, setAllLocation] = useState(null);
   const dispatch = useDispatch();
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
-    // !!!!!!!!!!!!!(s) code
-    axios.get(`${baseUrl}/location/viewAll`).then((res) => {
-      console.log('see this kabir--------> ', res.data);
-      setAllLocation(res.data.locations);
-    });
-    // setAllLocation([
-    //   {
-    //     name: 'new location',
-    //     shortid: 'gvr-QXU8c',
-    //     noOfBlocks: 3,
-    //   },
-    // ]);
-    // !!!!!!!!!!!!!(e) code
-
-    // axios({
-    //   method: 'post',
-    //   url: `${baseUrl}/tasklog/create`,
-    //   data: temp,
-    // }).then((res) => console.log('see this --------------------->', res.data))
-    //   .catch((err) => console.log('see this is an error--------> ', err));
+    (async () => {
+      axios.get(`${baseUrl}/location/viewAll`).then((res) => {
+        console.log('see this kabir--------> ', res.data);
+        setAllLocation(res.data.locations);
+      });
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
   }, []);
 
-  const LocationSelection = ({ locations }) => (
-    <View>
-      {locations.map((location) => (
-        <CustomButton
-          key={location.shortid}
-          label={location.name}
-          onPress={() => {
-            dispatch(setLocation(location));
-            navigation.navigate('home', { location });
-          }}
-        />
-      ))}
-    </View>
-  );
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    console.log('see this is data^^^^^^^^ > ', data);
+    const urlArray = data.split('/');
+    const locationId = urlArray[urlArray.length - 2];
+    console.log('see this is extractedLocation -- -- > ',locationId);
+    dispatch(setLocation(locationId));
+    navigation.navigate('home', { locationId });
+    // alert(`${data}`);
+  };
+
+  if (hasPermission === null) {
+    return <Text>Requesting for camera permission</Text>;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
 
   return (
-    <PageTemplate>
-      <TitleWithDescription title="Location" description="Slect your site" />
-      <View style={styles.containerWrapper}>
-        {!allLocation ? <ActivityIndicator size="large" color="#00ff00" />
-          : <LocationSelection locations={allLocation} />}
-      </View>
-    </PageTemplate>
+    <View style={styles.container}>
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={StyleSheet.absoluteFillObject}
+      />
+      {scanned && <Button title="Tap to Scan Again" onPress={() => setScanned(false)} />}
+    </View>
   );
-};
-
-export default LocationScreen;
+}
 
 const styles = StyleSheet.create({
-  containerWrapper: {
-    // marginHorizontal: 20,
+  container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  barCodeView: {
+    width: '100%',
+    height: '50%',
+    marginBottom: 40,
   },
 });
-
