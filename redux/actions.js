@@ -15,7 +15,6 @@ import {
   UPDATE_CURRENT_BLOCK_ID,
 } from './actionsConstant';
 
-
 // export const signinUser = (userCredentials) => ({
 //   type: SIGN_UP,
 //   payload: userCredentials,
@@ -38,14 +37,10 @@ export const initilizeTaskLog = (taskLog) => ({
   payload: taskLog,
 });
 
-export const roomCleaned = (selectedBlockId, roomIndex, cleaningType) => {
-  console.log('reached to roomCleaned action creator');
-  return ({
-    type: ROOM_CLEANED,
-    payload: { selectedBlockId, roomIndex, cleaningType },
-  });
-};
-
+export const roomCleaned = (selectedBlockId, roomIndex, cleaningType) => ({
+  type: ROOM_CLEANED,
+  payload: { selectedBlockId, roomIndex, cleaningType },
+});
 export const resetRoom = (selectedBlockId, roomIndex) => ({
   type: RESET_ROOM,
   payload: { selectedBlockId, roomIndex },

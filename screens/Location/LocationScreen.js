@@ -31,11 +31,9 @@ export default function App(props) {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    console.log('see this is data^^^^^^^^ > ', data);
-    const urlArray = data.split('/');
-    const locationId = urlArray[urlArray.length - 2];
-    console.log('see this is extractedLocation -- -- > ',locationId);
-    dispatch(setLocation(locationId));
+    const locationId = data;
+    const locationDetail = allLocation.find((location) => location.shortid === locationId);
+    dispatch(setLocation(locationDetail));
     navigation.navigate('home', { locationId });
     // alert(`${data}`);
   };
@@ -48,13 +46,25 @@ export default function App(props) {
   }
 
   return (
-    <View style={styles.container}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
-      {scanned && <Button title="Tap to Scan Again" onPress={() => setScanned(false)} />}
-    </View>
+    <PageTemplate>
+      <TitleWithDescription title="Location" description="Slect your site" />
+      <View style={{ height: 500, marginTop: 40 }}>
+        <View style={styles.container}>
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            style={{ ...StyleSheet.absoluteFillObject, backgroundColor: '#000' }}
+          />
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{
+              height: 180, width: 180, borderColor: 'white', borderWidth: 0.5,
+            }}
+            />
+            <Text style={{ color: 'white', fontSize: 11, marginTop: 15 }}>Focus QR code inside the square</Text>
+          </View>
+          {scanned && <Button title="Tap to Scan Again" onPress={() => setScanned(false)} />}
+        </View>
+      </View>
+    </PageTemplate>
   );
 }
 
@@ -65,9 +75,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fff',
   },
-  barCodeView: {
-    width: '100%',
-    height: '50%',
-    marginBottom: 40,
-  },
+  // barCodeView: {
+  //   width: '100%',
+  //   height: '50%',
+  //   marginBottom: 40,
+  // },
 });

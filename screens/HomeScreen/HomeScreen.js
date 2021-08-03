@@ -104,7 +104,7 @@ const HomeScreen = (props) => {
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
 
-  console.log('this is cleaning detail==========>', cleaningDetail);
+  // console.log('this is cleaning detail==========>', cleaningDetail);
   const { taskLog } = cleaningDetail;
 
   useEffect(() => {

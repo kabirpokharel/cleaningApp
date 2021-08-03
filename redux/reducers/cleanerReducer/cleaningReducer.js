@@ -42,7 +42,7 @@ const cleaningDetail = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case 'SET_LOCATION':
-      return { ...state, location: payload, startAt: new Date() };
+      return { ...state, location: payload, startAt: new Date().toString() };
       break;
     case 'INITILIZE_TASK_LOG':
       return { ...state, taskLog: payload };

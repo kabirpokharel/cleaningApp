@@ -227,22 +227,28 @@ const SummaryScreen = () => {
     );
   };
   const submitTaskLog = () => {
-    console.log('hey check for block id in this taskLog ^^^^^^^^>', taskLog);
     const refinedTasklog = taskLog.map((block) => { // data to send to server
-      delete Object.assign(block, { block: block.shortid }).shortid; // jsut to change shortid to block in tasks array
+      if ('shortid' in block) {
+        delete Object.assign(block, { block: block.shortid }).shortid; // jsut to change shortid to block in tasks array
+      }
       const filterdRooms = block.rooms.filter((room) => !('_id' in room) && ('cleaningType' in room));
-      return { ...block, rooms: filterdRooms };
+      const filteredExtras = block.extras.filter((item) => 'cleaningType' in item);
+      return { ...block, rooms: filterdRooms, extras: filteredExtras };
     }).filter((block) => !!block.rooms.length);
+    console.log('888888888888888888888888888 > ', {
+      user: currentUser.shortid, startAt, location: location.shortid, tasks: refinedTasklog,
+    });
     axios({
       method: 'post',
       url: `${baseUrl}/tasklog/create`,
-      data: {
-        user: currentUser.shortid, startAt, location: location.shortid, tasks: refinedTasklog,
-      },
+      // data: {
+      //   user: currentUser.shortid, startAt, location, tasks: refinedTasklog,
+      // },
+      data: temp,
     }).then((res) => {
-      console.log('see this block and room data ------->', res.data);
+      console.log('tasklog stored to database....success!!!------->', res.data);
     })
-      .catch((err) => console.log('see this is an error***--------> ', err));
+      .catch((err) => console.log('see this is an error in tasklog create***--------> ', err));
   };
   const dataFormatter = () => {
     const dailyCleaned = {};
@@ -356,3 +362,56 @@ const SummaryScreen = () => {
 export default SummaryScreen;
 
 const styles = StyleSheet.create({});
+
+const temp = {
+  location: 'gvr-QXU8c',
+  startAt: '2021-08-03T01:23:43.650Z',
+  tasks: [
+    {
+      block: 'XhkSOQwCX',
+      extras: [],
+      name: 'block 1',
+      rooms: [
+        {
+          cleaningType: 'thorough',
+          roomId: 1,
+        },
+        {
+          cleaningType: 'daily',
+          roomId: 2,
+        },
+      ],
+    },
+    {
+      block: 'Tq-T9MAnZ',
+      extras: [],
+      name: 'block 2',
+      rooms: [
+        {
+          cleaningType: 'thorough',
+          roomId: 11,
+        },
+        {
+          cleaningType: 'daily',
+          roomId: 12,
+        },
+      ],
+    },
+    {
+      block: '8ST2igVly',
+      extras: [],
+      name: 'block 3',
+      rooms: [
+        {
+          cleaningType: 'thorough',
+          roomId: 21,
+        },
+        {
+          cleaningType: 'daily',
+          roomId: 22,
+        },
+      ],
+    },
+  ],
+  user: 'DVGeKlbeD',
+};
