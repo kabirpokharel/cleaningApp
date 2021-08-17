@@ -10,6 +10,7 @@ import DrawerStack from './navigation/drawerStack';
 import { SigninScreen, SignupScreen } from './screens';
 import { COLORS, SIZES, FONTS } from './constants/theme';
 import AuthStack from './navigation/authStack';
+import ExtrasScreen from './screens/Extras/ExtrasScreen';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,8 @@ const NavigatePage = (props) => {
     state.auth);
   return (
     <NavigationContainer>
-      {!authData.isSignedIn ? <AuthStack /> : <DrawerStack />}
+      <ExtrasScreen />
+      {/* {!authData.isSignedIn ? <AuthStack /> : <DrawerStack />} */}
       {/* <DrawerStack /> */}
     </NavigationContainer>
   );

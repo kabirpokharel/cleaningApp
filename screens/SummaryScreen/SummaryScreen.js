@@ -143,6 +143,7 @@ const SummaryScreen = () => {
   const {
     taskLog, cleaningTypeCount, location, startAt,
   } = cleaningDetail;
+  console.log('see this is cleaningDetail from redux -- -- > ', cleaningDetail);
   const { currentUser } = authenticationDetail;
   const SummaryRoomComponent = ({ rooms }) => (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>

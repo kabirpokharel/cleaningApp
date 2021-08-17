@@ -91,13 +91,13 @@ const onSubmitFunc = (navigation, dispatch, values, setLoading) => {
   const signupCredentials = {
     firstName, surname, role: 'user', dob: '2000-02-02', email, password,
   };
-
+  console.log('signupCredentials -- - -> ', signupCredentials);
   axios({
     method: 'post',
     url: `${baseUrl}/signup`,
     data: signupCredentials,
   }).then((res) => {
-    console.log('see this is res.data.blocks ------->', res.data);
+    // console.log('see this is res.data.blocks ------->', res.data);
     // dispatch(signinUser({
     //   firstName, surname, email, password,
     // }));

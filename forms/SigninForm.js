@@ -71,8 +71,8 @@ const Login = ({ navigation }) => {
       <View style={{ paddingHorizontal: 32, width: '100%' }}>
         <Formik
           initialValues={{
-            email: '',
-            password: '',
+            email: 'kabirpokharel12@gmail.com',
+            password: '123admin',
           }}
           validationSchema={signinValidationSchema}
           onSubmit={(values) => loginFunc(dispatch, values, navigation)}
