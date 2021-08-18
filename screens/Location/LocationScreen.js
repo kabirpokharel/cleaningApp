@@ -10,6 +10,7 @@ import PageTemplate from '../../component/PageTemplate';
 import TitleWithDescription from '../../component/TitleWithDescriptionComponent';
 import { baseUrl } from '../../constants/constants';
 import { setLocation } from '../../redux/actions';
+import { SIZES } from '../../constants/theme';
 
 export default function App(props) {
   const { navigation } = props;
@@ -35,7 +36,6 @@ export default function App(props) {
     const locationDetail = allLocation.find((location) => location.shortid === locationId);
     dispatch(setLocation(locationDetail));
     navigation.navigate('home', { locationId });
-    // alert(`${data}`);
   };
 
   if (hasPermission === null) {
@@ -48,7 +48,7 @@ export default function App(props) {
   return (
     <PageTemplate>
       <TitleWithDescription title="Location" description="Slect your site" />
-      <View style={{ height: 500, marginTop: 40 }}>
+      <View style={{ height: SIZES.baseSize * 500, marginTop: SIZES.baseSize * 40 }}>
         <View style={styles.container}>
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -59,7 +59,7 @@ export default function App(props) {
               height: 180, width: 180, borderColor: 'white', borderWidth: 0.5,
             }}
             />
-            <Text style={{ color: 'white', fontSize: 11, marginTop: 15 }}>Focus QR code inside the square</Text>
+            <Text style={{ color: 'white', fontSize: 11, marginTop: SIZES.baseSize * 15 }}>Focus QR code inside the square</Text>
           </View>
           {scanned && <Button title="Tap to Scan Again" onPress={() => setScanned(false)} />}
         </View>

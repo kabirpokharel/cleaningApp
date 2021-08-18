@@ -122,8 +122,8 @@ const SummaryElement = ({ item, measure }) => (
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      height: 35,
-      marginHorizontal: 20,
+      height: SIZES.baseSize * 35,
+      marginHorizontal: SIZES.baseSize * 20,
     }}
   >
     <SummaryText text={item} />
@@ -167,8 +167,8 @@ const SummaryScreen = () => {
       ) : (
         <View
           style={{
-            height: 23,
-            margin: 3,
+            height: SIZES.baseSize * 23,
+            margin: SIZES.baseSize * 3,
           }}
         >
           <Entypo name="cross" size={20} color={COLORS.secondary1} />
@@ -190,11 +190,11 @@ const SummaryScreen = () => {
       <View
         style={{
           borderWidth: 4,
-          marginTop: 30,
-          marginVertical: 20,
-          marginHorizontal: 10,
-          paddingHorizontal: 10,
-          paddingVertical: 10,
+          marginTop: SIZES.baseSize * 30,
+          marginVertical: SIZES.baseSize * 20,
+          marginHorizontal: SIZES.baseSize * 10,
+          paddingHorizontal: SIZES.baseSize * 10,
+          paddingVertical: SIZES.baseSize * 10,
           borderColor: COLORS.light3,
         }}
       >
@@ -202,24 +202,24 @@ const SummaryScreen = () => {
           style={{
             position: 'absolute',
             backgroundColor: COLORS.white,
-            paddingVertical: 10,
-            paddingHorizontal: 5,
-            top: -25,
-            left: 7,
+            paddingVertical: SIZES.baseSize * 10,
+            paddingHorizontal: SIZES.baseSize * 5,
+            top: SIZES.baseSize * -25,
+            left: SIZES.baseSize * 7,
           }}
         >
           <Text style={[FONTS.body3, { color: COLORS.primary, textTransform: 'capitalize' }]}>{`${blockName}`}</Text>
         </View>
         <View>
-          <View style={{ margin: 2 }}>
+          <View style={{ margin: SIZES.baseSize * 2 }}>
             <Text style={{ color: COLORS.dark3 }}>Daily Cleaned:</Text>
             <SummaryRoomComponent rooms={daily} />
           </View>
-          <View style={{ margin: 2 }}>
+          <View style={{ margin: SIZES.baseSize * 2 }}>
             <Text style={{ color: COLORS.dark3 }}>Thorough Cleaned:</Text>
             <SummaryRoomComponent rooms={thorough} />
           </View>
-          <View style={{ margin: 2 }}>
+          <View style={{ margin: SIZES.baseSize * 2 }}>
             <Text style={{ color: COLORS.dark3 }}>Unattended:</Text>
             <SummaryRoomComponent rooms={unattended} />
           </View>

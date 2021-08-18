@@ -31,7 +31,7 @@ const ElementComponent = ({
         {
           justifyContent: 'center',
           alignItems: 'center',
-          marginVertical: [singleGutterWidth] / 2,
+          marginVertical: SIZES.baseSize * ([singleGutterWidth] / 2),
           marginRight,
           height: cardWidth,
           width: cardWidth,

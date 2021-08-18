@@ -16,14 +16,14 @@ const Stack = createStackNavigator();
 const LogoTitle = ({ title }) => (
   <View
     style={{
-      width: 190,
-      paddingHorizontal: 10,
-      paddingVertical: 5,
+      width: SIZES.baseSize * 190,
+      paddingHorizontal: SIZES.baseSize * 10,
+      paddingVertical: SIZES.baseSize * 5,
+      marginBottom: SIZES.baseSize * 9,
       alignItems: 'center',
       backgroundColor: COLORS.light4,
       justifyContent: 'center',
       borderRadius: 25,
-      marginBottom: 9,
     }}
   >
     <Text style={[FONTS.body3, { color: COLORS.primary2, letterSpacing: 0.8 }]}>{title}</Text>
@@ -83,8 +83,8 @@ const HomeStack = ({ navigation }) => {
             <TouchableOpacity
               onPress={() => navigation.openDrawer()}
               style={{
-                paddingHorizontal: 10,
-                marginBottom: 9,
+                paddingHorizontal: SIZES.baseSize * 10,
+                marginBottom: SIZES.baseSize * 9,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
@@ -92,7 +92,7 @@ const HomeStack = ({ navigation }) => {
               <Entypo name="menu" size={33} color={COLORS.primary2} />
             </TouchableOpacity>
           ),
-          headerRight: () => <View style={{ paddingHorizontal: 10 }} />,
+          headerRight: () => <View style={{ paddingHorizontal: SIZES.baseSize * 10 }} />,
         }}
       />
       {/* <Stack.Screen
@@ -141,8 +141,8 @@ const HomeStack = ({ navigation }) => {
             <TouchableOpacity
               onPress={() => navigation.goBack()}
               style={{
-                paddingHorizontal: 10,
-                marginBottom: 9,
+                paddingHorizontal: SIZES.baseSize * 10,
+                marginBottom: SIZES.baseSize * 9,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
@@ -150,7 +150,7 @@ const HomeStack = ({ navigation }) => {
               <AntDesign name="arrowleft" size={33} color={COLORS.primary2} />
             </TouchableOpacity>
           ),
-          headerRight: () => <View style={{ paddingHorizontal: 10 }} />,
+          headerRight: () => <View style={{ paddingHorizontal: SIZES.baseSize * 10 }} />,
         }}
       />
     </Stack.Navigator>

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import SignupForm from '../../forms/SignupForm';
-import { COLORS, FONTS } from '../../constants/theme';
+import { COLORS, FONTS, SIZES } from '../../constants/theme';
 
 const SignupScreen = () => {
   console.log('from signup screen');
@@ -37,11 +37,11 @@ const SignupScreen = () => {
           <Image
             resizeMode="cover"
             style={{
-              width: 160,
+              width: SIZES.baseSize * 160,
               height: undefined,
               aspectRatio: 1.8,
-              marginTop: 30,
-              marginBottom: 40,
+              marginTop: SIZES.baseSize * 30,
+              marginBottom: SIZES.baseSize * 40,
             }}
             source={require('../../assets/images/acssLogo.png')}
           />

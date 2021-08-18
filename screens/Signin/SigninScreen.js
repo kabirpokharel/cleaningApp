@@ -1,16 +1,18 @@
-import React from "react";
-import { Text, View, Keyboard, Image, KeyboardAvoidingView, SafeAreaView } from "react-native";
-import { COLORS, FONTS } from "../../constants/theme";
-import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import React from 'react';
+import {
+  Text, View, Keyboard, Image, KeyboardAvoidingView, SafeAreaView,
+} from 'react-native';
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { COLORS, FONTS, SIZES } from '../../constants/theme';
 // import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import SigninForm from "../../forms/SigninForm";
-import SignupScreen from "../Signup/SignupScreen";
-import Signup from "../../forms/SignupForm";
+import SigninForm from '../../forms/SigninForm';
+import SignupScreen from '../Signup/SignupScreen';
+import Signup from '../../forms/SignupForm';
 
 const OtherLinks = ({ navigation }) => (
-  <View style={{ justifyContent: "center", alignItems: "center", marginVertical: 15 }}>
+  <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 15 }}>
     <TouchableOpacity
-      onPress={() => alert("resetPassword")}
+      onPress={() => alert('resetPassword')}
       style={{
         padding: 10,
       }}
@@ -18,14 +20,15 @@ const OtherLinks = ({ navigation }) => (
       <Text style={[FONTS.h6, { color: COLORS.primary }]}>Forgot Password?</Text>
     </TouchableOpacity>
     <TouchableOpacity
-      onPress={() => navigation.navigate("Signup")}
+      onPress={() => navigation.navigate('Signup')}
       style={{
-        flexDirection: "row",
+        flexDirection: 'row',
         padding: 10,
       }}
     >
       <Text style={[FONTS.body4, { color: COLORS.primary1, lineHeight: 18 }]}>
-        Don't have an account?{" "}
+        Don't have an account?
+        {' '}
       </Text>
       <Text style={[FONTS.h6, { color: COLORS.primary }]}>Sign up </Text>
     </TouchableOpacity>
@@ -40,32 +43,32 @@ const SigninScreen = (props) => {
         flex: 1,
         backgroundColor: COLORS.white,
       }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <TouchableWithoutFeedback
         style={{
-          height: "100%",
-          justifyContent: "center",
+          height: '100%',
+          justifyContent: 'center',
         }}
         onPress={Keyboard.dismiss}
       >
         <View
           style={{
-            alignItems: "center",
+            alignItems: 'center',
           }}
         >
           <Image
-            resizeMode={"cover"}
+            resizeMode="cover"
             style={{
               width: 160,
               height: undefined,
               aspectRatio: 1.8,
-              marginTop: 30,
-              marginBottom: 40,
+              marginTop: SIZES.baseSize * 30,
+              marginBottom: SIZES.baseSize * 40,
             }}
-            source={require("../../assets/images/acssLogo.png")}
+            source={require('../../assets/images/acssLogo.png')}
           />
-          <View style={{ width: "100%" }}>
+          <View style={{ width: '100%' }}>
             <Text style={[FONTS.h3, { paddingLeft: 30, paddingBottom: 15, color: COLORS.light2 }]}>
               Welcome!
             </Text>

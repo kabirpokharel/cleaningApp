@@ -20,8 +20,7 @@ const NavigatePage = (props) => {
     state.auth);
   return (
     <NavigationContainer>
-      <ExtrasScreen />
-      {/* {!authData.isSignedIn ? <AuthStack /> : <DrawerStack />} */}
+      {!authData.isSignedIn ? <AuthStack /> : <DrawerStack />}
       {/* <DrawerStack /> */}
     </NavigationContainer>
   );

@@ -3,6 +3,7 @@ export const SIGN_IN = 'SIGN_IN';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const UPDATE_CURRENT_BLOCK_ID = 'UPDATE_CURRENT_BLOCK_ID';
 export const RESET_ROOM = 'RESET_ROOM';
+export const EXTRAS_TOGGLE = 'EXTRAS_TOGGLE';
 
 export const SET_LOCATION = 'SET_LOCATION';
 export const LOAD_ROOM = 'LOAD_ROOM';

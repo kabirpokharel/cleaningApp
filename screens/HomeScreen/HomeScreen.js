@@ -26,6 +26,7 @@ import PageTemplate from '../../component/PageTemplate';
 import { baseUrl } from '../../constants/constants';
 import CustomButton from '../../component/CustomButton';
 import CardComponent from '../../component/CardComponent';
+import ExtraScreen from '../Extras/ExtrasScreen';
 
 const isPlatformIos = Platform.OS === 'ios';
 
@@ -150,7 +151,7 @@ const HomeScreen = (props) => {
       )}
       {loading ? (
         <View style={{
-          alignItems: 'center', justifyContent: 'center', height: 89,
+          alignItems: 'center', justifyContent: 'center', height: SIZES.baseSize * 89,
         }}
         >
           <ActivityIndicator size="large" color="#00ff00" />
@@ -165,7 +166,7 @@ const HomeScreen = (props) => {
       <View style={{
         zIndex: 2,
         position: 'absolute',
-        top: 190,
+        top: SIZES.baseSize * 190,
         right: 0,
       }}
       >
@@ -197,15 +198,15 @@ const HomeScreen = (props) => {
           </TouchableOpacity>
           <View
             style={{
-              marginHorizontal: 5,
+              marginHorizontal: SIZES.baseSize * 5,
               borderBottomColor: COLORS.light1,
               borderBottomWidth: 1,
             }}
           />
           <TouchableOpacity
             style={{
-              paddingHorizontal: 8,
-              paddingVertical: 5,
+              paddingHorizontal: SIZES.baseSize * 8,
+              paddingVertical: SIZES.baseSize * 5,
               justifyContent: 'center',
             }}
             onPress={() => {
@@ -234,6 +235,7 @@ const HomeScreen = (props) => {
         overlay, setOverlay, selectedBlockId, taskLog,
       }}
       />
+      <ExtraScreen {...{ selectedBlockId }} />
       <FooterButton
         onPress={() => navigation.navigate('summaryScreen')}
         // onPress={showData}

@@ -27,7 +27,6 @@ const initialState = {
   //   ],
   // },
   // ],
-  // currentBlockId: null,
 
   cleaningTypeCount: {
     daily: 0,
@@ -67,6 +66,24 @@ const cleaningDetail = (state = initialState, action) => {
       );
       return { ...state, taskLog: newTaskLog, currentBlockId: payload };
       break;
+    }
+    case 'EXTRAS_TOGGLE': {
+      const taskLogCopy = [...state.taskLog];
+      const updatedTaskLog = taskLogCopy.map((block) => {
+        if (block.shortid === payload.selectedBlockId) {
+          const selectedExtrasObj = block.extras[payload.index];
+          console.log('this is selectedExtrasObj -- - > ', selectedExtrasObj);
+          if ('cleaningType' in selectedExtrasObj) {
+            delete selectedExtrasObj.cleaningType;
+          } else {
+            selectedExtrasObj.cleaningType = 'thorough';
+            console.log('this is block after selecting extras -- - >', block);
+          }
+        }
+        return block;
+        // console.log('see this updated tasklog -- -- > ', updatedTaskLog);
+      });
+      return { ...state, taskLog: updatedTaskLog };
     }
     // case 'ROOM_CLEANED': {
     //   const newState = { ...state };

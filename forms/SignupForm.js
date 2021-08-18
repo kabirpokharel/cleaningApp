@@ -55,9 +55,9 @@ const SignUpButton = ({ label, onPress, loading }) => (
     style={[
       {
         borderRadius: 8,
-        height: 50,
-        marginTop: 15,
-        marginHorizontal: 30,
+        height: SIZES.baseSize * 50,
+        marginTop: SIZES.baseSize * 15,
+        marginHorizontal: SIZES.baseSize * 30,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: COLORS.primary,

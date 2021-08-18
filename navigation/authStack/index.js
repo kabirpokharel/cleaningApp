@@ -12,7 +12,7 @@ import {
   ResetPassword,
   SettingScreen,
 } from '../../screens';
-import { COLORS, FONTS } from '../../constants/theme';
+import { COLORS, FONTS, SIZES } from '../../constants/theme';
 
 const titleObj = (title, navigation) => ({
   headerStyle: {
@@ -30,8 +30,8 @@ const titleObj = (title, navigation) => ({
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{
-          paddingHorizontal: 10,
-          marginBottom: 9,
+          paddingHorizontal: SIZES.baseSize * 10,
+          marginBottom: SIZES.baseSize * 9,
           alignItems: 'center',
           justifyContent: 'center',
         }}
@@ -45,14 +45,14 @@ const titleObj = (title, navigation) => ({
 const LogoTitle = ({ title }) => (
   <View
     style={{
-      width: 190,
-      paddingHorizontal: 10,
-      paddingVertical: 5,
+      width: SIZES.baseSize * 190,
+      paddingHorizontal: SIZES.baseSize * 10,
+      paddingVertical: SIZES.baseSize * 5,
+      marginBottom: SIZES.baseSize * 9,
       alignItems: 'center',
       backgroundColor: COLORS.light4,
       justifyContent: 'center',
       borderRadius: 25,
-      marginBottom: 9,
     }}
   >
     <Text style={[FONTS.body3, { color: COLORS.primary2, letterSpacing: 0.8 }]}>{title}</Text>

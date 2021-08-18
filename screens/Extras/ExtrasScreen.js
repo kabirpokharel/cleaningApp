@@ -1,125 +1,90 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, Text, View, CheckBox, FlatList,
+  StyleSheet, Text, View, CheckBox, FlatList, ScrollView,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { extrasCleaned } from '../../redux/actions';
 import PageTemplate from '../../component/PageTemplate';
 import TitleWithDescription from '../../component/TitleWithDescriptionComponent';
-import { FONTS, COLORS } from '../../constants/theme';
+import { FONTS, COLORS, SIZES } from '../../constants/theme';
 import CardComponent from '../../component/CardComponent';
 import FooterButton from '../../component/FooterButton';
+import TagComponent from '../../component/TagComponent';
 
-const dummyExtras = [
-  'toilet and this is random text to test the element and this is random text to test the element', 'bathroom', 'kitchen', 'store room', 'railings', 'windows', 'door knobs', 'game room', 'gym hall',
-];
+const tagStyle = (elem, type) => {
+  console.log('see this is elem -- -- > ', elem);
+  if ('cleaningType' in elem) {
+    if (type === 'text') { return { color: COLORS.white }; }
+    if (type === 'tag') {
+      return { backgroundColor: '#05c46b' };
+    }
+  } return {};
+};
 
-const CheckListElement = ({
-  item, extras, index, setExtras,
-}) => {
-  const objKey = Object.keys(item)[0];
-  const lastElement = extras.length - 1 === index;
+const ExtraScreen = ({ selectedBlockId }) => {
+  const dispatch = useDispatch();
+  const cleaningDetail = useSelector((state) => state.cleaning);
+  const { taskLog } = cleaningDetail;
+  let currentBlock = {};
+  if (selectedBlockId) {
+    currentBlock = taskLog.find((block) => {
+      console.log('see short id and current block id', block.shortid, selectedBlockId);
+      return block.shortid === selectedBlockId;
+    });
+  }
+  // console.log('hey see this currentBlockExtras.extras-- --- >', currentBlock);
   return (
-    <CardComponent
-      key={objKey}
-      // style={styles.checkBoxWrapper}
-      cardStyle={{
-        marginBottom: lastElement ? 60 : 5,
-        borderRadius: 4,
-        backgroundColor: item[objKey] ? COLORS.light4 : COLORS.white,
-      }}
-      onPress={() => {
-        const updatedExtras = [...extras];
-        updatedExtras[index][objKey] = !item[objKey];
-        setExtras(updatedExtras);
-      }}
+    <View style={{
+      height: SIZES.baseSize * 260,
+    // backgroundColor: 'pink'
+    }}
     >
-
-      <TouchableOpacity
-        key={objKey}
-        style={styles.checkBoxWrapper}
-        onPress={() => {
-          const updatedExtras = [...extras];
-          updatedExtras[index][objKey] = !item[objKey];
-          setExtras(updatedExtras);
+      <TitleWithDescription
+        title="Extras"
+        description="Select areas you attended"
+        containerStyle={{
+          marginTop: SIZES.baseSize * -8,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         }}
-      >
-        <View style={styles.extrasWrapper}>
-          <Text style={[
-            FONTS.body4,
-            { color: item[objKey] ? COLORS.primary : COLORS.primary2 },
-          ]}
-          >
-            {objKey}
-          </Text>
-        </View>
-        <View style={styles.statusWrapper}>
-          {item[objKey] ? <Feather name="check-circle" size={24} color={COLORS.primary} /> : <Feather name="circle" size={24} color={COLORS.primary2} />}
-        </View>
-      </TouchableOpacity>
-    </CardComponent>
-  );
-};
-const formatExtras = (dummyExtras) => {
-  const arr = [];
-  dummyExtras.forEach((e) => arr.push({ [e]: false }));
-  console.log('this is arr - - -- > ', arr);
-  return arr;
-};
-
-const ExtrasScreen = () => {
-  const [extras, setExtras] = useState(formatExtras(dummyExtras));
-  return (
-    <PageTemplate>
-      <TitleWithDescription title="Block" description="Slect block to access rooms" />
-      <View style={styles.checkBoxContainer}>
+      />
+      {selectedBlockId && (
+      <View style={styles.extrasContainer}>
         <FlatList
-          data={extras}
+          data={currentBlock.extras}
+          horizontal
+          showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => (
-            <CheckListElement {...{
-              item, extras, index, setExtras,
-            }}
+            <TagComponent
+              Key={item.type}
+              onPress={() => dispatch(extrasCleaned(index, selectedBlockId))}
+              tagText={item.type}
+              textStyle={tagStyle(item, 'text')}
+              containerStyle={tagStyle(item, 'tag')}
             />
           )}
-          keyExtractor={(item, index) => Object.keys(item)[0]}
+          keyExtractor={(item) => item.id}
         />
       </View>
-      <FooterButton
-        // onPress={() => navigation.navigate('summaryScreen')}
-        // onPress={showData}
-        containerStyle
-        textStyle
-        btnText="Continue"
-      />
-      {/* <SafeAreaView /> */}
-    </PageTemplate>
+      )}
+    </View>
   );
 };
 
-export default ExtrasScreen;
+export default ExtraScreen;
 
 const styles = StyleSheet.create({
-  checkBoxContainer: {
-    margin: 20,
-    width: 350,
-    flex: 1,
-  },
-  checkBoxWrapper: {
+  extrasContainer: {
+    marginTop: SIZES.baseSize * 15,
+    // borderColor: COLORS.light4,
+    // borderWidth: 1,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    paddingHorizontal: SIZES.baseSize * 10,
     flexDirection: 'row',
-    paddingVertical: 10,
+    flexWrap: 'wrap',
+    alignContent: 'space-between',
   },
-  extrasWrapper: {
-    flex: 3,
-    justifyContent: 'center',
-  },
-  statusWrapper: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-  itemWrapper: {
-
-  },
-
 });

@@ -3,6 +3,7 @@ import {
   LOAD_ROOM,
   ROOM_CLEANED,
   REMOVE_ROOM,
+  EXTRAS_TOGGLE,
   COMMON_AREA_CLEANED,
   ADD_SHIFT_TIME,
   DELETE_TIMELOG,
@@ -44,6 +45,11 @@ export const roomCleaned = (selectedBlockId, roomIndex, cleaningType) => ({
 export const resetRoom = (selectedBlockId, roomIndex) => ({
   type: RESET_ROOM,
   payload: { selectedBlockId, roomIndex },
+});
+
+export const extrasCleaned = (index, selectedBlockId) => ({
+  type: EXTRAS_TOGGLE,
+  payload: { index, selectedBlockId },
 });
 // export const updateCurrentBlockId = (blockId) => ({
 //   type: UPDATE_CURRENT_BLOCK_ID,

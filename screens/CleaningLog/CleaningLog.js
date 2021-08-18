@@ -78,7 +78,7 @@ const CleaningLog = (props) => {
             style={{
               flex: 1,
               marginHorizontal: SIZES.baseSize * 20,
-              paddingTop: SIZES.baseSize * 32 - 6,
+              paddingTop: SIZES.baseSize * 32 - SIZES.baseSize * 6,
             }}
           >
             <RowElements
