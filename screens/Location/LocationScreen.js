@@ -22,7 +22,7 @@ export default function App(props) {
   useEffect(() => {
     (async () => {
       axios.get(`${baseUrl}/location/viewAll`).then((res) => {
-        console.log('see this kabir--------> ', res.data);
+        // console.log('see this kabir--------> ', res.data);
         setAllLocation(res.data.locations);
       });
       const { status } = await BarCodeScanner.requestPermissionsAsync();

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  StyleSheet, Text, View, Platform,
+  StyleSheet, Text, View, Platform, Modal, ActivityIndicator,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, AntDesign, MaterialIcons } from '@expo/vector-icons';
 
 import { block } from 'react-native-reanimated';
 import moment from 'moment';
@@ -15,6 +15,7 @@ import PageTemplate from '../../component/PageTemplate';
 import TitleWithDescription from '../../component/TitleWithDescriptionComponent';
 import { COLORS, FONTS, SIZES } from '../../constants/theme';
 import { baseUrl } from '../../constants/constants';
+import CustomButton from '../../component/CustomButton';
 
 const isPlatformIos = Platform.OS === 'ios';
 
@@ -137,6 +138,9 @@ const SummaryElement = ({ item, measure }) => (
 const SummaryScreen = () => {
   const [viewMore, setViewMore] = useState(false);
   const [blockDetails, setblockDetails] = useState({});
+  const [loading, setLoding] = useState(false);
+  const [error, setError] = useState(false);
+  const [popup, setPopup] = useState(false);
 
   const cleaningDetail = useSelector((state) => state.cleaning);
   const authenticationDetail = useSelector((state) => state.auth);
@@ -228,28 +232,40 @@ const SummaryScreen = () => {
     );
   };
   const submitTaskLog = () => {
+    setLoding(true);
+    console.log('see this tasklog -- -- > ', taskLog.length);
     const refinedTasklog = taskLog.map((block) => { // data to send to server
       if ('shortid' in block) {
-        delete Object.assign(block, { block: block.shortid }).shortid; // jsut to change shortid to block in tasks array
+        // jsut to change shortid to block in tasks array
+        delete Object.assign(block, { block: block.shortid }).shortid;
       }
       const filterdRooms = block.rooms.filter((room) => !('_id' in room) && ('cleaningType' in room));
-      const filteredExtras = block.extras.filter((item) => 'cleaningType' in item);
+      const filteredExtras = block.extras.filter((item) => !('_id' in item) && 'cleaningType' in item);
+      // console.log('this is filtered extras --- --> ', filteredExtras);
       return { ...block, rooms: filterdRooms, extras: filteredExtras };
-    }).filter((block) => !!block.rooms.length);
+    });
+    console.log('this is refined tasklog -- -- > ', refinedTasklog);
     console.log('888888888888888888888888888 > ', {
-      user: currentUser.shortid, startAt, location: location.shortid, tasks: refinedTasklog,
+      user: currentUser.shortid, tasks: refinedTasklog, location: location.shortid, startAt,
     });
     axios({
       method: 'post',
       url: `${baseUrl}/tasklog/create`,
-      // data: {
-      //   user: currentUser.shortid, startAt, location, tasks: refinedTasklog,
-      // },
-      data: temp,
+      data: {
+        user: currentUser.shortid, tasks: refinedTasklog, location: location.shortid, startAt,
+      },
+      // data: temp,
     }).then((res) => {
       console.log('tasklog stored to database....success!!!------->', res.data);
+      setLoding(false);
+      setPopup(true);
     })
-      .catch((err) => console.log('see this is an error in tasklog create***--------> ', err));
+      .catch((err) => {
+        console.log('see this is an error in tasklog create***--------> ', err);
+        setLoding(false);
+        setError(true);
+        setPopup(true);
+      });
   };
   const dataFormatter = () => {
     const dailyCleaned = {};
@@ -291,6 +307,45 @@ const SummaryScreen = () => {
   return (
     <PageTemplate>
       <TitleWithDescription title="Summary" description="check your log before saving your log" />
+      {(popup || loading) && (
+      <Modal transparent isVisible={popup}>
+        <View style={{
+          flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+        >
+          {loading ? <ActivityIndicator size="large" color="#00ff00" />
+            : (
+              <TouchableOpacity
+                onPress={() => setPopup(false)}
+              >
+                <View style={{
+                  width: '90%',
+                  // height: 50,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderColor: '#ccc',
+                  borderWidth: 1,
+                  borderStyle: 'solid',
+                  backgroundColor: 'white',
+                  elevation: 20,
+                  paddingHorizontal: 20,
+                  paddingVertical: 30,
+                  borderRadius: 4,
+                }}
+                >
+                  <View style={{ marginBottom: 20 }}>
+                    {error ? <MaterialIcons name="cancel" size={80} color={COLORS.primary} /> : <AntDesign name="checkcircle" size={80} color="#05c46b" />}
+                  </View>
+                  <Text style={[FONTS.body2, { color: COLORS.primary }]}>{error ? 'Error' : 'Success!!'}</Text>
+                  <Text style={[FONTS.body5, { color: COLORS.primary1, textAlign: 'center' }]}>{error ? 'Error encountered try again' : 'Your tasklog has been recorded press OK to return to home menu'}</Text>
+                  <CustomButton btnStyle={{ marginTop: 20, backgroundColor: COLORS.primary }} label="Ok" onPress={() => setPopup(false)} />
+                </View>
+              </TouchableOpacity>
+            )}
+        </View>
+      </Modal>
+      )}
+      {/* <CustomButton label="Show modal" onPress={() => setPopup(true)} /> */}
       <View
         style={{
           flex: 1,

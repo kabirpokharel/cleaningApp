@@ -65,7 +65,7 @@ const ExtraScreen = ({ selectedBlockId }) => {
               containerStyle={tagStyle(item, 'tag')}
             />
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.type}
         />
       </View>
       )}

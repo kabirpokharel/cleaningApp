@@ -55,7 +55,6 @@ const loginFunc = (dispatch, values) => {
     data: values,
   }).then((res) => {
     console.log('see this is res.data from sinin form ------->', res.data);
-
     dispatch(signinUser(res.data));
   })
     .catch((err) => {

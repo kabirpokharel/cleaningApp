@@ -11,7 +11,7 @@ const CustomButton = ({ label, onPress, btnStyle }) => (
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#e94832',
-      },
+      }, btnStyle,
     ]}
     activeOpacity={0.7}
     onPress={onPress}

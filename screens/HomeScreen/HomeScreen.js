@@ -115,7 +115,7 @@ const HomeScreen = (props) => {
       method: 'get',
       url: `${baseUrl}/location/${locationId}/roomStatus`,
     }).then((res) => {
-      console.log('see this is res.data.blocks ------->', res.data.data.blocks);
+      // console.log('see this is res.data.blocks ------->', res.data.data.blocks);
       // console.log('see this is dummyRoomStatus.blocks ------->', dummyRoomStatus.blocks);
       // dispatch(initilizeTaskLog(res.data.blocks));
       dispatch(initilizeTaskLog(res.data.data.blocks));

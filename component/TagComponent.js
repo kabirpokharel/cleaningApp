@@ -11,15 +11,14 @@ const TagComponent = ({
     disabled={disabled}
     onPress={onPress}
     style={[{
-
       flexDirection: 'row',
       paddingHorizontal: SIZES.baseSize * 30,
       paddingVertical: SIZES.baseSize * 12,
-      backgroundColor: !true ? '#05c46b' : COLORS.white,
+      backgroundColor: COLORS.white,
       borderRadius: SIZES.baseSize * 40,
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: 8,
+      marginBottom: 9,
       marginTop: 1,
       // marginRight: SIZES.baseSize * 16,
       marginRight: SIZES.baseSize * 16 - SIZES.baseSize * 4,
