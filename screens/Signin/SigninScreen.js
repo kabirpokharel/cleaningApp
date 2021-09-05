@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Text, View, Keyboard, Image, KeyboardAvoidingView, SafeAreaView,
+  Text, View, Keyboard, Image, KeyboardAvoidingView, SafeAreaView, Platform,
 } from 'react-native';
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { COLORS, FONTS, SIZES } from '../../constants/theme';

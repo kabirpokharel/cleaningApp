@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View, Text, Button, StyleSheet, SafeAreaView,
+  View, Text,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
@@ -101,7 +101,7 @@ const CleaningLog = (props) => {
               justifyContent: 'center',
             }}
           >
-            <Text style={[FONTS.h2, { color: COLORS.light1 }]}>Slect a block</Text>
+            <Text style={[FONTS.h2, { color: COLORS.light1 }]}>Select a block</Text>
           </View>
         )}
     </View>

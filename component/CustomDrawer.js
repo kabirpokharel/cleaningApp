@@ -17,7 +17,7 @@ const Profile = ({ email, name, img }) => (
     style={{
       // flexDirection: "column",
       // alignItems: "center",
-      paddingTop: SIZES.baseSize * 20,
+      paddingTop: Platform.OS !== 'ios' ? SIZES.baseSize * 50 : SIZES.baseSize * 20,
       paddingLeft: SIZES.baseSize * 20,
       paddingBottom: SIZES.baseSize * 35,
       marginBottom: SIZES.baseSize * 35,
@@ -74,6 +74,7 @@ const CustomDrawer = (props) => {
         <Text style={{ fontSize: 10, color: "grey", fontWeight: "200" }}>*Logo Here</Text>
         <Text style={[FONTS.h3, { color: COLORS.secondary }]}>ACSS</Text>
       </View> */}
+        {/* {Platform.OS !== 'ios' && <View style={{ height: 20 }} />} */}
         <Profile
           name="Kabir Pokharel"
           email="kabirpokharel12@gmail.com"

@@ -7,32 +7,29 @@ import { useSelector, useDispatch } from 'react-redux';
 // import ProfileScreen from "./screens/ProfileScreen";
 import HomeStack from './navigation/homeStack';
 import DrawerStack from './navigation/drawerStack';
-import { SigninScreen, SignupScreen } from './screens';
-import { COLORS, SIZES, FONTS } from './constants/theme';
+// import { SigninScreen, SignupScreen } from './screens';
+// import { COLORS, SIZES, FONTS } from './constants/theme';
 import AuthStack from './navigation/authStack';
-import ExtrasScreen from './screens/Extras/ExtrasScreen';
+// import ExtrasScreen from './screens/Extras/ExtrasScreen';
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
 
-const NavigatePage = (props) => {
-  const authData = useSelector((state) =>
-    // console.log("this is auth state in reudx form Nativate==> ", state);
-    state.auth);
+const NavigatePage = () => {
+  const authData = useSelector((state) => state.auth);
   return (
     <NavigationContainer>
       {!authData.isSignedIn ? <AuthStack /> : <DrawerStack />}
-      {/* <DrawerStack /> */}
     </NavigationContainer>
   );
 };
 
 export default NavigatePage;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.white,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: COLORS.white,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });

@@ -59,7 +59,11 @@ const ExtraScreen = ({ selectedBlockId }) => {
           renderItem={({ item, index }) => (
             <TagComponent
               Key={item.type}
-              onPress={() => dispatch(extrasCleaned(index, selectedBlockId))}
+              onPress={() => {
+                if (!('_id' in item)) {
+                  dispatch(extrasCleaned(index, selectedBlockId));
+                }
+              }}
               tagText={item.type}
               textStyle={tagStyle(item, 'text')}
               containerStyle={tagStyle(item, 'tag')}

@@ -12,7 +12,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import commonStyle from '../style';
-import styles from './homeScreeStyle';
+import styles from './taskLogScreeStyle';
 import {
   selectAllRooms, commonAreaCleanedAct, resetCurrentBlock, updateCurrentBlockId, initilizeTaskLog,
 } from '../../redux/actions';
@@ -97,7 +97,7 @@ const itemExtractor = (taskLog, currentBlockId) => {
   const rooms = currentBlock?.map((room) => room.roomId);
   return rooms;
 };
-const HomeScreen = (props) => {
+const TaskLogScreen = (props) => {
   const { navigation, route } = props;
   const [selectedBlockId, setSelectedBlockId] = useState(null);
   const [overlay, setOverlay] = useState(false);
@@ -129,7 +129,7 @@ const HomeScreen = (props) => {
   }, []);
   return (
     <PageTemplate>
-      <TitleWithDescription title="Block" description="Slect block to access rooms" />
+      <TitleWithDescription title="Block" description="Select block to access rooms" />
       {overlay && (
       <TouchableOpacity
         style={{
@@ -247,4 +247,4 @@ const HomeScreen = (props) => {
     </PageTemplate>
   );
 };
-export default HomeScreen;
+export default TaskLogScreen;

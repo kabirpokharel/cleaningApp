@@ -8,7 +8,7 @@ import { Entypo, AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS, SIZES, FONTS } from '../../constants/theme';
 import {
-  HomeScreen, TimeLog, SummaryScreen, LocationScreen,
+  HomeScreen, TaskLogScreen, TimeLog, SummaryScreen, LocationScreen,
 } from '../../screens';
 
 const Stack = createStackNavigator();
@@ -36,6 +36,35 @@ const HomeStack = ({ navigation }) => {
   const cleaningDetail = useSelector((state) => state.cleaning);
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="home"
+        component={HomeScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+          },
+          screenOptions: { headerTitleAlign: 'center' },
+          headerTitle: () => (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <LogoTitle title="Home" />
+            </View>
+          ),
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.openDrawer()}
+              style={{
+                paddingHorizontal: SIZES.baseSize * 10,
+                marginBottom: SIZES.baseSize * 9,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Entypo name="menu" size={33} color={COLORS.primary2} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => <View style={{ paddingHorizontal: SIZES.baseSize * 10 }} />,
+        }}
+      />
       <Stack.Screen
         name="location"
         component={LocationScreen}
@@ -67,8 +96,8 @@ const HomeStack = ({ navigation }) => {
         }}
       />
       <Stack.Screen
-        name="home"
-        component={HomeScreen}
+        name="taskLogScreen"
+        component={TaskLogScreen}
         options={{
           headerStyle: {
             backgroundColor: COLORS.white,

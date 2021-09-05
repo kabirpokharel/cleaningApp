@@ -10,21 +10,17 @@ import TitleWithDescription from '../../component/TitleWithDescriptionComponent'
 import { baseUrl } from '../../constants/constants';
 import { setLocation } from '../../redux/actions';
 
-
-
-
-
 const LocationScreen = (props) => {
   const { navigation } = props;
   const [allLocation, setAllLocation] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // !!!!!!!!!!!!!(s) code
     axios.get(`${baseUrl}/location/viewAll`).then((res) => {
       console.log('see this kabir--------> ', res.data);
       setAllLocation(res.data.locations);
     });
+    // !!!!!!!!!!!!!(s) code
     // setAllLocation([
     //   {
     //     name: 'new location',
@@ -59,7 +55,7 @@ const LocationScreen = (props) => {
 
   return (
     <PageTemplate>
-      <TitleWithDescription title="Location" description="Slect your site" />
+      <TitleWithDescription title="Location" description="Select your site" />
       <View style={styles.containerWrapper}>
         {!allLocation ? <ActivityIndicator size="large" color="#00ff00" />
           : <LocationSelection locations={allLocation} />}
@@ -78,4 +74,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-

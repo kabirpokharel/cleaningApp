@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { COLORS, SIZES, FONTS } from '../../constants/theme';
-import homeStyles from './homeScreeStyle';
+import homeStyles from './taskLogScreeStyle';
 
 export default ({ taskLog, selectedBlockId, setSelectedBlockId }) => {
   const dispatch = useDispatch();

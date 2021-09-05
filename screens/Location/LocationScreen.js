@@ -34,8 +34,9 @@ export default function App(props) {
     setScanned(true);
     const locationId = data;
     const locationDetail = allLocation.find((location) => location.shortid === locationId);
+    // if(locationDetail)
     dispatch(setLocation(locationDetail));
-    navigation.navigate('home', { locationId });
+    navigation.navigate('taskLogScreen', { locationId });
   };
 
   if (hasPermission === null) {
@@ -47,7 +48,7 @@ export default function App(props) {
 
   return (
     <PageTemplate>
-      <TitleWithDescription title="Location" description="Slect your site" />
+      <TitleWithDescription title="Location" description="Select your site" />
       <View style={{ height: SIZES.baseSize * 500, marginTop: SIZES.baseSize * 40 }}>
         <View style={styles.container}>
           <BarCodeScanner
@@ -64,6 +65,7 @@ export default function App(props) {
           {scanned && <Button title="Tap to Scan Again" onPress={() => setScanned(false)} />}
         </View>
       </View>
+      <Button title="Tap to Scan Again" onPress={() => setScanned(false)} />
     </PageTemplate>
   );
 }

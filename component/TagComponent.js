@@ -12,7 +12,7 @@ const TagComponent = ({
     onPress={onPress}
     style={[{
       flexDirection: 'row',
-      paddingHorizontal: SIZES.baseSize * 30,
+      paddingHorizontal: SIZES.baseSize * 20,
       paddingVertical: SIZES.baseSize * 12,
       backgroundColor: COLORS.white,
       borderRadius: SIZES.baseSize * 40,

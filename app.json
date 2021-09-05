@@ -1,12 +1,14 @@
 {
   "expo": {
-    "name": "cleaningApp",
+    "name": "Cleaning TaskLog",
     "slug": "cleaningApp",
+    "privacy": "public",
+    "description": "An application to keep tack of cleaning tasklog",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/icon.png",
+    "icon": "./assets/icons/icon.jpg",
     "splash": {
-      "image": "./assets/icons/splash.png",
+      "image": "./assets/icons/splash.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,13 +19,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.example.cleaningapp"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/adaptive-icon.png",
+        "foregroundImage": "./assets/icons/adaptive-icon.jpg",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.example.cleaningapp"
     },
     "web": {
       "favicon": "./assets/icons/favicon.png"
