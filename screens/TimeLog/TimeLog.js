@@ -1,60 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { View, Platform, Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import {
+  View, Platform, Text, StyleSheet, SafeAreaView, ScrollView,
+} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { deleteTimeLog, initilizeTimeLog } from "../../redux/actions";
-import TimePicker from "../../container/TimePicker";
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
-import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
-import styles from "./timeLogStyle";
-import commonStyle from "../style";
-import { COLORS, SIZES, FONTS } from "../../constants/theme";
-import FooterButton from "../../component/FooterButton";
+import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { deleteTimeLog, initilizeTimeLog } from '../../redux/actions';
+import TimePicker from '../../container/TimePicker';
+import styles from './timeLogStyle';
+import commonStyle from '../style';
+import { COLORS, SIZES, FONTS } from '../../constants/theme';
+import FooterButton from '../../component/FooterButton';
 import TitleWithDescriptionComponent, {
   TitleDescription,
-} from "../../component/TitleWithDescriptionComponent";
-import PageTemplate from "../../component/PageTemplate";
-import CardComponent from "../../component/CardComponent";
+} from '../../component/TitleWithDescriptionComponent';
+import PageTemplate from '../../component/PageTemplate';
+import CardComponent from '../../component/CardComponent';
 
-const isPlatformIos = Platform.OS === "ios";
+const isPlatformIos = Platform.OS === 'ios';
 
-const checkTimeLogHasError = (feedbackString) => {
-  return !feedbackString.includes(":");
-};
+const checkTimeLogHasError = (feedbackString) => !feedbackString.includes(':');
 
 const timeLogErrorCheck = (reduxTimeArray) => {
-  let result = "";
-  const emptyLog = reduxTimeArray.find((time) => !time.status); //only one time log can have empty status at a time, it's after initilization and creating new log
-  let errorsArray = reduxTimeArray.filter(
+  let result = '';
+  const emptyLog = reduxTimeArray.find((time) => !time.status); // only one time log can have empty status at a time, it's after initilization and creating new log
+  const errorsArray = reduxTimeArray.filter(
     // filter out all the array with error (first check it status is undefined or empty) if not than check for status string
     (time) => {
       if (!time.status) {
         return false;
-      } else return checkTimeLogHasError(time.status);
-    }
+      } return checkTimeLogHasError(time.status);
+    },
   );
-  if (!!emptyLog) {
-    result = "incomplete";
-  } else if (!!errorsArray.length) {
-    result = "other errors";
+  if (emptyLog) {
+    result = 'incomplete';
+  } else if (errorsArray.length) {
+    result = 'other errors';
   } else {
-    result = "no error";
+    result = 'no error';
   }
   return result;
 };
 
 // const continueButtonAction = (reduxTimeArray, timeSetCounter, navigation) => {
 const continueButtonAction = (reduxTimeArray, navigation) => {
-  let errorCheckResult = timeLogErrorCheck(reduxTimeArray);
+  const errorCheckResult = timeLogErrorCheck(reduxTimeArray);
   switch (errorCheckResult) {
-    case "incomplete":
-      alert("Enter start and end time before proceeding");
+    case 'incomplete':
+      alert('Enter start and end time before proceeding');
       break;
-    case "other error":
-      alert("Fix above error before proceeding");
+    case 'other error':
+      alert('Fix above error before proceeding');
       break;
     default:
-      navigation.navigate("summaryScreen");
+      navigation.navigate('summaryScreen');
       break;
   }
 };
@@ -62,15 +62,14 @@ const TimeLogFeedback = ({ feedbackString, defaultColor, errorColor }) => {
   let hasError = checkTimeLogHasError(feedbackString);
   if (!hasError) {
     hasError = false;
-    feedbackString =
-      feedbackString.substring(0, feedbackString.indexOf(":")) +
-      "hrs " +
-      feedbackString.substring(feedbackString.indexOf(":") + 1) +
-      "min";
-  } else if (feedbackString == "diff error") {
-    feedbackString = "*start time should be early than end time";
-  } else if (feedbackString == "incomplete") {
-    feedbackString = "*Enter both start and end time";
+    feedbackString = `${feedbackString.substring(0, feedbackString.indexOf(':'))
+    }hrs ${
+      feedbackString.substring(feedbackString.indexOf(':') + 1)
+    }min`;
+  } else if (feedbackString == 'diff error') {
+    feedbackString = '*start time should be early than end time';
+  } else if (feedbackString == 'incomplete') {
+    feedbackString = '*Enter both start and end time';
   }
   return (
     <Text
@@ -95,15 +94,17 @@ const TimeLog = (props) => {
 
   const { time: reduxTimeArray } = cleaningDetail;
 
-  const AddCardButton = ({ disabled, activeColor, disableColor, onPress }) => {
-    let variableStyle = disabled
+  const AddCardButton = ({
+    disabled, activeColor, disableColor, onPress,
+  }) => {
+    const variableStyle = disabled
       ? { backgroundColor: disableColor }
       : { backgroundColor: activeColor };
     return (
       <TouchableOpacity
         onPress={
           disabled
-            ? () => alert("Please complete time set and resolve errors before adding new ")
+            ? () => alert('Please complete time set and resolve errors before adding new ')
             : onPress
         }
         disabled={overlay}
@@ -113,8 +114,8 @@ const TimeLog = (props) => {
             width: 50,
             margin: 10,
             borderRadius: 4,
-            alignItems: "center",
-            justifyContent: "center",
+            alignItems: 'center',
+            justifyContent: 'center',
           },
           variableStyle,
         ]}
@@ -134,13 +135,13 @@ const TimeLog = (props) => {
         {overlay && (
           <View
             style={{
-              position: "absolute",
+              position: 'absolute',
               top: 0,
               bottom: 0,
               left: 0,
               right: 0,
               opacity: 0.3,
-              backgroundColor: "#000",
+              backgroundColor: '#000',
               zIndex: 2,
             }}
           >
@@ -163,11 +164,11 @@ const TimeLog = (props) => {
           {overlay && (
             <View
               style={{
-                position: "absolute",
+                position: 'absolute',
                 height: SIZES.height,
                 width: SIZES.width,
                 opacity: 0.3,
-                backgroundColor: "#000",
+                backgroundColor: '#000',
                 zIndex: 1,
               }}
             >
@@ -195,13 +196,13 @@ const TimeLog = (props) => {
                   {overlay && (
                     <View
                       style={{
-                        position: "absolute",
+                        position: 'absolute',
                         top: -10,
                         left: -10,
                         right: -10,
                         bottom: -10,
                         opacity: 0.3,
-                        backgroundColor: "#000",
+                        backgroundColor: '#000',
                         zIndex: 1,
                       }}
                     >
@@ -216,19 +217,21 @@ const TimeLog = (props) => {
                   )}
                   <View
                     style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
                     }}
                   >
                     <Text style={[commonStyle.titleText, FONTS.body3, { color: COLORS.primary }]}>
-                      Time log {inputId + 1}
+                      Time log
+                      {' '}
+                      {inputId + 1}
                     </Text>
                     <TouchableOpacity
                       onPress={() => {
                         setOverlay(true);
                         setShowTimeEditpopup(inputId);
                       }}
-                      style={{ height: 40, width: 40, alignItems: "center" }}
+                      style={{ height: 40, width: 40, alignItems: 'center' }}
                     >
                       <AntDesign name="ellipsis1" size={24} color="#00000080" />
                     </TouchableOpacity>
@@ -237,13 +240,13 @@ const TimeLog = (props) => {
                     <View
                       style={{
                         width: 150,
-                        position: "absolute",
-                        backgroundColor: "#fff",
+                        position: 'absolute',
+                        backgroundColor: '#fff',
                         borderRadius: 4,
                         zIndex: 3,
                         right: -5,
                         top: -5,
-                        shadowColor: "#000",
+                        shadowColor: '#000',
                         shadowOffset: {
                           width: 0,
                           height: 2,
@@ -259,7 +262,7 @@ const TimeLog = (props) => {
                         style={{
                           paddingHorizontal: 8,
                           paddingVertical: 5,
-                          justifyContent: "center",
+                          justifyContent: 'center',
                         }}
                         onPress={() => {
                           setOverlay(false);
@@ -288,10 +291,10 @@ const TimeLog = (props) => {
                         style={{
                           paddingHorizontal: 8,
                           paddingVertical: 5,
-                          justifyContent: "center",
+                          justifyContent: 'center',
                         }}
                         onPress={() => {
-                          alert("watnt to Reset??");
+                          alert('watnt to Reset??');
                         }}
                       >
                         <Text
@@ -309,37 +312,37 @@ const TimeLog = (props) => {
                   )}
                   <View
                     style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       height: 40,
                     }}
                   >
                     <View>
-                      <TimePicker {...{ inputId, timeType: "start" }} />
+                      <TimePicker {...{ inputId, timeType: 'start' }} />
                     </View>
                     <View style={{ width: 25 }} />
                     <View>
-                      <TimePicker {...{ inputId, timeType: "end" }} />
+                      <TimePicker {...{ inputId, timeType: 'end' }} />
                     </View>
                   </View>
-                  <View style={{ height: 20, marginTop: 10, alignItems: "center" }}>
-                    {!!reduxTimeArray.length &&
-                      reduxTimeArray[inputId] &&
-                      Object.keys(reduxTimeArray[inputId]).length > 1 && (
+                  <View style={{ height: 20, marginTop: 10, alignItems: 'center' }}>
+                    {!!reduxTimeArray.length
+                      && reduxTimeArray[inputId]
+                      && Object.keys(reduxTimeArray[inputId]).length > 1 && (
                         <TimeLogFeedback
                           feedbackString={reduxTimeArray[inputId].status}
                           defaultColor={COLORS.primary1}
                           errorColor={COLORS.secondary}
                         />
-                      )}
+                    )}
                   </View>
                 </View>
               </CardComponent>
             </React.Fragment>
           ))}
           <AddCardButton
-            disabled={!(timeLogErrorCheck(reduxTimeArray) === "no error")}
+            disabled={!(timeLogErrorCheck(reduxTimeArray) === 'no error')}
             onPress={() => {
               dispatch(initilizeTimeLog(reduxTimeArray.length));
             }}

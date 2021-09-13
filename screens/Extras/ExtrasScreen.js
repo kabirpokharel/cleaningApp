@@ -50,7 +50,7 @@ const ExtraScreen = ({ selectedBlockId }) => {
           justifyContent: 'space-between',
         }}
       />
-      {selectedBlockId && (
+      {!!selectedBlockId && (
       <View style={styles.extrasContainer}>
         <FlatList
           data={currentBlock.extras}

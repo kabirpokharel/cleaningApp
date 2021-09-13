@@ -13,18 +13,20 @@ import TitleWithDescription from '../../component/TitleWithDescriptionComponent'
 import { COLORS, FONTS, SIZES } from '../../constants/theme';
 import { baseUrl } from '../../constants/constants';
 import CustomButton from '../../component/CustomButton';
+import { setLocation } from '../../redux/actions';
 import { dataFormatter, submitTaskLog, processBlockRoomStatus } from './summaryScreenFunc';
 import { IndividualBlockDetails, SummaryElement } from './summaryComponent';
 
 const isPlatformIos = Platform.OS === 'ios';
 
-const SummaryScreen = () => {
+const SummaryScreen = (props) => {
+  const { navigation } = props;
   const [viewMore, setViewMore] = useState(false);
   const [blockDetails, setblockDetails] = useState({});
   const [loading, setLoding] = useState(false);
   const [error, setError] = useState(false);
   const [popup, setPopup] = useState(false);
-
+  const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
   const authenticationDetail = useSelector((state) => state.auth);
   const {
@@ -44,18 +46,33 @@ const SummaryScreen = () => {
         >
           {loading ? <ActivityIndicator size="large" color="#00ff00" />
             : (
-              <TouchableOpacity
-                onPress={() => setPopup(false)}
+              <View
+                // onPress={() => setPopup(false)}
+                style={{
+                  flex: 1, alignItems: 'center', justifyContent: 'center',
+                }}
               >
                 <View style={styles.popupModalWrapper}>
                   <View style={{ marginBottom: 20 }}>
-                    {error ? <MaterialIcons name="cancel" size={80} color={COLORS.primary} /> : <AntDesign name="checkcircle" size={80} color="#05c46b" />}
+                    {error ? <MaterialIcons name="cancel" size={80} color={error ? COLORS.secondary : COLORS.primary} /> : <AntDesign name="checkcircle" size={80} color="#05c46b" />}
                   </View>
-                  <Text style={[FONTS.body2, { color: COLORS.primary }]}>{error ? 'Error' : 'Success!!'}</Text>
-                  <Text style={[FONTS.body5, { color: COLORS.primary1, textAlign: 'center' }]}>{error ? 'Error encountered try again' : 'Your tasklog has been recorded press OK to return to home menu'}</Text>
-                  <CustomButton btnStyle={{ marginTop: 20, backgroundColor: COLORS.primary }} label="Ok" onPress={() => setPopup(false)} />
+                  <Text style={[FONTS.body2, { color: COLORS.primary, marginBottom: 5 }]}>{error ? 'Error' : 'Success!!'}</Text>
+                  <Text style={[FONTS.body5, { color: COLORS.primary1, fontSize: 15, textAlign: 'center' }]}>{error ? 'Error encountered try again' : 'Tasklog recorded, press OK to return to home menu'}</Text>
+                  <CustomButton
+                    btnStyle={{
+                      marginTop: 20, width: 150, borderRadius: '20', backgroundColor: COLORS.primary,
+                    }}
+                    label="Ok"
+                    onPress={() => {
+                      setPopup(false);
+                      // dispatch(setLocation(location));
+                      // navigation.navigate('home', { location });
+                      navigation.navigate('home');
+                    }}
+
+                  />
                 </View>
-              </TouchableOpacity>
+              </View>
             )}
         </View>
       </Modal>
@@ -117,8 +134,7 @@ export default SummaryScreen;
 
 const styles = StyleSheet.create({
   popupModalWrapper: {
-    width: '90%',
-    // height: 50,
+    width: '85%',
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: '#ccc',
@@ -127,8 +143,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     elevation: 20,
     paddingHorizontal: 20,
-    paddingVertical: 30,
-    borderRadius: 4,
+    paddingTop: 25,
+    paddingBottom: 30,
+    borderRadius: 25,
   },
   cardStyle: {
     paddingHorizontal: 10,

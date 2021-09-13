@@ -12,6 +12,7 @@ import SigninScreen from '../../screens/Signin/SigninScreen';
 import { ResetPassword, SettingScreen, SignupScreen } from '../../screens';
 import { COLORS } from '../../constants/theme';
 import LocationScreen from '../../screens/Location/LocationScreen';
+import SettingStack from '../settingStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -57,8 +58,8 @@ const DrawerStack = () => (
           <IconComponent {...{ size, focused, name: 'setting' }} />
         ),
       }}
-      name="authauthStack"
-      component={SettingScreen}
+      name="SettingStack"
+      component={SettingStack}
     />
     <Drawer.Screen
       options={{

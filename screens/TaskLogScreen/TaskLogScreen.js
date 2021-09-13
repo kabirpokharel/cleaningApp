@@ -8,11 +8,14 @@ import {
   FlatList,
   SafeAreaView,
   ActivityIndicator,
+  StyleSheet,
+  Modal,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import { MaterialIcons } from '@expo/vector-icons';
 import commonStyle from '../style';
-import styles from './taskLogScreeStyle';
+// import styles from './taskLogScreeStyle';
 import {
   selectAllRooms, commonAreaCleanedAct, resetCurrentBlock, updateCurrentBlockId, initilizeTaskLog,
 } from '../../redux/actions';
@@ -99,15 +102,24 @@ const itemExtractor = (taskLog, currentBlockId) => {
 };
 const TaskLogScreen = (props) => {
   const { navigation, route } = props;
-  const [selectedBlockId, setSelectedBlockId] = useState(null);
+  const [selectedBlockId, setSelectedBlockId] = useState('');
   const [overlay, setOverlay] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
 
-  // console.log('this is cleaning detail==========>', cleaningDetail);
-  const { taskLog } = cleaningDetail;
+  const { taskLog, cleaningTypeCount } = cleaningDetail;
+  const { daily, thorough } = cleaningTypeCount;
+  const cleanedRoomCount = daily + thorough;
 
+  const navigationToSummaryPage = () => {
+    if (cleanedRoomCount) {
+      navigation.navigate('summaryScreen');
+    } else {
+      setShowModal(true);
+    }
+  };
   useEffect(() => {
     const { locationId } = route.params;
     console.log('see this locaiton id', locationId);
@@ -122,14 +134,38 @@ const TaskLogScreen = (props) => {
       setLoading(false);
     })
       .catch((err) => console.log('see this is an error from home screen***--------> ', err));
-
-    // (S) working with dummy data dummyRoomStatus
-    // dispatch(initilizeTaskLog(dummyRoomStatus.blocks));
-    // (E) working with dummy data dummyRoomStatus
   }, []);
   return (
     <PageTemplate>
       <TitleWithDescription title="Block" description="Select block to access rooms" />
+      {showModal && !cleanedRoomCount && (
+        <Modal transparent isVisible={cleanedRoomCount > 0}>
+          <View style={{
+            flex: 1,
+            // alignItems: 'center',
+            // justifyContent: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}
+          >
+            <TouchableOpacity
+              onPress={() => setShowModal(false)}
+              style={{
+                flex: 1, alignItems: 'center', justifyContent: 'center',
+              }}
+            >
+              <View style={styles.popupModalWrapper}>
+                <View style={{ marginBottom: 20 }}>
+                  <MaterialIcons name="info" size={80} color="#4285f4" />
+                </View>
+                <Text style={[FONTS.body2, { color: COLORS.primary, marginBottom: 5 }]}>
+                  Attention!!
+                </Text>
+                <Text style={[FONTS.body5, { color: COLORS.primary1, fontSize: 15, textAlign: 'center' }]}>No room selected, log your task before proceeding</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      )}
       {overlay && (
       <TouchableOpacity
         style={{
@@ -232,19 +268,38 @@ const TaskLogScreen = (props) => {
       </View>
       )}
       <CleaningLog {...{
-        overlay, setOverlay, selectedBlockId, taskLog,
+        // overlay,
+        setOverlay, selectedBlockId,
+        // taskLog,
       }}
       />
       <ExtraScreen {...{ selectedBlockId }} />
       <FooterButton
-        onPress={() => navigation.navigate('summaryScreen')}
+        onPress={navigationToSummaryPage}
         // onPress={showData}
         containerStyle
         textStyle
-        btnText="Continue"
+        btnText="Continue to summary"
       />
       {/* <SafeAreaView /> */}
     </PageTemplate>
   );
 };
+
 export default TaskLogScreen;
+const styles = StyleSheet.create({
+  popupModalWrapper: {
+    width: '85%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    backgroundColor: 'white',
+    elevation: 20,
+    paddingHorizontal: 20,
+    paddingTop: 25,
+    paddingBottom: 30,
+    borderRadius: 25,
+  },
+});

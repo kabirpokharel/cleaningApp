@@ -13,7 +13,7 @@ const TagComponent = ({
     style={[{
       flexDirection: 'row',
       paddingHorizontal: SIZES.baseSize * 20,
-      paddingVertical: SIZES.baseSize * 12,
+      paddingVertical: SIZES.baseSize * 11,
       backgroundColor: COLORS.white,
       borderRadius: SIZES.baseSize * 40,
       alignItems: 'center',

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, StyleSheet, TouchableOpacity, FlatList,
+  View, StyleSheet, TouchableOpacity, FlatList, Vibration,
 } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
@@ -70,7 +70,10 @@ const RowElements = ({
             round={round}
             extraStyle={extraStyle ? extraStyle(item) : {}}
             onPress={() => onPress(item, index)}
-            onLongPress={() => onLongPress(item, index)}
+            onLongPress={() => {
+              onLongPress(item, index);
+              Vibration.vibrate(300);
+            }}
             ElementChildren={() => (
               <ElementChildren
                 dynamicStyle={{

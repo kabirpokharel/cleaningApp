@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
+import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import commonStyle from '../style';
 import styles from './cleaningLogStyle';
@@ -22,7 +23,6 @@ const ElementChildren = ({ item, dynamicStyle }) => <Text style={dynamicStyle}>{
 
 const CleaningLog = (props) => {
   const { overlay, setOverlay, selectedBlockId } = props;
-
   const dispatch = useDispatch();
   const cleaningDetail = useSelector((state) => state.cleaning);
   const { taskLog } = cleaningDetail;
@@ -55,8 +55,7 @@ const CleaningLog = (props) => {
           justifyContent: 'space-between',
         }}
       >
-        {/* {!overlay && ( */}
-        {selectedBlockId && (
+        {!!selectedBlockId && (
         <TouchableOpacity
           onPress={() => {
             setOverlay(true);
@@ -106,6 +105,12 @@ const CleaningLog = (props) => {
         )}
     </View>
   );
+};
+
+CleaningLog.propTypes = {
+  setOverlay: PropTypes.func.isRequired,
+  selectedBlockId: PropTypes.string.isRequired,
+
 };
 
 export default CleaningLog;

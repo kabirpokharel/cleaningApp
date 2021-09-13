@@ -27,7 +27,7 @@ const SettingScreen = (props) =>
             <View style={styles.box1} />
             <View style={styles.box1} />
             <View style={styles.box1}>
-              <Text>Last Item</Text>
+              <Text>Last Itemmm</Text>
             </View>
             <View style={{ marginBottom: 50 }} />
           </View>

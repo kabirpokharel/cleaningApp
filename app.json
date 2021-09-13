@@ -6,9 +6,9 @@
     "description": "An application to keep tack of cleaning tasklog",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/icon.jpg",
+    "icon": "./assets/icons/newLogo.png",
     "splash": {
-      "image": "./assets/icons/splash.jpg",
+      "image": "./assets/icons/newSplash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -24,7 +24,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/adaptive-icon.jpg",
+        "foregroundImage": "./assets/icons/newAdaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.example.cleaningapp"

@@ -62,16 +62,19 @@ const LogoTitle = ({ title }) => (
 const Stack = createStackNavigator();
 
 const AuthStack = ({ navigation }) => (
-  <Stack.Navigator>
+  <Stack.Navigator screenOptions={{
+    headerShown: false,
+  }}
+  >
     <Stack.Screen
       name="Signin"
       component={SigninScreen}
-      options={({ navigation }) => titleObj('Signin', navigation)}
+      // options={({ navigation }) => titleObj('Signin', navigation)}
     />
     <Stack.Screen
       name="Signup"
       component={SignupScreen}
-      options={({ navigation }) => titleObj('Signup', navigation)}
+      // options={({ navigation }) => titleObj('Signup', navigation)}
     />
 
     {/* <Stack.Screen name="Signup" component={SignupScreen} options={{ title: "Signup" }} />

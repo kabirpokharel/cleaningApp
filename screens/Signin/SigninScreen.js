@@ -60,17 +60,21 @@ const SigninScreen = (props) => {
           <Image
             resizeMode="cover"
             style={{
-              width: 160,
+              width: SIZES.baseSize * 200,
               height: undefined,
-              aspectRatio: 1.8,
+              aspectRatio: 1,
               marginTop: SIZES.baseSize * 30,
-              marginBottom: SIZES.baseSize * 40,
             }}
-            source={require('../../assets/images/acssLogo.png')}
+            source={require('../../assets/icons/newLogo.png')}
+
           />
-          <View style={{ width: '100%' }}>
-            <Text style={[FONTS.h3, { paddingLeft: 30, paddingBottom: 15, color: COLORS.light2 }]}>
-              Welcome!
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: (SIZES.baseSize * 40) }}>
+            <Text style={[FONTS.body6,
+              {
+                paddingLeft: 30, textAlign: 'center', paddingBottom: 15, lineHeight: 15, color: COLORS.primary2,
+              }]}
+            >
+              We clean corners, we do not cut them!
             </Text>
           </View>
           <SigninForm {...{ navigation }} />
