@@ -1,72 +1,110 @@
-import React from 'react';
-import {
-  View, Text, Button, StyleSheet, Dimensions, SafeAreaView,
-} from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { StatusBar } from 'expo-status-bar';
+import React, { useEffect } from 'react';
+import { StyleSheet, Button, View } from 'react-native';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 
-const { width } = Dimensions.get('window'); // full width
-const { height } = Dimensions.get('window'); // full height
+export default () => {
+  const triggerNotificationHandler = () => {
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'My first local notificaiton',
+        body: 'This is first local notification i am sending',
 
-const SettingScreen = (props) =>
-  // const { navigation } = props;
-  (
-    <View style={styles.containerWrapper}>
-      <SafeAreaView />
-      <Text>This is setting Page!!!</Text>
+      },
+      trigger: {
+        seconds: 10,
+      },
+    });
+  };
+  return (
+    <View>
       <Button
-        title="Update Profile"
+        title="Trigger Notification"
+        onPress={triggerNotificationHandler}
       />
-      <View style={{ flex: 1, backgroundColor: 'blue' }}>
-        <View style={{ height: 20 }} />
-        <View style={{ backgroundColor: 'yellow', flex: 1 }}>
-          <View>
-            <View style={styles.box1} />
-            <View style={styles.box1} />
-            <View style={styles.box1} />
-            <View style={styles.box1} />
-            <View style={styles.box1} />
-            <View style={styles.box1} />
-            <View style={styles.box1}>
-              <Text>Last Itemmm</Text>
-            </View>
-            <View style={{ marginBottom: 50 }} />
-          </View>
-        </View>
-        <View
-          style={{
-            height: 60,
-            // position: "absolute",
-            // bottom: 0,
-            // height: 150,
-            width,
-            // borderRadius: 25,
-            backgroundColor: 'transparent',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text style={{ color: '#ffffff', fontSize: 25, fontWeight: 'bold' }}>
-            continue =
-            {'>'}
-          </Text>
-        </View>
-      </View>
     </View>
   );
-const styles = StyleSheet.create({
-  containerWrapper: {
-    flex: 1,
-    backgroundColor: 'pink',
-  },
-  box1: {
-    height: 150,
-    // width: 150,
-    color: '#ffffff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-    backgroundColor: 'purple',
-  },
-});
+};
 
-export default SettingScreen;
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({
+//     shouldShowAlert: true,
+//   }),
+// });
+
+// export default function App() {
+//   useEffect(() => {
+//     Permissions.getAsync(Permissions.NOTIFICATIONS)
+//       .then((statusObj) => {
+//         if (statusObj.status !== 'granted') {
+//           return Permissions.askAsync(Permissions.NOTIFICATIONS);
+//         }
+//         return statusObj;
+//       })
+//       .then((statusObj) => {
+//         if (statusObj.status !== 'granted') {
+//           throw new Error('Permission not granted!');
+//         }
+//       })
+//       .then(() => Notifications.getExpoPushTokenAsync())
+//       .then((response) => {
+//         const token = response.data;
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         return null;
+//       });
+//   }, []);
+
+//   useEffect(() => {
+//     const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
+//       (response) => {
+//         console.log(response);
+//       },
+//     );
+
+//     const foregroundSubscription = Notifications.addNotificationReceivedListener(
+//       (notification) => {
+//         console.log(notification);
+//       },
+//     );
+
+//     return () => {
+//       backgroundSubscription.remove();
+//       foregroundSubscription.remove();
+//     };
+//   }, []);
+
+//   const triggerNotificationHandler = () => {
+//     // Notifications.scheduleNotificationAsync({
+//     //   content: {
+//     //     title: 'My first local notification',
+//     //     body: 'This is the first local notification we are sending!',
+//     //     data: { mySpecialData: 'Some text' },
+//     //   },
+//     //   trigger: {
+//     //     seconds: 10,
+//     //   },
+//     // });
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <Button
+//         title="Trigger Notification"
+//         onPress={triggerNotificationHandler}
+//       />
+//       <StatusBar style="auto" />
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });

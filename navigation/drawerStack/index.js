@@ -71,7 +71,7 @@ const DrawerStack = () => (
       name="dummy1"
       component={DummyComp1}
     />
-    <Drawer.Screen
+    {/* <Drawer.Screen
       options={{
         title: 'Logout',
         drawerIcon: ({ focused, size }) => (
@@ -80,7 +80,7 @@ const DrawerStack = () => (
       }}
       name="dummy2"
       component={DummyComp2}
-    />
+    /> */}
   </Drawer.Navigator>
 );
 export default DrawerStack;

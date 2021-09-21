@@ -10,24 +10,10 @@ import {
   resettingRoom,
 } from './cleaningReducerFunc';
 
-const initialState = {
-  // user: 'X4WQRHEvQ', // replace with dynamic user
+const initialValues = {
   location: null,
   startAt: '',
   taskLog: [],
-  // taskLog: [
-  //    {
-  //   name: 'block 3',
-  //   shortid: '8ST2igVly',
-  //   rooms: [
-  //     { roomId: 21 },
-  //     { roomId: 22 },
-  //     { roomId: 23 },
-  //     { roomId: 24 },
-  //   ],
-  // },
-  // ],
-
   cleaningTypeCount: {
     daily: 0,
     thorough: 0,
@@ -36,6 +22,7 @@ const initialState = {
   roomsLoading: true,
   error: null,
 };
+const initialState = { ...initialValues };
 
 const cleaningDetail = (state = initialState, action) => {
   const { type, payload } = action;

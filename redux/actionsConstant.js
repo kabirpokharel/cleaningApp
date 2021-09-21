@@ -1,6 +1,6 @@
 export const SIGN_UP = 'SIGN_UP';
 export const SIGN_IN = 'SIGN_IN';
-export const LOGOUT_USER = 'LOGOUT_USER';
+export const SIGN_OUT = 'SIGN_OUT';
 export const UPDATE_CURRENT_BLOCK_ID = 'UPDATE_CURRENT_BLOCK_ID';
 export const RESET_ROOM = 'RESET_ROOM';
 export const EXTRAS_TOGGLE = 'EXTRAS_TOGGLE';

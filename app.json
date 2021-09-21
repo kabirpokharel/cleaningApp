@@ -23,11 +23,13 @@
       "bundleIdentifier": "com.example.cleaningapp"
     },
     "android": {
+      "useNextNotificationsApi" : true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/newAdaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.example.cleaningapp"
+      
     },
     "web": {
       "favicon": "./assets/icons/favicon.png"

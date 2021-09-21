@@ -3,14 +3,36 @@ import {
   View, Text, StyleSheet, ScrollView, SafeAreaView, Platform, Image,
 } from 'react-native';
 // import { DrawerItems } from "react-navigation";
-import { AntDesign } from '@expo/vector-icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 
-import { DrawerItemList } from '@react-navigation/drawer';
+import { DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 
-import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONTS, SIZES } from '../constants/theme';
+import { signOut } from '../redux/actions';
 
 // import colors from "../../assets/colors";
+
+const IconComponent = ({ size, focused, name }) => (
+  <View style={{
+    flexDirection: 'row', alignItems: 'center',
+  }}
+  >
+    <AntDesign
+      name={name}
+      size={size || 25}
+      color={focused ? COLORS.dark3 : COLORS.primary}
+    />
+    <View style={{ marginLeft: 32 }}>
+      <Text style={[FONTS.body4, {
+        textTransform: 'capitalize', fontSize: 15, color: COLORS.primary,
+      }]}
+      >
+        {name}
+      </Text>
+    </View>
+  </View>
+);
 
 const Profile = ({ email, name, img }) => (
   <View
@@ -54,6 +76,7 @@ const Profile = ({ email, name, img }) => (
 );
 
 const CustomDrawer = (props) => {
+  const dispatch = useDispatch();
   const [active, setActive] = useState('');
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -91,16 +114,38 @@ const CustomDrawer = (props) => {
           style={{
             backgroundColor: COLORS.white,
             height: '100%',
+            justifyContent: 'space-between',
             borderTopLeftRadius: 45,
             borderTopRightRadius: 45,
           }}
         >
-          <DrawerItemList
-            inactiveTintColor={COLORS.primary}
-            activeTintColor={COLORS.dark3}
-            activeBackgroundColor={COLORS.light3}
-            {...props}
-          />
+          <View>
+            <DrawerItemList
+              inactiveTintColor={COLORS.primary}
+              activeTintColor={COLORS.dark3}
+              activeBackgroundColor={COLORS.light3}
+              {...props}
+            />
+          </View>
+          <View style={{
+            borderTopColor: COLORS.light4,
+            borderTopWidth: 2,
+            marginTop: -20,
+          }}
+          >
+            <DrawerItem
+            // options={{
+            //   // title: 'Home',
+            //   drawerIcon: ({ focused, size }) => <IconComponent {...{ size, focused, name: 'home' }} />,
+            // }}
+              label={({ focused, size }) => <IconComponent {...{ size, focused, name: 'logout' }} />}
+              onPress={() => {
+                props.navigation.closeDrawer();
+                alert('drawer is closed');
+                dispatch(signOut());
+              }}
+            />
+          </View>
         </View>
       </ScrollView>
     </View>
