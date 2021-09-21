@@ -4,16 +4,45 @@ import { StyleSheet, Button, View } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+  }),
+});
+
 export default () => {
+  useEffect(() => {
+    Permissions.getAsync(Permissions.NOTIFICATIONS)
+      .then((statusObj) => {
+        if (statusObj.status !== 'granted') {
+          return Permissions.askAsync(Permissions.NOTIFICATIONS);
+        }
+        return statusObj;
+      })
+      .then((statusObj) => {
+        if (statusObj.status !== 'granted') {
+
+          // throw new Error('Permission not granted!');
+        }
+      });
+    // .then(() => Notifications.getExpoPushTokenAsync())
+    // .then((response) => {
+    //   const token = response.data;
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    //   return null;
+    // });
+  }, []);
   const triggerNotificationHandler = () => {
     Notifications.scheduleNotificationAsync({
       content: {
         title: 'My first local notificaiton',
-        body: 'This is first local notification i am sending',
+        body: 'This is first local notification i am sending with 5 seconds delay ',
 
       },
       trigger: {
-        seconds: 10,
+        seconds: 5,
       },
     });
   };
