@@ -10,6 +10,7 @@ import SigninScreen from './Signin/SigninScreen';
 import SignupScreen from './Signup/SignupScreen';
 import LocationScreen from './Location/LocationScreen';
 import CommonAreaLog from './CommonAreaLog/CommonAreaLogScreen';
+import NotificationScreen from './Notification/NotificationScreen';
 
 export {
   ForgotPassword,
@@ -18,6 +19,7 @@ export {
   CommonAreaLog,
   // CleaningLog,
   // TimeLogScreen,
+  NotificationScreen,
   SummaryScreen,
   ResetPassword,
   SettingScreen,

@@ -13,6 +13,14 @@ import {
 
 const Stack = createStackNavigator();
 
+const DummyComponent = () => (
+  <View>
+    <Text style={{ fontSize: 30 }}>
+      THis is dummyComponent
+    </Text>
+  </View>
+);
+
 const LogoTitle = ({ title }) => (
   <View
     style={{
@@ -164,6 +172,35 @@ const HomeStack = ({ navigation }) => {
           headerTitle: () => (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <LogoTitle title="Summary" />
+            </View>
+          ),
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{
+                paddingHorizontal: SIZES.baseSize * 10,
+                marginBottom: SIZES.baseSize * 9,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <AntDesign name="arrowleft" size={33} color={COLORS.primary2} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => <View style={{ paddingHorizontal: SIZES.baseSize * 10 }} />,
+        }}
+      />
+      <Stack.Screen
+        name="dummyScreen"
+        component={DummyComponent}
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+          },
+          screenOptions: { headerTitleAlign: 'center' },
+          headerTitle: () => (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <LogoTitle title="Dummy Screen" />
             </View>
           ),
           headerLeft: () => (

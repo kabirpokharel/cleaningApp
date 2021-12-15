@@ -9,7 +9,9 @@ import AuthStack from '../authStack';
 import CustomDrawer from '../../component/CustomDrawer';
 import SigninScreen from '../../screens/Signin/SigninScreen';
 
-import { ResetPassword, SettingScreen, SignupScreen } from '../../screens';
+import {
+  ResetPassword, SettingScreen, SignupScreen, NotificationScreen,
+} from '../../screens';
 import { COLORS } from '../../constants/theme';
 import LocationScreen from '../../screens/Location/LocationScreen';
 import SettingStack from '../settingStack';
@@ -58,7 +60,7 @@ const DrawerStack = () => (
           <IconComponent {...{ size, focused, name: 'setting' }} />
         ),
       }}
-      name="SettingStack"
+      name="settingStack"
       component={SettingStack}
     />
     <Drawer.Screen
@@ -68,8 +70,8 @@ const DrawerStack = () => (
           <IconComponent {...{ size, focused, name: 'bells' }} />
         ),
       }}
-      name="dummy1"
-      component={DummyComp1}
+      name="notificaitonStack"
+      component={NotificationScreen}
     />
     {/* <Drawer.Screen
       options={{

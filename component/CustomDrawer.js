@@ -130,14 +130,14 @@ const CustomDrawer = (props) => {
           <View style={{
             borderTopColor: COLORS.light4,
             borderTopWidth: 2,
-            marginTop: -20,
+            // marginTop: -20,
           }}
           >
             <DrawerItem
-            // options={{
-            //   // title: 'Home',
-            //   drawerIcon: ({ focused, size }) => <IconComponent {...{ size, focused, name: 'home' }} />,
-            // }}
+              // options={{
+              //   title: 'Home',
+              //   drawerIcon: ({ focused, size }) => <IconComponent {...{ size, focused, name: 'home' }} />,
+              // }}
               label={({ focused, size }) => <IconComponent {...{ size, focused, name: 'logout' }} />}
               onPress={() => {
                 props.navigation.closeDrawer();
