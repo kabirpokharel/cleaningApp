@@ -4,14 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { signinUser } from "../redux/actions";
-import {
-  TextInput as TextInputAdaptor,
-  Button as ButtonAdaptor,
-  Title,
-  useTheme,
-} from "react-native-paper";
+import { TextInput as TextInputAdaptor, Title, useTheme } from "react-native-paper";
 import InputFieldAdaptor from "../component/InputFieldAdaptor";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
+import ButtonAdaptor from "../component/ButtonAdaptor";
 
 var width = Dimensions.get("window").width; //full width
 var height = Dimensions.get("window").height; //full height
@@ -34,9 +30,7 @@ const SigninForm = (props) => {
       <Title style={styles.titleText}>Signin</Title>
       {!!authData.error && (
         <View>
-          <Text
-            style={{ color: colors.error }}
-          >{`this is error -> ${authData.error}`}</Text>
+          <Text style={{ color: colors.error }}>{`this is error -> ${authData.error}`}</Text>
         </View>
       )}
       <Formik
@@ -49,14 +43,7 @@ const SigninForm = (props) => {
           actions.resetForm();
         }}
       >
-        {({
-          handleSubmit,
-          handleChange,
-          handleBlur,
-          touched,
-          errors,
-          values,
-        }) => (
+        {({ handleSubmit, handleChange, handleBlur, touched, errors, values }) => (
           <View>
             <InputFieldAdaptor
               style={styles.input}
@@ -76,9 +63,7 @@ const SigninForm = (props) => {
               touched={touched.password}
               error={errors.password}
             />
-            <ButtonAdaptor mode="contained" onPress={handleSubmit}>
-              Submit
-            </ButtonAdaptor>
+            <ButtonAdaptor title={"signin"} onPress={handleSubmit} />
           </View>
         )}
       </Formik>
