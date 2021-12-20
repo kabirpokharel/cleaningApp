@@ -1,103 +1,94 @@
-import React, { useRef } from 'react';
-import {
-  Text, View, Keyboard, Button,
-} from 'react-native';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { useFormik, Formik, Field } from 'formik';
-import axios from 'axios';
-import * as yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
-import { baseUrl } from '../constants/constants';
-import InputFieldAdaptor from '../component/InputFieldAdaptor';
-import { COLORS, FONTS, SIZES } from '../constants/theme';
-import CustomButton from '../component/CustomButton';
-import { Title } from '../component/TitleWithDescriptionComponent';
-import CardComponent from '../component/CardComponent';
-import { signinUser } from '../redux/actions';
+import React from "react";
+import { Button, View, StyleSheet, Text, Dimensions } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { Formik } from "formik";
+import * as yup from "yup";
+import { signinUser } from "../redux/actions";
+import { TextInput as TextInputAdaptor, Title, useTheme } from "react-native-paper";
+import InputFieldAdaptor from "../component/InputFieldAdaptor";
+import { TouchableNativeFeedback } from "react-native-gesture-handler";
+import ButtonAdaptor from "../component/ButtonAdaptor";
 
-const signinValidationSchema = yup.object().shape({
-  email: yup.string().email('Please enter valid email').required('Email is required'),
-  password: yup
-    .string()
-    .min(8, ({ min }) => `Password must be at least ${min} characters`)
-    .required('Password is required'),
+var width = Dimensions.get("window").width; //full width
+var height = Dimensions.get("window").height; //full height
+
+const reviewSchema = yup.object({
+  email: yup.string().email().required("Email is required"),
+  password: yup.string().required("Password is required"),
 });
 
-// const LoginSchema = Yup.object().shape({
-//   email: Yup.string().email("Invalid email").required("Required"),
-//   password: Yup.string().min(2, "Too Short!").max(10, "Too Long!").required("Required"),
-// });
-
-const SigninButton = ({ label, onPress }) => (
-  <TouchableOpacity
-    style={[
-      {
-        borderRadius: 8,
-        height: SIZES.baseSize * 50,
-        marginTop: SIZES.baseSize * 15,
-        marginHorizontal: SIZES.baseSize * 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: COLORS.primary,
-      },
-    ]}
-    activeOpacity={0.7}
-    onPress={onPress}
-  >
-    <Text style={[FONTS.body3, { color: 'white', textTransform: 'uppercase' }]}>{label}</Text>
-  </TouchableOpacity>
-);
-
-const loginFunc = (dispatch, values) => {
-  axios({
-    method: 'post',
-    url: `${baseUrl}/login`,
-    data: values,
-  }).then((res) => {
-    console.log('see this is res.data from sinin form ------->', res.data);
-    dispatch(signinUser(res.data));
-  })
-    .catch((err) => {
-      console.log('see this is an error from signIn screen***--------> ', err);
-    });
-};
-
-const Login = ({ navigation }) => {
+const SigninForm = (props) => {
   const dispatch = useDispatch();
+  const { colors } = useTheme();
+  const authData = useSelector((state) => {
+    console.log("this is auth state in reudx==> ", state);
+    return state.auth;
+  });
 
   return (
-    <>
-      <View style={{ paddingHorizontal: 32, width: '100%' }}>
-        <Formik
-          initialValues={{
-            email: 'kabirpokharel12@gmail.com',
-            password: '123admin',
-          }}
-          validationSchema={signinValidationSchema}
-          onSubmit={(values) => loginFunc(dispatch, values, navigation)}
-        >
-          {({ handleSubmit, isValid }) => (
-            <>
-              <Field
-                component={InputFieldAdaptor}
-                name="email"
-                placeholder="Email Address"
-                keyboardType="email-address"
-              />
-              <Field
-                component={InputFieldAdaptor}
-                name="password"
-                placeholder="Password"
-                secureTextEntry
-              />
-              <SigninButton label="login" onPress={handleSubmit} disabled={!isValid} />
-            </>
-          )}
-        </Formik>
-      </View>
-      {/* <SigninButton label={"login"} onPress={handleSubmit} /> */}
-    </>
+    <View style={styles.containerWrapper}>
+      <Title style={styles.titleText}>Signin</Title>
+      {!!authData.error && (
+        <View>
+          <Text style={{ color: colors.error }}>{`this is error -> ${authData.error}`}</Text>
+        </View>
+      )}
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        validateOnChange={false}
+        validateOnBlur={false}
+        validationSchema={reviewSchema}
+        onSubmit={(values, actions) => {
+          dispatch(signinUser(values));
+          actions.resetForm();
+        }}
+      >
+        {({ handleSubmit, handleChange, handleBlur, touched, errors, values }) => (
+          <View>
+            <InputFieldAdaptor
+              style={styles.input}
+              label="E-mail"
+              onChangeText={handleChange("email")}
+              onBlur={handleBlur("email")}
+              value={values.email}
+              touched={touched.email}
+              error={errors.email}
+            />
+            <InputFieldAdaptor
+              style={styles.input}
+              label="Password"
+              onChangeText={handleChange("password")}
+              onBlur={handleBlur("password")}
+              value={values.password}
+              touched={touched.password}
+              error={errors.password}
+            />
+            <View style={{ marginVertical: 10 }}>
+              <ButtonAdaptor title={"signin"} onPress={handleSubmit} />
+            </View>
+          </View>
+        )}
+      </Formik>
+    </View>
   );
 };
 
-export default Login;
+export default SigninForm;
+
+const styles = StyleSheet.create({
+  containerWrapper: {
+    marginHorizontal: 20,
+  },
+  titleText: {
+    marginBottom: 15,
+    fontSize: 25,
+  },
+  paragraph: {
+    marginVertical: 8,
+    lineHeight: 20,
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+});
