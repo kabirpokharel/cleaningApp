@@ -63,7 +63,9 @@ const SigninForm = (props) => {
               touched={touched.password}
               error={errors.password}
             />
-            <ButtonAdaptor title={"signin"} onPress={handleSubmit} />
+            <View style={{ marginVertical: 10 }}>
+              <ButtonAdaptor title={"signin"} onPress={handleSubmit} />
+            </View>
           </View>
         )}
       </Formik>
