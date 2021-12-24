@@ -9,20 +9,16 @@ const HomeScreen = (props) => {
   return (
     <View>
       <Button
-        title="Go to Jane's profile"
-        onPress={() => navigation.navigate("profile", { name: "Jane" })}
+        title="Go to Kabir's profile"
+        onPress={() => navigation.navigate("profile", { name: "Kabir" })}
       />
       <Button title="Open drawer" onPress={() => navigation.openDrawer()} />
       <Button
         title="Reset Password"
-        onPress={() =>
-          navigation.navigate("authStack", { screen: "Reset Password" })
-        }
+        onPress={() => navigation.navigate("authStack", { screen: "Reset Password" })}
       />
       <View>
-        <Text style={{ color: colors.error }}>
-          This is dummy text in welcome screen
-        </Text>
+        <Text style={{ color: "grey" }}>This is dummy text in welcome screen</Text>
       </View>
     </View>
   );

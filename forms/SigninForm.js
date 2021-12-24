@@ -27,7 +27,7 @@ const SigninForm = (props) => {
 
   return (
     <View style={styles.containerWrapper}>
-      <Title style={styles.titleText}>Signin</Title>
+      <Title style={styles.titleText}>Sign In</Title>
       {!!authData.error && (
         <View>
           <Text style={{ color: colors.error }}>{`this is error -> ${authData.error}`}</Text>
@@ -64,7 +64,7 @@ const SigninForm = (props) => {
               error={errors.password}
             />
             <View style={{ marginVertical: 10 }}>
-              <ButtonAdaptor title={"signin"} onPress={handleSubmit} />
+              <ButtonAdaptor title={"Sign In"} onPress={handleSubmit} />
             </View>
           </View>
         )}
